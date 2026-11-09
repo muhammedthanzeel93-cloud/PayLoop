@@ -1,0 +1,27 @@
+{
+  "name": "@kerala-tourism/mobile",
+  "version": "1.0.0",
+  "description": "Tourist Mobile Application for Kerala Tourism Ecosystem",
+  "private": true,
+  "main": "App.tsx",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@kerala-tourism/api-client": "*",
+    "@kerala-tourism/constants": "*",
+    "@kerala-tourism/shared-types": "*",
+    "expo": "~51.0.38",
+    "expo-status-bar": "~1.12.1",
+    "react": "18.2.0",
+    "react-native": "0.74.5"
+  },
+  "devDependencies": {
+    "@types/react": "~18.2.79",
+    "typescript": "^5.4.5"
+  }
+}

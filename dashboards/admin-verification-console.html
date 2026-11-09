@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kerala Tourism — Admin Destination Verification Review Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              forest: '#145C43',
+              nature: '#78A878',
+              cream: '#F8F7F1',
+              sunset: '#E99A54',
+              charcoal: '#202A25',
+              muted: '#EFECE4',
+              border: '#E3DFD5',
+              borderStrong: '#D1CBBF',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #F8F7F1; color: #202A25; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 22; }
+    .custom-scroll::-webkit-scrollbar { width: 6px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #D1CBBF; border-radius: 4px; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-[#F8F7F1]">
+
+  <!-- TOP GOVERNANCE HEADER -->
+  <header class="sticky top-0 z-50 bg-[#202A25] text-white px-8 py-3.5 flex items-center justify-between border-b border-brand-charcoal shadow-md">
+    <div class="flex items-center gap-6">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl">🏛️</span>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-sm tracking-tight text-white">Kerala Tourism Directorate</span>
+            <span class="px-2 py-0.5 bg-brand-nature/20 text-brand-nature text-[10px] font-bold rounded uppercase">Inspection Console</span>
+          </div>
+          <div class="text-[11px] text-gray-400">Submission #SUB-4982 • Devikulam Taluk, Idukki District</div>
+        </div>
+      </div>
+      
+      <!-- SLA Countdown Timer -->
+      <div class="hidden md:flex items-center gap-2 px-3 py-1 bg-white/10 rounded-full border border-white/15 text-xs">
+        <span class="material-symbols-outlined text-amber-400 text-[16px]">timer</span>
+        <span class="text-gray-300">Review SLA:</span>
+        <span class="font-bold text-amber-300 font-mono">23h 18m left</span>
+      </div>
+    </div>
+
+    <!-- Inspector & Submitter Status -->
+    <div class="flex items-center gap-6 text-xs">
+      <!-- Submitter Profile Card -->
+      <div class="hidden lg:flex items-center gap-3 bg-white/5 px-3 py-1.5 rounded-xl border border-white/10">
+        <div class="w-8 h-8 rounded-full bg-brand-forest text-white flex items-center justify-center font-bold text-xs">
+          AM
+        </div>
+        <div>
+          <div class="font-bold text-white flex items-center gap-1">
+            Arjun Menon (@arjun_wildlife)
+            <span class="material-symbols-outlined text-brand-nature text-[14px]">verified</span>
+          </div>
+          <div class="text-[10px] text-brand-nature">Level 3 Eco-Guide • 14 spots approved</div>
+        </div>
+      </div>
+
+      <a href="dashboards-prototype.html" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-lg text-white font-medium transition flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+        <span>Back to Queue</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- SPLIT INSPECTION WORKSPACE -->
+  <main class="flex-1 max-w-[1600px] w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 pb-28">
+
+    <!-- LEFT COLUMN (5 COLUMNS): SUBMISSION ARTIFACTS & CAMERA EXIF AUDIT -->
+    <div class="lg:col-span-5 space-y-5">
+      
+      <!-- Submission Metadata Card -->
+      <div class="bg-white rounded-3xl p-6 border border-brand-border shadow-sm space-y-4">
+        <div>
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-0.5 bg-brand-cream border border-brand-borderStrong text-brand-forest rounded-full text-[10px] font-bold uppercase tracking-wider">
+              Community Eco-Trail
+            </span>
+            <span class="text-[11px] text-gray-500 font-mono">ID: #SUB-4982</span>
+          </div>
+          <h1 class="text-xl font-bold text-brand-charcoal mt-2">Cheeyappara Lower Secret Cascades</h1>
+          <div class="text-xs font-semibold text-brand-forest font-serif mt-0.5">ചീയപ്പാറ താഴത്തെ വെള്ളച്ചാട്ടം (Malayalam)</div>
+          <div class="text-xs text-brand-charcoal/70 mt-1 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px] text-brand-forest">location_on</span>
+            <span>Idukki District • Devikulam Taluk • NH 85 Milestone Km 48</span>
+          </div>
+        </div>
+
+        <!-- Photo Gallery Mosaic with Zoom -->
+        <div class="space-y-2">
+          <div class="h-60 rounded-2xl overflow-hidden relative border border-brand-border bg-gray-100 group">
+            <img id="main-preview-img" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" alt="Cheeyappara Cascades" class="w-full h-full object-cover">
+            <div class="absolute bottom-2 left-2 px-2.5 py-1 bg-black/70 backdrop-blur-md rounded-lg text-white text-[10px] font-mono flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[14px] text-green-400">photo_camera</span>
+              <span>Photo 1 of 4 • Original Unedited RAW</span>
+            </div>
+          </div>
+          <!-- Thumbnail Row -->
+          <div class="grid grid-cols-4 gap-2">
+            <div class="h-16 rounded-xl overflow-hidden border-2 border-brand-forest cursor-pointer">
+              <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover">
+            </div>
+            <div class="h-16 rounded-xl overflow-hidden border border-brand-border cursor-pointer opacity-70 hover:opacity-100">
+              <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover">
+            </div>
+            <div class="h-16 rounded-xl overflow-hidden border border-brand-border cursor-pointer opacity-70 hover:opacity-100">
+              <img src="https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover">
+            </div>
+            <div class="h-16 rounded-xl overflow-hidden border border-brand-border cursor-pointer opacity-70 hover:opacity-100">
+              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover">
+            </div>
+          </div>
+        </div>
+
+        <!-- Forensic Camera EXIF Audit Box -->
+        <div class="bg-brand-cream/60 p-4 rounded-2xl border border-brand-border space-y-2 text-xs">
+          <div class="flex items-center justify-between text-brand-forest font-bold text-[11px] uppercase tracking-wider">
+            <span class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[16px]">verified_user</span>
+              Camera EXIF Forensic Validation
+            </span>
+            <span class="text-green-700 bg-green-100 px-2 py-0.5 rounded text-[10px]">Verified Match</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-[11px]">
+            <div><span class="text-gray-500">Camera:</span> <strong class="text-brand-charcoal">Sony ILCE-7M4 (A7 IV)</strong></div>
+            <div><span class="text-gray-500">Lens:</span> <strong class="text-brand-charcoal">FE 24-70mm F2.8 GM</strong></div>
+            <div><span class="text-gray-500">Original Timestamp:</span> <strong class="text-brand-charcoal">18 Oct 2026, 07:14:22 IST</strong></div>
+            <div><span class="text-gray-500">EXIF Geotag:</span> <strong class="text-brand-forest font-mono">10.01241°N, 76.89215°E</strong></div>
+          </div>
+          <p class="text-[10px] text-gray-500 pt-1 border-t border-brand-border">
+            ✓ Hardware timestamp and GPS coordinates in photo header correlate with submitter phone triangulation within 4.2 meters.
+          </p>
+        </div>
+
+        <!-- Submitter Narrative & Tips -->
+        <div class="space-y-2 text-xs leading-relaxed text-brand-charcoal/80">
+          <h3 class="font-bold text-brand-charcoal text-sm">Submitter Description & Field Notes</h3>
+          <p>
+            "A secluded freshwater plunge pool located 400m below the highway bridge. Accessible via a narrow foot-trail through cardamom groves. Water is crystal clear with zero tourist commercialization or plastic stalls. Excellent post-monsoon stream flow."
+          </p>
+          <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 text-amber-900 text-[11px] space-y-1">
+            <strong class="block font-bold">Safety & Parking Guidance:</strong>
+            <span>"Rocky boulders get slippery after heavy rainfall. Advise travelers to wear trekking boots. Public parking available at Km 48 milestone shoulder only."</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN (7 COLUMNS): GEOSPATIAL GEOFENCE & SAFETY VALIDATION ENGINE -->
+    <div class="lg:col-span-7 space-y-5">
+      
+      <!-- Interactive Satellite Geofence Map -->
+      <div class="bg-white rounded-3xl p-6 border border-brand-border shadow-sm space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-base font-bold text-brand-charcoal">Geospatial Boundary & Buffer Zone Inspection</h2>
+            <p class="text-xs text-brand-charcoal/70">Cross-referencing Forest Department cadastral layers & wildlife corridors</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button class="px-3 py-1 bg-brand-forest text-white rounded-lg text-xs font-semibold shadow-sm">Satellite Hybrid</button>
+            <button class="px-3 py-1 bg-brand-cream border border-brand-borderStrong text-brand-charcoal rounded-lg text-xs font-medium">Cadastral Grid</button>
+          </div>
+        </div>
+
+        <!-- Simulated Vector/Satellite Map Container -->
+        <div class="h-80 w-full rounded-2xl overflow-hidden relative border border-brand-border bg-emerald-950">
+          <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80" alt="Satellite Map" class="w-full h-full object-cover opacity-75">
+          
+          <!-- Forest Boundary Layer Overlay -->
+          <div class="absolute inset-8 border-2 border-dashed border-green-400 rounded-3xl pointer-events-none flex items-start p-3 bg-green-500/10">
+            <span class="bg-green-800 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow">
+              Kerala Revenue Land (Eco-Tourism Permitted Zone)
+            </span>
+          </div>
+
+          <!-- Restricted Core Boundary (Outside) -->
+          <div class="absolute top-4 right-4 bg-red-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-lg border border-red-500/50">
+            ⚠ Eravikulam Core Wildlife Sanctuary: 3.4 km North (Protected)
+          </div>
+
+          <!-- User Submitted Pin Marker -->
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+            <div class="px-2.5 py-1 bg-brand-sunset text-brand-charcoal font-bold text-[10px] rounded-full shadow-lg border border-white mb-1 flex items-center gap-1">
+              <span>📍 #SUB-4982 (New Pin)</span>
+            </div>
+            <div class="w-5 h-5 rounded-full bg-brand-sunset border-2 border-white shadow-xl animate-bounce"></div>
+          </div>
+
+          <!-- Registered Nearby Landmark Pin -->
+          <div class="absolute bottom-16 left-24 flex items-center gap-1.5 bg-brand-forest/90 text-white px-2.5 py-1 rounded-full text-[10px] shadow border border-white/30">
+            <span>Cheeyappara Highway Viewpoint (1.8 km)</span>
+          </div>
+
+          <!-- Map Utility Controls -->
+          <div class="absolute bottom-4 right-4 flex flex-col gap-1.5">
+            <button class="w-8 h-8 rounded-lg bg-white shadow flex items-center justify-center text-brand-charcoal font-bold text-sm">+</button>
+            <button class="w-8 h-8 rounded-lg bg-white shadow flex items-center justify-center text-brand-charcoal font-bold text-sm">−</button>
+          </div>
+        </div>
+
+        <!-- Automated Safety Validation Cards (4-Grid) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+          
+          <!-- Card 1: Geofence Validation -->
+          <div class="p-3.5 bg-green-50 border border-green-200 rounded-2xl space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-green-900 flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-green-700 text-[18px]">verified</span>
+                Forest Buffer Compliance
+              </span>
+              <span class="px-2 py-0.5 bg-green-200 text-green-900 rounded text-[10px] font-bold">PASSED</span>
+            </div>
+            <p class="text-[11px] text-green-800">
+              Coordinates verified within Devikulam Revenue Buffer. Daylight eco-trekking permitted under Forest Dept circular #FD-2023-88.
+            </p>
+          </div>
+
+          <!-- Card 2: Proximity Duplication Check -->
+          <div class="p-3.5 bg-green-50 border border-green-200 rounded-2xl space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-green-900 flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-green-700 text-[18px]">share_location</span>
+                Proximity Clearance
+              </span>
+              <span class="px-2 py-0.5 bg-green-200 text-green-900 rounded text-[10px] font-bold">1.8 KM CLEAR</span>
+            </div>
+            <p class="text-[11px] text-green-800">
+              No registered tourist spots within 500m radius threshold. Spot represents a genuine new community discovery.
+            </p>
+          </div>
+
+          <!-- Card 3: Reverse-Image Search Check -->
+          <div class="p-3.5 bg-green-50 border border-green-200 rounded-2xl space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-green-900 flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-green-700 text-[18px]">image_search</span>
+                Copyright & Originality
+              </span>
+              <span class="px-2 py-0.5 bg-green-200 text-green-900 rounded text-[10px] font-bold">100% UNIQUE</span>
+            </div>
+            <p class="text-[11px] text-green-800">
+              Reverse search against 12 million index images returned zero matches. Certified original explorer content.
+            </p>
+          </div>
+
+          <!-- Card 4: Automated Toxicity & NSFW -->
+          <div class="p-3.5 bg-green-50 border border-green-200 rounded-2xl space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-green-900 flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-green-700 text-[18px]">security</span>
+                Content Safety Scan
+              </span>
+              <span class="px-2 py-0.5 bg-green-200 text-green-900 rounded text-[10px] font-bold">SAFE (99.8%)</span>
+            </div>
+            <p class="text-[11px] text-green-800">
+              No commercial logos, offensive imagery, or hazardous waste detected in uploaded media stream.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- STICKY BOTTOM ACTION CONSOLE -->
+  <footer class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-brand-borderStrong px-8 py-4 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+    <!-- Taxonomy Assignment -->
+    <div class="flex items-center gap-4 text-xs w-full md:w-auto">
+      <div class="flex items-center gap-2">
+        <label class="font-bold text-brand-charcoal">Assign Category:</label>
+        <select class="p-2 border border-brand-borderStrong rounded-lg font-semibold bg-brand-cream/50">
+          <option>Waterfalls & Cascades</option>
+          <option>Hill Treks & Shola Forests</option>
+          <option>Backwater Canal Routes</option>
+          <option>Cultural Heritage Sites</option>
+        </select>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <label class="font-bold text-brand-charcoal">Difficulty:</label>
+        <select class="p-2 border border-brand-borderStrong rounded-lg font-semibold bg-brand-cream/50">
+          <option>Moderate (20-min descent)</option>
+          <option>Easy Family Walk</option>
+          <option>Strenuous Mountain Trail</option>
+        </select>
+      </div>
+
+      <!-- Field DTO Routing Dropdown -->
+      <div class="flex items-center gap-2">
+        <label class="font-bold text-brand-charcoal">Routing DTO:</label>
+        <select class="p-2 border border-brand-borderStrong rounded-lg font-medium bg-white">
+          <option>DTO Office Munnar (Devikulam)</option>
+          <option>DTO Office Nedumkandam (Udumbanchola)</option>
+          <option>DTO Office Thodupuzha</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+      <!-- Reject Button -->
+      <button onclick="openModal('rejectModal')" class="px-4 py-2.5 border border-red-300 text-red-700 bg-red-50 hover:bg-red-100 rounded-xl font-semibold text-xs transition">
+        ✕ Reject Submission
+      </button>
+
+      <!-- Field Audit Dispatch -->
+      <button onclick="alert('Inspection Ticket #FL-8821 dispatched to DTO Munnar Office for physical ground check.')" class="px-4 py-2.5 border border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 rounded-xl font-semibold text-xs transition flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-[16px]">assignment_turned_in</span>
+        <span>Dispatch Field DTO</span>
+      </button>
+
+      <!-- Approve & Publish -->
+      <button onclick="approveDestination()" class="px-6 py-2.5 bg-green-700 hover:bg-green-800 text-white rounded-xl font-bold text-xs shadow-md transition flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-[18px]">verified</span>
+        <span>✓ Approve & Publish Spot Live</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- REJECTION REASON MODAL -->
+  <div id="rejectModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-brand-border">
+      <div class="flex items-center justify-between border-b border-brand-border pb-3">
+        <h3 class="font-bold text-base text-brand-charcoal">Reject Destination Submission</h3>
+        <button onclick="closeModal('rejectModal')" class="text-gray-400 hover:text-gray-600">✕</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <label class="block font-semibold text-brand-charcoal">Primary Justification:</label>
+        <select class="w-full p-2.5 border border-brand-borderStrong rounded-lg font-medium">
+          <option>Hazardous terrain / Flash flood risk during monsoon</option>
+          <option>Restricted Core Wildlife Corridor (Non-Accessible)</option>
+          <option>Private estate / Encroachment dispute</option>
+          <option>Poor image quality or inadequate wayfinding tips</option>
+        </select>
+        <textarea rows="3" placeholder="Provide feedback notes for the submitting explorer..." class="w-full p-2.5 border border-brand-borderStrong rounded-lg"></textarea>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-2 border-t border-brand-border">
+        <button onclick="closeModal('rejectModal')" class="px-4 py-2 text-xs text-gray-500 font-semibold">Cancel</button>
+        <button onclick="alert('Submission rejected and feedback sent to explorer.'); closeModal('rejectModal');" class="px-4 py-2 bg-red-600 text-white font-bold text-xs rounded-lg hover:bg-red-700">
+          Confirm Rejection
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function approveDestination() {
+      alert("Success! 'Cheeyappara Lower Secret Cascades' has been published to the official Kerala Tourism Explore Directory. Contributor @arjun_wildlife awarded 500 Eco-Points.");
+    }
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+  </script>
+
+</body>
+</html>

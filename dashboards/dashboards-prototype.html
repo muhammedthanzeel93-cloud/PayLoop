@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kerala Tourism — Admin & Business Dashboard Prototypes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              forest: '#145C43',
+              nature: '#78A878',
+              cream: '#F8F7F1',
+              sunset: '#E99A54',
+              charcoal: '#202A25',
+              muted: '#EFECE4',
+              border: '#E3DFD5',
+              borderStrong: '#D1CBBF',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #F8F7F1; color: #202A25; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 22; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- TOP SHELL SWITCHER (DEMO CONTROL BAR) -->
+  <header class="bg-brand-charcoal text-white px-8 py-3 flex items-center justify-between text-xs border-b border-brand-charcoal">
+    <div class="flex items-center gap-3">
+      <span class="font-bold text-white tracking-wide">KERALA TOURISM PORTAL</span>
+      <span class="text-gray-400">|</span>
+      <span class="text-gray-300">Switch Workspace View:</span>
+      <div class="flex items-center gap-2 bg-white/10 p-1 rounded-lg">
+        <button onclick="switchPortal('admin')" id="tab-admin" class="px-3 py-1 bg-brand-forest text-white rounded font-bold shadow-sm">
+          Admin Governance Console
+        </button>
+        <button onclick="switchPortal('business')" id="tab-business" class="px-3 py-1 text-gray-300 hover:text-white rounded font-medium">
+          Merchant Business Dashboard
+        </button>
+      </div>
+    </div>
+    <div class="flex items-center gap-4 text-gray-300">
+      <span>Signed in as: <strong class="text-white">Govt Tourism Inspector #KL-04</strong></span>
+      <button class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded text-white">Log Out</button>
+    </div>
+  </header>
+
+  <!-- PORTAL 1: ADMIN DASHBOARD -->
+  <div id="portal-admin" class="portal-view flex-1 flex">
+    
+    <!-- ADMIN SIDEBAR -->
+    <aside class="w-64 bg-[#202A25] text-white flex flex-col justify-between shrink-0 p-4 border-r border-brand-border">
+      <div class="space-y-6">
+        <div class="flex items-center gap-2 px-2 py-1">
+          <span class="text-2xl">🏛️</span>
+          <div>
+            <div class="font-bold text-sm text-white">Kerala Tourism Admin</div>
+            <div class="text-[10px] text-brand-nature uppercase font-semibold">Directorate Portal</div>
+          </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="space-y-1 text-xs">
+          <div class="text-[10px] uppercase font-bold text-gray-400 px-3 pt-2">Platform Control</div>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-brand-forest text-white font-semibold">
+            <span class="material-symbols-outlined text-[18px]">dashboard</span>
+            <span>Overview & KPIs</span>
+          </a>
+          <a href="#" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-gray-300 hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[18px]">verified</span>
+              <span>Destination Queue</span>
+            </div>
+            <span class="px-1.5 py-0.5 bg-brand-sunset text-brand-charcoal font-bold rounded-full text-[10px]">8</span>
+          </a>
+          <a href="#" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-gray-300 hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[18px]">shield</span>
+              <span>Post Moderation</span>
+            </div>
+            <span class="px-1.5 py-0.5 bg-red-500 text-white font-bold rounded-full text-[10px]">3</span>
+          </a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-white/5 transition">
+            <span class="material-symbols-outlined text-[18px]">apartment</span>
+            <span>Business Verification</span>
+          </a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-white/5 transition">
+            <span class="material-symbols-outlined text-[18px]">group</span>
+            <span>User Management</span>
+          </a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-white/5 transition">
+            <span class="material-symbols-outlined text-[18px]">receipt_long</span>
+            <span>Booking Ledger</span>
+          </a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-white/5 transition">
+            <span class="material-symbols-outlined text-[18px]">history</span>
+            <span>Audit Logs</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="p-3 bg-white/5 rounded-xl text-[11px] text-gray-400">
+        <div>Kerala Tourism Dept.</div>
+        <div class="text-white font-mono text-[10px]">Build v2.4.1 (Stable)</div>
+      </div>
+    </aside>
+
+    <!-- ADMIN CONTENT -->
+    <main class="flex-1 p-8 space-y-8 overflow-y-auto">
+      
+      <!-- Top Overview Stats -->
+      <div>
+        <h1 class="text-2xl font-bold text-brand-charcoal">Tourism Operations Command</h1>
+        <p class="text-xs text-brand-charcoal/70">Real-time surveillance across Kerala districts, eco-accreditation & community submissions</p>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div class="bg-white p-5 rounded-2xl border border-brand-border shadow-sm space-y-1">
+          <div class="text-xs text-gray-500 font-medium">Total Registered Explorers</div>
+          <div class="text-2xl font-bold text-brand-charcoal">128,490</div>
+          <div class="text-[11px] text-green-700 font-semibold">↑ +14.2% this month</div>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-brand-border shadow-sm space-y-1">
+          <div class="text-xs text-gray-500 font-medium">Pending Destination Approvals</div>
+          <div class="text-2xl font-bold text-brand-sunset">8 Submissions</div>
+          <div class="text-[11px] text-amber-600 font-semibold">Requires geospatial check</div>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-brand-border shadow-sm space-y-1">
+          <div class="text-xs text-gray-500 font-medium">Monthly Gross Volume (GMV)</div>
+          <div class="text-2xl font-bold text-brand-forest">₹4.82 Cr</div>
+          <div class="text-[11px] text-green-700 font-semibold">Across stays & packages</div>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-brand-border shadow-sm space-y-1">
+          <div class="text-xs text-gray-500 font-medium">Verified Homestays & Resorts</div>
+          <div class="text-2xl font-bold text-brand-charcoal">892 Active</div>
+          <div class="text-[11px] text-brand-forest font-semibold">Gold & Silver class verified</div>
+        </div>
+      </div>
+
+      <!-- DESTINATION VERIFICATION WORKFLOW SPECIMEN (SIDE-BY-SIDE REVIEW) -->
+      <div class="bg-white rounded-3xl border border-brand-border p-6 shadow-sm space-y-5">
+        <div class="flex items-center justify-between border-b border-brand-border pb-4">
+          <div>
+            <span class="px-2.5 py-0.5 bg-amber-100 text-amber-800 rounded-full text-xs font-bold uppercase">
+              Action Required
+            </span>
+            <h2 class="text-lg font-bold text-brand-charcoal mt-1">Community Destination Verification Review</h2>
+          </div>
+          <div class="text-xs text-gray-500">Submission ID: #SUB-4982 • Received 42 mins ago</div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Left: User Submission -->
+          <div class="space-y-3 bg-brand-cream p-5 rounded-2xl border border-brand-border">
+            <div class="text-xs font-bold text-brand-forest uppercase">Explorer Submitted Data</div>
+            <div>
+              <div class="text-sm font-bold text-brand-charcoal">Cheeyappara Lower Secret Cascades</div>
+              <div class="text-xs text-gray-600">District: Idukki • Nearest Town: Adimali</div>
+            </div>
+            <p class="text-xs text-brand-charcoal/80 leading-relaxed">
+              "Hidden pool located 400m below the main highway viewpoint. Crystal clean mountain stream with zero commercial stalls. Pristine bathing spot."
+            </p>
+            <div class="h-36 rounded-xl overflow-hidden bg-gray-200">
+              <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+            </div>
+            <div class="text-[11px] text-gray-500">Submitted by: <strong class="text-brand-charcoal">@arjun_wildlife</strong> (Certified Eco-Guide)</div>
+          </div>
+
+          <!-- Right: Geo-Fence & Safety Validation -->
+          <div class="space-y-3 bg-white p-5 rounded-2xl border border-brand-borderStrong">
+            <div class="text-xs font-bold text-brand-charcoal uppercase">Inspector Geo-Verification</div>
+            
+            <div class="p-3 bg-green-50 border border-green-200 rounded-xl space-y-1">
+              <div class="text-xs font-bold text-green-900 flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-green-700 text-[18px]">check_circle</span>
+                GPS Geofence Validation: Pass
+              </div>
+              <div class="text-[11px] text-green-800 font-mono">10.0124° N, 76.8921° E (Within Kerala Tourism Jurisdiction)</div>
+            </div>
+
+            <div class="p-3 bg-gray-50 border border-brand-border rounded-xl space-y-1">
+              <div class="text-xs font-bold text-brand-charcoal">Forest Department Clearance</div>
+              <div class="text-[11px] text-gray-600">Eco-sensitive buffer zone — Non-restricted access allowed during daytime.</div>
+            </div>
+
+            <div class="space-y-2 pt-2">
+              <label class="block text-xs font-bold text-brand-charcoal">Assigned Tourism Category</label>
+              <select class="w-full p-2 border border-brand-borderStrong rounded-lg text-xs font-medium">
+                <option>Eco-Trekking & Waterfalls</option>
+                <option>Heritage & Religious Sites</option>
+                <option>Backwater Lagoons</option>
+              </select>
+            </div>
+
+            <div class="pt-3 flex items-center gap-3">
+              <button onclick="alert('Destination Verified and Published to Kerala Tourism Directory!')" class="flex-1 py-2.5 bg-green-700 text-white rounded-xl font-bold text-xs hover:bg-green-800 shadow">
+                ✓ Approve & Publish Spot
+              </button>
+              <button onclick="alert('Sent back to explorer for additional land permission clarification.')" class="px-4 py-2.5 border border-brand-borderStrong text-brand-charcoal rounded-xl font-semibold text-xs hover:bg-gray-50">
+                Request Info
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- PORTAL 2: BUSINESS DASHBOARD (MERCHANT) -->
+  <div id="portal-business" class="portal-view hidden flex-1 flex">
+    
+    <!-- BUSINESS SIDEBAR -->
+    <aside class="w-64 bg-white text-brand-charcoal flex flex-col justify-between shrink-0 p-4 border-r border-brand-border shadow-sm">
+      <div class="space-y-6">
+        <!-- Business Tenant Header -->
+        <div class="p-3 bg-brand-cream rounded-2xl border border-brand-border space-y-1">
+          <div class="text-[10px] font-bold text-brand-nature uppercase tracking-wider">Active Business</div>
+          <div class="font-bold text-sm text-brand-forest">Kumarakom Lake Resort</div>
+          <div class="text-[10px] text-gray-500">Tenant: Resort & Hourly Homestay</div>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="space-y-1 text-xs font-medium">
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-brand-forest text-white font-semibold shadow-sm">
+            <span class="material-symbols-outlined text-[18px]">storefront</span>
+            <span>Business Overview</span>
+          </a>
+          <a href="#" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-brand-charcoal hover:bg-brand-cream transition">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[18px]">calendar_clock</span>
+              <span>Hourly & Daily Calendar</span>
+            </div>
+            <span class="px-1.5 py-0.5 bg-brand-nature text-white font-bold rounded-full text-[10px]">Live</span>
+          </a>
+          <a href="#" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-brand-charcoal hover:bg-brand-cream transition">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[18px]">bed</span>
+              <span>Room Inventory</span>
+            </div>
+            <span class="text-xs text-gray-500 font-bold">18 Rooms</span>
+          </a>
+          <a href="#" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-brand-charcoal hover:bg-brand-cream transition">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[18px]">notification_important</span>
+              <span>Booking Requests</span>
+            </div>
+            <span class="px-1.5 py-0.5 bg-brand-sunset text-brand-charcoal font-bold rounded-full text-[10px]">2</span>
+          </a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-brand-charcoal hover:bg-brand-cream transition">
+            <span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
+            <span>Check-in QR Scanner</span>
+          </a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-brand-charcoal hover:bg-brand-cream transition">
+            <span class="material-symbols-outlined text-[18px]">payments</span>
+            <span>Revenue & Payouts</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="p-3 bg-brand-cream rounded-xl text-[11px] text-gray-600 space-y-1">
+        <div class="font-bold text-brand-forest">Kerala Gold Accreditation</div>
+        <div>Lic: #KTD-2024-RESORT-81</div>
+      </div>
+    </aside>
+
+    <!-- BUSINESS CONTENT -->
+    <main class="flex-1 p-8 space-y-8 overflow-y-auto">
+      
+      <!-- Top Operational Header -->
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl font-bold text-brand-charcoal">Resort Front Desk & Inventory</h1>
+          <p class="text-xs text-brand-charcoal/70">Managing 18 luxury lakefront villas & 6 hourly transit day-use suites</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="alert('Camera Scanner activated to scan guest voucher QR code')" class="px-4 py-2 bg-brand-sunset text-brand-charcoal font-bold text-xs rounded-full shadow hover:bg-[#DE8C44] flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
+            <span>Scan Guest Check-in QR</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 15-MINUTE BOOKING REQUEST ALERT -->
+      <div class="bg-amber-50 border-2 border-amber-300 p-5 rounded-3xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-brand-sunset text-brand-charcoal font-bold flex items-center justify-center text-xl">
+            ⏱️
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-amber-900 uppercase tracking-wider">New Booking Request</span>
+              <span class="px-2 py-0.5 bg-red-600 text-white text-[10px] font-bold rounded-full animate-pulse">11m 40s remaining</span>
+            </div>
+            <div class="text-sm font-bold text-brand-charcoal mt-0.5">
+              Guest: Rahul Sharma • 3-Hour Transit Room (12:00 PM – 03:00 PM Today)
+            </div>
+            <div class="text-xs text-gray-600">Arriving from Ernakulam Junction. Needs private bath and workspace.</div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2.5 w-full md:w-auto">
+          <button onclick="alert('Request Accepted! Room locked and pass issued to guest.')" class="flex-1 md:flex-none px-5 py-2.5 bg-brand-forest text-white font-bold text-xs rounded-full hover:bg-brand-forest/90 shadow">
+            Accept Request (₹850)
+          </button>
+          <button class="px-4 py-2.5 border border-brand-borderStrong text-brand-charcoal font-semibold text-xs rounded-full hover:bg-white">
+            Decline
+          </button>
+        </div>
+      </div>
+
+      <!-- 24-HOUR AVAILABILITY MATRIX & HOURLY CALENDAR -->
+      <div class="bg-white rounded-3xl border border-brand-border p-6 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-brand-border pb-3">
+          <div>
+            <h2 class="text-base font-bold text-brand-charcoal">Today's Hourly Room Schedule & Status</h2>
+            <p class="text-xs text-gray-500">Live slot occupancy across Lake Breeze Villas</p>
+          </div>
+          <div class="flex items-center gap-3 text-xs">
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-green-500"></span> Available</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-red-500"></span> Occupied</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-500"></span> Pending</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-gray-300"></span> Cleaning</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-3 pt-2">
+          <!-- Slot 1 -->
+          <div class="p-3 rounded-xl bg-brand-cream border border-brand-border text-center space-y-1">
+            <div class="text-[10px] font-bold text-gray-500 uppercase">06:00 - 09:00</div>
+            <div class="text-xs font-bold text-green-700">Available</div>
+            <div class="text-xs font-mono font-semibold">₹700</div>
+          </div>
+          <!-- Slot 2 -->
+          <div class="p-3 rounded-xl bg-amber-50 border border-amber-300 text-center space-y-1">
+            <div class="text-[10px] font-bold text-gray-500 uppercase">09:00 - 12:00</div>
+            <div class="text-xs font-bold text-amber-700">1 Request</div>
+            <div class="text-xs font-mono font-semibold">₹850</div>
+          </div>
+          <!-- Slot 3 -->
+          <div class="p-3 rounded-xl bg-red-50 border border-red-200 text-center space-y-1 opacity-75">
+            <div class="text-[10px] font-bold text-gray-500 uppercase">12:00 - 15:00</div>
+            <div class="text-xs font-bold text-red-700">Booked</div>
+            <div class="text-[10px] text-gray-500">Guest: Aysha</div>
+          </div>
+          <!-- Slot 4 -->
+          <div class="p-3 rounded-xl bg-gray-100 border border-gray-300 text-center space-y-1">
+            <div class="text-[10px] font-bold text-gray-500 uppercase">15:00 - 16:00</div>
+            <div class="text-xs font-bold text-gray-600">Sanitizing</div>
+            <div class="text-[10px] text-gray-400">Housekeeping</div>
+          </div>
+          <!-- Slot 5 -->
+          <div class="p-3 rounded-xl bg-brand-cream border border-brand-border text-center space-y-1">
+            <div class="text-[10px] font-bold text-gray-500 uppercase">16:00 - 21:00</div>
+            <div class="text-xs font-bold text-green-700">Available</div>
+            <div class="text-xs font-mono font-semibold">₹1,500</div>
+          </div>
+          <!-- Slot 6 -->
+          <div class="p-3 rounded-xl bg-brand-cream border border-brand-border text-center space-y-1">
+            <div class="text-[10px] font-bold text-gray-500 uppercase">21:00 - 09:00</div>
+            <div class="text-xs font-bold text-green-700">Available</div>
+            <div class="text-xs font-mono font-semibold">₹3,400</div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    function switchPortal(portalId) {
+      document.querySelectorAll('.portal-view').forEach(el => el.classList.add('hidden'));
+      const active = document.getElementById('portal-' + portalId);
+      if (active) active.classList.remove('hidden');
+
+      if (portalId === 'admin') {
+        document.getElementById('tab-admin').className = "px-3 py-1 bg-brand-forest text-white rounded font-bold shadow-sm";
+        document.getElementById('tab-business').className = "px-3 py-1 text-gray-300 hover:text-white rounded font-medium";
+      } else {
+        document.getElementById('tab-business').className = "px-3 py-1 bg-brand-forest text-white rounded font-bold shadow-sm";
+        document.getElementById('tab-admin').className = "px-3 py-1 text-gray-300 hover:text-white rounded font-medium";
+      }
+    }
+  </script>
+
+</body>
+</html>

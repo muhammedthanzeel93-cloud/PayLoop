@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@kerala-tourism/constants": ["packages/constants/src"],
+      "@kerala-tourism/constants/*": ["packages/constants/src/*"],
+      "@kerala-tourism/shared-types": ["packages/shared-types/src"],
+      "@kerala-tourism/shared-types/*": ["packages/shared-types/src/*"],
+      "@kerala-tourism/validation": ["packages/validation/src"],
+      "@kerala-tourism/validation/*": ["packages/validation/src/*"],
+      "@kerala-tourism/api-client": ["packages/api-client/src"],
+      "@kerala-tourism/api-client/*": ["packages/api-client/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist", ".next", ".expo"]
+}

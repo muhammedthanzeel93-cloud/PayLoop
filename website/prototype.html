@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kerala Tourism — Interactive Web Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              forest: '#145C43',
+              nature: '#78A878',
+              cream: '#F8F7F1',
+              sunset: '#E99A54',
+              charcoal: '#202A25',
+              muted: '#EFECE4',
+              border: '#E3DFD5',
+              borderStrong: '#D1CBBF',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #F8F7F1; color: #202A25; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- TOP STICKY NAVBAR (WEB COMPONENT) -->
+  <header class="sticky top-0 z-50 bg-[#F8F7F1]/95 backdrop-blur-md border-b border-brand-border px-8 py-3.5 flex items-center justify-between shadow-sm">
+    <div class="flex items-center gap-8">
+      <div class="flex items-center gap-2 cursor-pointer" onclick="showScreen('landing')">
+        <span class="text-2xl">🌴</span>
+        <div>
+          <span class="font-bold text-brand-forest tracking-tight text-lg">KERALA TOURISM</span>
+          <span class="text-[10px] block text-brand-charcoal/60 -mt-1 font-semibold tracking-wider uppercase">God's Own Country</span>
+        </div>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <button onclick="showScreen('landing')" class="nav-link text-brand-forest font-semibold border-b-2 border-brand-forest pb-1" id="nav-landing">Home</button>
+        <button onclick="showScreen('explore')" class="nav-link text-brand-charcoal/70 hover:text-brand-forest transition pb-1" id="nav-explore">Explore Spots</button>
+        <button onclick="showScreen('stays')" class="nav-link text-brand-charcoal/70 hover:text-brand-forest transition pb-1" id="nav-stays">Stays (Hourly & Daily)</button>
+        <button onclick="showScreen('feed')" class="nav-link text-brand-charcoal/70 hover:text-brand-forest transition pb-1" id="nav-feed">Community Feed</button>
+        <button onclick="showScreen('checkout')" class="nav-link text-brand-charcoal/70 hover:text-brand-forest transition pb-1" id="nav-checkout">My Bookings</button>
+      </nav>
+    </div>
+
+    <!-- Quick Search Pill -->
+    <div class="hidden lg:flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-brand-borderStrong text-xs text-brand-charcoal/70 w-80 shadow-inner">
+      <span class="material-symbols-outlined text-[18px] text-brand-forest">search</span>
+      <input type="text" placeholder="Search Munnar, Alleppey, Varkala..." class="w-full focus:outline-none bg-transparent">
+      <span class="material-symbols-outlined text-[16px] text-brand-nature cursor-pointer" title="GPS Auto-detect">my_location</span>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <button onclick="openModal('createPostModal')" class="px-4 py-2 bg-brand-sunset text-brand-charcoal font-semibold text-xs rounded-full shadow-sm hover:bg-[#DE8C44] transition flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-[16px]">add_location_alt</span>
+        <span>Submit a Spot</span>
+      </button>
+      <div class="w-9 h-9 rounded-full bg-brand-forest text-white flex items-center justify-center font-bold text-xs shadow-sm cursor-pointer" title="Tourist Account">
+        AY
+      </div>
+    </div>
+  </header>
+
+  <!-- DYNAMIC SCREEN CONTAINER -->
+  <main class="flex-1">
+
+    <!-- SCREEN 1: LANDING PAGE -->
+    <div id="screen-landing" class="screen-view space-y-16 pb-20">
+      
+      <!-- HERO BANNER -->
+      <section class="relative h-[560px] bg-brand-forest flex items-center justify-center text-center overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1600&q=80" alt="Kerala Backwaters" class="absolute inset-0 w-full h-full object-cover opacity-40">
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-charcoal/90 via-brand-forest/60 to-transparent"></div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-6 space-y-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-nature/30 text-white backdrop-blur-md text-xs font-semibold uppercase tracking-wider">
+            <span>🌿</span> Official Kerala Eco-Tourism Platform
+          </div>
+          <h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight leading-tight">
+            Discover God's Own Country in Quiet Luxury
+          </h1>
+          <p class="text-base md:text-lg text-white/90 max-w-2xl mx-auto font-normal">
+            Immerse yourself in misty tea plantations, emerald backwaters, and verified heritage homestays with flexible hourly and daily bookings.
+          </p>
+
+          <!-- OMNISEARCH WIDGET -->
+          <div class="bg-white p-3 rounded-2xl md:rounded-full shadow-2xl border border-brand-border flex flex-col md:flex-row items-center gap-3 text-left max-w-3xl mx-auto">
+            <!-- Location -->
+            <div class="flex-1 px-4 py-2 border-b md:border-b-0 md:border-r border-brand-border w-full">
+              <label class="block text-[11px] font-bold text-brand-charcoal uppercase tracking-wider">Destination</label>
+              <input type="text" value="Alleppey Backwaters" class="w-full text-sm font-semibold text-brand-forest focus:outline-none bg-transparent">
+            </div>
+
+            <!-- Booking Type Toggle -->
+            <div class="px-4 py-2 border-b md:border-b-0 md:border-r border-brand-border w-full md:w-48">
+              <label class="block text-[11px] font-bold text-brand-charcoal uppercase tracking-wider">Booking Mode</label>
+              <select class="w-full text-sm font-semibold text-brand-forest focus:outline-none bg-transparent">
+                <option>Overnight Stay</option>
+                <option>Hourly Transit (3h / 6h)</option>
+              </select>
+            </div>
+
+            <!-- Date -->
+            <div class="px-4 py-2 w-full md:w-44">
+              <label class="block text-[11px] font-bold text-brand-charcoal uppercase tracking-wider">Check-in</label>
+              <div class="text-sm font-semibold text-brand-forest">Today, 2:00 PM</div>
+            </div>
+
+            <!-- Search Action -->
+            <button onclick="showScreen('explore')" class="w-full md:w-auto px-7 py-3.5 bg-brand-sunset text-brand-charcoal font-bold text-sm rounded-full hover:bg-[#DE8C44] transition shadow-md flex items-center justify-center gap-2">
+              <span class="material-symbols-outlined text-[18px]">search</span>
+              <span>Explore</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- DISTRICT HIGHLIGHTS -->
+      <section class="max-w-7xl mx-auto px-8 space-y-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold text-brand-forest uppercase tracking-widest">Regional Sanctuaries</span>
+            <h2 class="text-2xl font-bold text-brand-charcoal">Curated Kerala Districts</h2>
+          </div>
+          <button onclick="showScreen('explore')" class="text-sm font-semibold text-brand-forest hover:underline">
+            View All 14 Districts →
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <!-- Munnar -->
+          <div onclick="showScreen('details')" class="group relative h-80 rounded-2xl overflow-hidden shadow-sm cursor-pointer border border-brand-border">
+            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" alt="Munnar" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-charcoal/90 via-transparent to-transparent"></div>
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <span class="text-[10px] font-bold uppercase tracking-wider bg-brand-nature/80 px-2 py-0.5 rounded">Idukki</span>
+              <h3 class="text-lg font-bold mt-1">Munnar Tea Highlands</h3>
+              <p class="text-xs text-white/80">Misty shola forests & cold breeze</p>
+            </div>
+          </div>
+
+          <!-- Alleppey -->
+          <div onclick="showScreen('details')" class="group relative h-80 rounded-2xl overflow-hidden shadow-sm cursor-pointer border border-brand-border">
+            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80" alt="Alleppey" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-charcoal/90 via-transparent to-transparent"></div>
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <span class="text-[10px] font-bold uppercase tracking-wider bg-brand-nature/80 px-2 py-0.5 rounded">Alappuzha</span>
+              <h3 class="text-lg font-bold mt-1">Vembanad Waterways</h3>
+              <p class="text-xs text-white/80">Houseboats & coir villages</p>
+            </div>
+          </div>
+
+          <!-- Varkala -->
+          <div onclick="showScreen('details')" class="group relative h-80 rounded-2xl overflow-hidden shadow-sm cursor-pointer border border-brand-border">
+            <img src="https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?auto=format&fit=crop&w=600&q=80" alt="Varkala" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-charcoal/90 via-transparent to-transparent"></div>
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <span class="text-[10px] font-bold uppercase tracking-wider bg-brand-nature/80 px-2 py-0.5 rounded">Trivandrum</span>
+              <h3 class="text-lg font-bold mt-1">Varkala Red Laterite Cliff</h3>
+              <p class="text-xs text-white/80">Sandstone cliffs & Arabian Sea</p>
+            </div>
+          </div>
+
+          <!-- Wayanad -->
+          <div onclick="showScreen('details')" class="group relative h-80 rounded-2xl overflow-hidden shadow-sm cursor-pointer border border-brand-border">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Wayanad" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-charcoal/90 via-transparent to-transparent"></div>
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <span class="text-[10px] font-bold uppercase tracking-wider bg-brand-nature/80 px-2 py-0.5 rounded">Wayanad</span>
+              <h3 class="text-lg font-bold mt-1">Chembra Heart Lake</h3>
+              <p class="text-xs text-white/80">Pristine rainforest treks</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOURLY ROOMS VALUE BANNER -->
+      <section class="max-w-7xl mx-auto px-8">
+        <div class="bg-brand-forest text-white p-8 md:p-12 rounded-3xl shadow-lg relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
+          <div class="space-y-4 max-w-xl z-10">
+            <span class="px-3 py-1 bg-brand-nature/30 rounded-full text-xs font-semibold text-brand-nature uppercase tracking-wider">
+              Transit & Day-Use Accommodation
+            </span>
+            <h2 class="text-3xl font-bold leading-tight">Need a 3-Hour Shower & Rest Between Journeys?</h2>
+            <p class="text-sm text-white/80 leading-relaxed">
+              Skip overpriced full-night hotel bookings. Reserve verified private rooms at boutique homestays and lakefront resorts for 3, 6, or 12 hours with instant check-in.
+            </p>
+            <div class="pt-2 flex items-center gap-4">
+              <button onclick="showScreen('stays')" class="px-6 py-3 bg-brand-sunset text-brand-charcoal font-bold text-sm rounded-full shadow hover:bg-[#DE8C44] transition">
+                Find Hourly Stays
+              </button>
+              <span class="text-xs text-white/70">From ₹600 / 3 hours</span>
+            </div>
+          </div>
+          <div class="w-full md:w-80 bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 text-white space-y-3 z-10">
+            <div class="text-xs font-bold text-brand-nature uppercase tracking-wider">Live Availability</div>
+            <div class="text-2xl font-bold">142 Hourly Rooms</div>
+            <div class="text-xs text-white/80">Available right now near Kochi Airport, Alleppey Jetty & Trivandrum Central.</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- SCREEN 2: EXPLORE DESTINATIONS -->
+    <div id="screen-explore" class="screen-view hidden max-w-7xl mx-auto px-8 py-10 space-y-8">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-brand-border pb-6">
+        <div>
+          <span class="text-xs font-bold text-brand-forest uppercase tracking-widest">Directory</span>
+          <h2 class="text-3xl font-bold text-brand-charcoal">Explore 48 Curated Destinations</h2>
+        </div>
+        <div class="flex items-center gap-3">
+          <button class="px-4 py-2 bg-white border border-brand-borderStrong text-brand-charcoal rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">tune</span>
+            <span>Filters (2 Active)</span>
+          </button>
+          <select class="px-4 py-2 bg-white border border-brand-borderStrong text-brand-charcoal rounded-full text-xs font-semibold shadow-sm focus:outline-none">
+            <option>Sort by: Popularity</option>
+            <option>Highest Rated</option>
+            <option>Distance: Nearest First</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Destination Card 1 -->
+        <div onclick="showScreen('details')" class="bg-white rounded-2xl border border-brand-border overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer">
+          <div class="h-52 relative">
+            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80" alt="Backwaters" class="w-full h-full object-cover">
+            <span class="absolute top-3 left-3 px-2.5 py-1 bg-white/95 rounded-full text-[11px] font-bold text-brand-forest">Alappuzha</span>
+            <span class="absolute bottom-3 left-3 px-2 py-0.5 bg-brand-nature text-white text-[10px] font-semibold rounded">Eco-Certified</span>
+          </div>
+          <div class="p-5 space-y-2">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-lg text-brand-charcoal">Alleppey Backwater Canals</h3>
+              <span class="text-xs font-bold text-amber-600">★ 4.9</span>
+            </div>
+            <p class="text-xs text-brand-charcoal/70 line-clamp-2">
+              Paddle through narrow canals shaded by coconut fronds, watching coir makers and tranquil village life.
+            </p>
+            <div class="pt-3 border-t border-brand-border flex items-center justify-between text-xs">
+              <span class="text-brand-charcoal/70">Houseboat from <strong class="text-brand-forest text-sm">₹4,200</strong></span>
+              <button class="px-3.5 py-1.5 bg-brand-forest text-white font-semibold rounded-full text-xs">Details</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Destination Card 2 -->
+        <div onclick="showScreen('details')" class="bg-white rounded-2xl border border-brand-border overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer">
+          <div class="h-52 relative">
+            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" alt="Munnar" class="w-full h-full object-cover">
+            <span class="absolute top-3 left-3 px-2.5 py-1 bg-white/95 rounded-full text-[11px] font-bold text-brand-forest">Idukki</span>
+          </div>
+          <div class="p-5 space-y-2">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-lg text-brand-charcoal">Kolukkumalai Tea Estate</h3>
+              <span class="text-xs font-bold text-amber-600">★ 4.8</span>
+            </div>
+            <p class="text-xs text-brand-charcoal/70 line-clamp-2">
+              The world's highest tea plantation, offering ethereal sunrise views over clouds and rugged 4x4 trails.
+            </p>
+            <div class="pt-3 border-t border-brand-border flex items-center justify-between text-xs">
+              <span class="text-brand-charcoal/70">Jeep Safari from <strong class="text-brand-forest text-sm">₹1,800</strong></span>
+              <button class="px-3.5 py-1.5 bg-brand-forest text-white font-semibold rounded-full text-xs">Details</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Destination Card 3 -->
+        <div onclick="showScreen('details')" class="bg-white rounded-2xl border border-brand-border overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer">
+          <div class="h-52 relative">
+            <img src="https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?auto=format&fit=crop&w=600&q=80" alt="Varkala" class="w-full h-full object-cover">
+            <span class="absolute top-3 left-3 px-2.5 py-1 bg-white/95 rounded-full text-[11px] font-bold text-brand-forest">Trivandrum</span>
+          </div>
+          <div class="p-5 space-y-2">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-lg text-brand-charcoal">Varkala Papanasam Beach</h3>
+              <span class="text-xs font-bold text-amber-600">★ 4.7</span>
+            </div>
+            <p class="text-xs text-brand-charcoal/70 line-clamp-2">
+              Ancient sacred beach framed by red laterite sandstone cliffs, natural spring water baths, and coastal cafes.
+            </p>
+            <div class="pt-3 border-t border-brand-border flex items-center justify-between text-xs">
+              <span class="text-brand-charcoal/70">Rooms from <strong class="text-brand-forest text-sm">₹1,200</strong></span>
+              <button class="px-3.5 py-1.5 bg-brand-forest text-white font-semibold rounded-full text-xs">Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 3: DESTINATION DETAILS & BOOKING -->
+    <div id="screen-details" class="screen-view hidden max-w-7xl mx-auto px-8 py-10 space-y-8">
+      <!-- Breadcrumb -->
+      <div class="text-xs text-brand-charcoal/70 flex items-center gap-2">
+        <span onclick="showScreen('landing')" class="cursor-pointer hover:underline">Home</span>
+        <span>/</span>
+        <span onclick="showScreen('explore')" class="cursor-pointer hover:underline">Destinations</span>
+        <span>/</span>
+        <span class="font-bold text-brand-forest">Alleppey Backwater Canals</span>
+      </div>
+
+      <!-- Photo Bento Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 h-[420px] rounded-3xl overflow-hidden shadow-sm border border-brand-border">
+        <div class="md:col-span-2 h-full">
+          <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
+        </div>
+        <div class="h-full flex flex-col gap-4">
+          <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=400&q=80" class="w-full h-1/2 object-cover">
+          <img src="https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?auto=format&fit=crop&w=400&q=80" class="w-full h-1/2 object-cover">
+        </div>
+        <div class="h-full relative">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover">
+          <button class="absolute bottom-4 right-4 px-4 py-2 bg-white/90 backdrop-blur-md rounded-xl text-xs font-bold text-brand-charcoal shadow">
+            View All 24 Photos
+          </button>
+        </div>
+      </div>
+
+      <!-- 2-Column Content & Sticky Booking Widget -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <!-- Left Editorial Column -->
+        <div class="lg:col-span-2 space-y-6">
+          <div>
+            <div class="flex items-center gap-2 text-xs font-bold text-brand-nature uppercase tracking-wider mb-1">
+              <span>★ 4.9 (842 Verified Explorer Reviews)</span>
+              <span>•</span>
+              <span>Alappuzha, Kerala</span>
+            </div>
+            <h1 class="text-3xl font-bold text-brand-charcoal">Vembanad Waterways & Houseboat Sanctuary</h1>
+          </div>
+
+          <!-- Weather & Monsoon Widget -->
+          <div class="p-4 bg-brand-cream border border-brand-border rounded-2xl flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🌧️</span>
+              <div>
+                <div class="text-xs font-bold text-brand-forest">Live Season: Karkidakam Monsoon</div>
+                <div class="text-[11px] text-brand-charcoal/70">24°C • Calm backwater breeze • Perfect for Ayurvedic rejuvenate therapy</div>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 bg-brand-forest text-white rounded text-[10px] font-bold">Good for Kayaking</span>
+          </div>
+
+          <!-- Narrative Body -->
+          <div class="space-y-4 text-sm text-brand-charcoal/80 leading-relaxed">
+            <p>
+              Interlinked by a labyrinth of calm canals, palm-fringed lagoons, and Vembanad Lake, Alleppey is the undisputed cultural crown of Kerala's backwater heritage. Traditionally navigated by majestic teakwood *Kettuvallams* (spiced cargo vessels), the waterway ecosystem is now one of the world's most tranquil slow-travel sanctuaries.
+            </p>
+            <h3 class="text-lg font-bold text-brand-charcoal pt-2">Key Experience Highlights</h3>
+            <ul class="space-y-2 text-xs text-brand-charcoal/80 list-disc list-inside">
+              <li>Glide along narrow palm-shaded village canals inaccessible to larger commercial boats.</li>
+              <li>Savor authentic pearl spot fish (*Karimeen Pollichathu*) and red rice cooked on banana leaves.</li>
+              <li>Visit 400-year-old wooden heritage temples and coir weaving cottage industries.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Right Sticky Booking Card -->
+        <div class="lg:col-span-1">
+          <div class="sticky top-24 bg-white p-6 rounded-3xl border border-brand-borderStrong shadow-lg space-y-5">
+            <div class="flex items-center justify-between border-b border-brand-border pb-4">
+              <div>
+                <span class="text-xs text-gray-500">Starting from</span>
+                <div class="text-2xl font-bold text-brand-forest">₹3,400 <span class="text-xs font-normal text-gray-500">/ stay</span></div>
+              </div>
+              <span class="px-2.5 py-1 bg-brand-nature/20 text-brand-forest rounded-full text-xs font-semibold">Instant Pass</span>
+            </div>
+
+            <!-- Booking Mode Selector -->
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-brand-charcoal">Select Stay Duration</label>
+              <div class="grid grid-cols-2 gap-2">
+                <button class="py-2 px-3 rounded-xl border-2 border-brand-forest bg-brand-forest/5 text-xs font-bold text-brand-forest text-center">
+                  Hourly (3h / 6h)
+                </button>
+                <button class="py-2 px-3 rounded-xl border border-brand-border text-xs font-medium text-brand-charcoal text-center hover:border-brand-forest">
+                  Overnight Stay
+                </button>
+              </div>
+            </div>
+
+            <!-- Time Slot -->
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-brand-charcoal">Choose Hourly Time Slot</label>
+              <select class="w-full p-2.5 rounded-xl border border-brand-borderStrong text-xs font-semibold bg-brand-cream/30 focus:outline-none">
+                <option>12:00 PM – 03:00 PM (Afternoon Transit) — ₹850</option>
+                <option>03:00 PM – 09:00 PM (Sunset Cruise & Dinner) — ₹1,600</option>
+                <option>Full Overnight (01:00 PM to 09:00 AM) — ₹3,400</option>
+              </select>
+            </div>
+
+            <!-- CTA -->
+            <button onclick="showScreen('checkout')" class="w-full py-3.5 bg-brand-sunset text-brand-charcoal font-bold text-sm rounded-full shadow hover:bg-[#DE8C44] transition flex items-center justify-center gap-2">
+              <span>Reserve Instant Slot</span>
+              <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </button>
+            <p class="text-[11px] text-center text-gray-500">Free cancellation up to 4 hours before check-in</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 4: HOURLY & DAILY STAYS MARKETPLACE -->
+    <div id="screen-stays" class="screen-view hidden max-w-7xl mx-auto px-8 py-10 space-y-8">
+      <div class="flex items-center justify-between border-b border-brand-border pb-6">
+        <div>
+          <span class="text-xs font-bold text-brand-forest uppercase tracking-widest">Hospitality Marketplace</span>
+          <h2 class="text-3xl font-bold text-brand-charcoal">Hourly & Daily Room Reservations</h2>
+        </div>
+        <div class="flex items-center gap-2 bg-brand-cream p-1 rounded-full border border-brand-borderStrong">
+          <button class="px-4 py-1.5 bg-brand-forest text-white rounded-full text-xs font-semibold shadow-sm">All Stays</button>
+          <button class="px-4 py-1.5 text-brand-charcoal rounded-full text-xs font-medium hover:text-brand-forest">Hourly Only</button>
+          <button class="px-4 py-1.5 text-brand-charcoal rounded-full text-xs font-medium hover:text-brand-forest">Houseboats</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Resort 1 -->
+        <div class="bg-white rounded-2xl border border-brand-border p-4 shadow-sm hover:shadow-md transition space-y-3">
+          <div class="h-48 rounded-xl overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+            <span class="absolute top-2 left-2 px-2 py-0.5 bg-brand-sunset text-brand-charcoal text-[10px] font-bold rounded">
+              Hourly Available
+            </span>
+          </div>
+          <div>
+            <div class="text-[10px] uppercase font-bold text-brand-nature">Kumarakom Waterfront</div>
+            <h3 class="font-bold text-base text-brand-charcoal">Coconut Lagoon Heritage Villa</h3>
+          </div>
+          <div class="grid grid-cols-2 gap-2 bg-brand-cream p-2.5 rounded-xl text-xs">
+            <div>
+              <div class="text-[10px] text-gray-500">Hourly Transit</div>
+              <div class="font-bold text-brand-forest">₹850 <span class="text-[10px] font-normal">/ 3 hrs</span></div>
+            </div>
+            <div>
+              <div class="text-[10px] text-gray-500">Overnight Stay</div>
+              <div class="font-bold text-brand-forest">₹4,200 <span class="text-[10px] font-normal">/ night</span></div>
+            </div>
+          </div>
+          <button onclick="showScreen('checkout')" class="w-full py-2 bg-brand-sunset text-brand-charcoal font-semibold text-xs rounded-full hover:bg-[#DE8C44]">
+            Book Room
+          </button>
+        </div>
+
+        <!-- Homestay 2 -->
+        <div class="bg-white rounded-2xl border border-brand-border p-4 shadow-sm hover:shadow-md transition space-y-3">
+          <div class="h-48 rounded-xl overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+            <span class="absolute top-2 left-2 px-2 py-0.5 bg-brand-nature text-white text-[10px] font-bold rounded">
+              Eco Homestay
+            </span>
+          </div>
+          <div>
+            <div class="text-[10px] uppercase font-bold text-brand-nature">Varkala North Cliff</div>
+            <h3 class="font-bold text-base text-brand-charcoal">Clifftop Ayurvedic Retreat</h3>
+          </div>
+          <div class="grid grid-cols-2 gap-2 bg-brand-cream p-2.5 rounded-xl text-xs">
+            <div>
+              <div class="text-[10px] text-gray-500">Hourly Transit</div>
+              <div class="font-bold text-brand-forest">₹650 <span class="text-[10px] font-normal">/ 3 hrs</span></div>
+            </div>
+            <div>
+              <div class="text-[10px] text-gray-500">Overnight Stay</div>
+              <div class="font-bold text-brand-forest">₹2,400 <span class="text-[10px] font-normal">/ night</span></div>
+            </div>
+          </div>
+          <button onclick="showScreen('checkout')" class="w-full py-2 bg-brand-sunset text-brand-charcoal font-semibold text-xs rounded-full hover:bg-[#DE8C44]">
+            Book Room
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 5: CHECKOUT & DIGITAL PASS -->
+    <div id="screen-checkout" class="screen-view hidden max-w-5xl mx-auto px-8 py-10 space-y-8">
+      <div>
+        <span class="text-xs font-bold text-brand-forest uppercase tracking-widest">Safe & Secure Booking</span>
+        <h2 class="text-3xl font-bold text-brand-charcoal">Confirm Your Kerala Stay</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Guest Details Form -->
+        <div class="md:col-span-2 bg-white p-6 rounded-3xl border border-brand-border space-y-5">
+          <h3 class="font-bold text-base text-brand-charcoal">1. Guest & Contact Details</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-brand-charcoal mb-1">Full Name</label>
+              <input type="text" value="Aysha Khan" class="w-full p-2.5 rounded-lg border border-brand-borderStrong text-xs font-medium">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-brand-charcoal mb-1">Mobile Number (For WhatsApp Pass)</label>
+              <input type="text" value="+91 98451 23456" class="w-full p-2.5 rounded-lg border border-brand-borderStrong text-xs font-medium">
+            </div>
+          </div>
+
+          <h3 class="font-bold text-base text-brand-charcoal pt-3 border-t border-brand-border">2. Govt Tourism Registry ID</h3>
+          <p class="text-xs text-gray-500">Mandatory for all Kerala guest check-ins under Kerala Tourism Guidelines.</p>
+          <div class="p-4 border-2 border-dashed border-brand-borderStrong rounded-xl text-center space-y-2">
+            <span class="material-symbols-outlined text-3xl text-brand-forest">cloud_upload</span>
+            <div class="text-xs font-semibold text-brand-charcoal">Upload Aadhaar, Passport or Driving License</div>
+            <span class="text-[10px] text-gray-400">PDF, JPG, PNG up to 5MB</span>
+          </div>
+
+          <button onclick="alert('Booking Confirmed! QR Pass Generated.')" class="w-full py-4 bg-brand-sunset text-brand-charcoal font-bold text-sm rounded-full shadow hover:bg-[#DE8C44] transition">
+            Pay ₹952 & Issue Contactless QR Voucher
+          </button>
+        </div>
+
+        <!-- Voucher Summary & QR Preview -->
+        <div class="bg-brand-cream p-6 rounded-3xl border border-brand-border space-y-4">
+          <div class="text-xs font-bold text-brand-forest uppercase tracking-wider">Reservation Voucher</div>
+          <div class="text-lg font-bold text-brand-charcoal">Coconut Lagoon Villa</div>
+          <div class="text-xs text-brand-charcoal/70">3-Hour Transit Slot • Today 2:00 PM – 5:00 PM</div>
+
+          <!-- QR Code Preview -->
+          <div class="p-4 bg-white rounded-2xl border border-brand-border text-center space-y-2">
+            <div class="w-32 h-32 mx-auto bg-brand-charcoal/5 rounded-xl flex items-center justify-center border border-brand-border font-mono text-xs">
+              [ QR CODE PASS ]
+            </div>
+            <div class="font-mono text-[11px] font-bold text-brand-forest">REF: #KL-78291</div>
+            <div class="text-[10px] text-gray-500">Scan at reception for instant room key card</div>
+          </div>
+
+          <div class="border-t border-brand-borderStrong pt-3 space-y-1 text-xs">
+            <div class="flex justify-between text-gray-600"><span>3-Hr Transit Room</span><span>₹850</span></div>
+            <div class="flex justify-between text-gray-600"><span>Kerala Tourism GST (12%)</span><span>₹102</span></div>
+            <div class="flex justify-between font-bold text-brand-charcoal text-sm pt-2 border-t border-brand-border">
+              <span>Total Payable</span><span>₹952</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 6: COMMUNITY SOCIAL FEED -->
+    <div id="screen-feed" class="screen-view hidden max-w-4xl mx-auto px-8 py-10 space-y-6">
+      <div class="flex items-center justify-between border-b border-brand-border pb-4">
+        <div>
+          <span class="text-xs font-bold text-brand-forest uppercase tracking-widest">Community Stream</span>
+          <h2 class="text-2xl font-bold text-brand-charcoal">Kerala Travelers & Guides Feed</h2>
+        </div>
+        <button onclick="openModal('createPostModal')" class="px-4 py-2 bg-brand-sunset text-brand-charcoal font-semibold text-xs rounded-full shadow-sm hover:bg-[#DE8C44]">
+          + Create Post
+        </button>
+      </div>
+
+      <!-- Feed Card 1 -->
+      <div class="bg-white rounded-2xl border border-brand-border p-6 shadow-sm space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-brand-forest text-white font-bold flex items-center justify-center text-xs">
+              VN
+            </div>
+            <div>
+              <div class="font-bold text-sm text-brand-charcoal flex items-center gap-1">
+                Varun Nambiar
+                <span class="material-symbols-outlined text-brand-forest text-[14px]">verified</span>
+              </div>
+              <div class="text-xs text-brand-charcoal/60">Athirappilly Rain Forest Sanctuary • 3 hrs ago</div>
+            </div>
+          </div>
+          <span class="text-xs text-brand-forest font-semibold cursor-pointer hover:underline">+ Follow</span>
+        </div>
+
+        <p class="text-sm text-brand-charcoal leading-relaxed">
+          The monsoon roar at Athirappilly falls today is unlike anything in India. Rainbow misty arches over the Chalakudy river basin! Highly recommend carrying a waterproof dry bag.
+        </p>
+
+        <div class="h-64 rounded-xl overflow-hidden bg-gray-100">
+          <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
+        </div>
+
+        <div class="flex items-center gap-6 pt-2 border-t border-brand-border text-xs text-brand-charcoal/70">
+          <button class="flex items-center gap-1 text-red-500 font-semibold"><span class="material-symbols-outlined text-[18px]">favorite</span> 312 Likes</button>
+          <button class="flex items-center gap-1 hover:text-brand-forest"><span class="material-symbols-outlined text-[18px]">chat_bubble</span> 48 Comments</button>
+          <button class="flex items-center gap-1 hover:text-brand-forest"><span class="material-symbols-outlined text-[18px]">share</span> Share</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODAL: CREATE POST / SUBMIT DESTINATION -->
+  <div id="createPostModal" class="fixed inset-0 z-50 bg-brand-charcoal/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-brand-border">
+      <div class="flex items-center justify-between border-b border-brand-border pb-3">
+        <h3 class="font-bold text-lg text-brand-charcoal">Submit a Hidden Destination or Post</h3>
+        <button onclick="closeModal('createPostModal')" class="text-gray-400 hover:text-gray-600">✕</button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold text-brand-charcoal mb-1">Destination Name</label>
+          <input type="text" placeholder="e.g. Meenmutty Waterfalls Secret Pool" class="w-full p-2.5 rounded-lg border border-brand-borderStrong text-xs">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-brand-charcoal mb-1">GPS Coordinates (Auto-detecting...)</label>
+          <input type="text" value="10.0124° N, 76.8921° E (Accurate within 10m)" class="w-full p-2.5 rounded-lg border border-brand-borderStrong text-xs font-mono bg-brand-cream/40 text-brand-forest">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-brand-charcoal mb-1">Story & Local Travel Tips</label>
+          <textarea rows="3" placeholder="Share how travelers can reach this spot, parking tips, best season..." class="w-full p-2.5 rounded-lg border border-brand-borderStrong text-xs"></textarea>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-3 border-t border-brand-border">
+        <button onclick="closeModal('createPostModal')" class="px-4 py-2 text-xs font-semibold text-gray-500 hover:underline">Cancel</button>
+        <button onclick="alert('Submission received! Sent to Tourism Dept Admin Verification Queue.'); closeModal('createPostModal');" class="px-5 py-2 bg-brand-sunset text-brand-charcoal font-bold text-xs rounded-full hover:bg-[#DE8C44]">
+          Submit for Admin Review
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showScreen(screenId) {
+      document.querySelectorAll('.screen-view').forEach(el => el.classList.add('hidden'));
+      const activeScreen = document.getElementById('screen-' + screenId);
+      if (activeScreen) activeScreen.classList.remove('hidden');
+
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('text-brand-forest', 'font-semibold', 'border-b-2', 'border-brand-forest');
+        link.classList.add('text-brand-charcoal/70');
+      });
+
+      const activeNav = document.getElementById('nav-' + screenId);
+      if (activeNav) {
+        activeNav.classList.remove('text-brand-charcoal/70');
+        activeNav.classList.add('text-brand-forest', 'font-semibold', 'border-b-2', 'border-brand-forest');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+  </script>
+
+</body>
+</html>

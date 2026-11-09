@@ -1,0 +1,17 @@
+{
+  "name": "@kerala-tourism/constants",
+  "version": "1.0.0",
+  "description": "Shared constants and design tokens for the Kerala Tourism ecosystem",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}

@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kerala Tourism GeoInspect Console - Queue Audits</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Inter Google Font -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration verbatim -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "outline-variant": "#bfc9c2",
+            "error": "#ba1a1a",
+            "on-tertiary-fixed": "#2e1500",
+            "on-background": "#141e19",
+            "on-primary-fixed-variant": "#015139",
+            "surface-variant": "#dae5dd",
+            "secondary": "#3b683e",
+            "on-primary-fixed": "#002115",
+            "inverse-on-surface": "#e8f4eb",
+            "surface-container-highest": "#dae5dd",
+            "error-container": "#ffdad6",
+            "on-tertiary-fixed-variant": "#6d3a00",
+            "on-surface": "#141e19",
+            "on-secondary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-container": "#ffb474",
+            "surface-container-high": "#e0ebe3",
+            "on-error-container": "#93000a",
+            "inverse-surface": "#28332d",
+            "primary-fixed": "#acf1d0",
+            "surface-dim": "#d1ddd5",
+            "secondary-fixed-dim": "#a1d3a0",
+            "outline": "#707973",
+            "surface": "#f1fcf4",
+            "tertiary-fixed-dim": "#ffb77b",
+            "primary-container": "#145c43",
+            "on-secondary-fixed-variant": "#235029",
+            "surface-container-low": "#ebf6ee",
+            "tertiary": "#5b2f00",
+            "secondary-container": "#bcf0ba",
+            "on-error": "#ffffff",
+            "primary-fixed-dim": "#91d5b5",
+            "primary": "#00432e",
+            "inverse-primary": "#91d5b5",
+            "on-secondary-container": "#416e44",
+            "on-tertiary": "#ffffff",
+            "on-surface-variant": "#404943",
+            "on-primary": "#ffffff",
+            "background": "#f1fcf4",
+            "surface-bright": "#f1fcf4",
+            "on-secondary-fixed": "#002107",
+            "tertiary-container": "#7c4200",
+            "secondary-fixed": "#bcf0ba",
+            "tertiary-fixed": "#ffdcc2",
+            "on-primary-container": "#8ed2b2",
+            "surface-tint": "#266a50",
+            "surface-container": "#e5f1e9"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-2xl": "4rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem",
+            "margin": "3rem",
+            "margin-mobile": "1.25rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "space-xl": "2.5rem",
+            "gutter-mobile": "1rem",
+            "gutter": "1.5rem"
+          },
+          "fontFamily": {
+            "label-sm": ["Inter"],
+            "display-lg-mobile": ["Inter"],
+            "body-md": ["Inter"],
+            "title-lg": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-lg": ["Inter"],
+            "body-sm": ["Inter"],
+            "display-lg": ["Inter"],
+            "title-md": ["Inter"],
+            "mono": ["JetBrains Mono", "monospace"]
+          },
+          "fontSize": {
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "display-lg-mobile": ["38px", { "lineHeight": "46px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-md": ["15px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "title-lg": ["18px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+            "headline-sm": ["22px", { "lineHeight": "30px", "letterSpacing": "0em", "fontWeight": "500" }],
+            "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "600" }],
+            "headline-md": ["28px", { "lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "500" }],
+            "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "display-lg": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "title-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #ebf6ee;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #bfc9c2;
+      border-radius: 4px;
+    }
+    .radar-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(20, 92, 67, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(20, 92, 67, 0.08) 1px, transparent 1px);
+    }
+    @keyframes sweep {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .radar-sweep {
+      animation: sweep 6s linear infinite;
+      transform-origin: center center;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.9); opacity: 0.9; }
+      50% { transform: scale(1.3); opacity: 0.3; }
+      100% { transform: scale(0.9); opacity: 0.9; }
+    }
+    .pulse-radar {
+      animation: pulse-ring 2.5s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased font-body-md text-body-md overflow-x-hidden selection:bg-primary selection:text-white">
+<!-- ========================================================================= -->
+<!-- SHARED COMPONENT 1: TopNavBar (desktop_admin_header)                      -->
+<!-- ========================================================================= -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-low dark:bg-surface-container border-b border-outline-variant dark:border-outline shadow-sm h-16">
+<div class="w-full px-gutter max-w-[1360px] mx-auto flex items-center justify-between h-16">
+<!-- Left: Logo & Product Title -->
+<div class="flex items-center gap-space-md">
+<a aria-label="GeoInspect Console Home" class="text-title-lg font-title-lg font-semibold text-primary dark:text-primary-fixed tracking-tight flex items-center gap-space-sm" href="#">
+<img alt="Department of Tourism Government of Kerala Crest" class="h-9 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrBz7n7IXcMCchdEWbgf0dyEgAUGFWb4tnFBY5AjxpX0bHHPZ5cyVuQrmy2ZTh8ObTYplXjw9l2SfK1lbTuxN1_D0csvFgnXiqptw8esuviJIT10I5_E8NMJjGEHxFFfBsMd-47Av060Om4exBDOXVVd6xOWJxWkJpsvXcsWO256gBTKbewX2aKdrgKG4R_q7D3rfHpwspAP_TTRlpB_V_ZFMPXIF2Acbkr7aL_4HRY"/>
+<span class="border-l border-outline-variant pl-space-sm ml-space-xs text-on-surface font-title-md text-title-md hidden lg:inline">
+            Kerala Tourism GeoInspect Console
+          </span>
+</a>
+</div>
+<!-- Center: Navigation Links -->
+<nav aria-label="Main Admin Navigation" class="hidden md:flex items-center gap-space-lg">
+<!-- Queue Audits (Active as page intent is spot queue verification) -->
+<a class="text-primary dark:text-primary-fixed border-b-2 border-primary dark:border-primary-fixed font-title-md text-title-md pb-space-xs" href="#">
+          Queue Audits
+        </a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-title-md text-title-md hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+          Geofence Radar
+        </a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-title-md text-title-md hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+          EXIF Verification
+        </a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-title-md text-title-md hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+          Sanctuary Zones
+        </a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-title-md text-title-md hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+          Dispute Logs
+        </a>
+</nav>
+<!-- Right: Search Bar, Actions & Officer Emblem -->
+<div class="flex items-center gap-space-md">
+<!-- Search bar on right -->
+<div class="relative hidden xl:block w-52">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input class="w-full pl-8 pr-2.5 py-1 text-body-sm font-body-sm rounded-lg border border-outline-variant bg-surface-container-lowest focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="Search GPS or Spot ID..." type="text"/>
+</div>
+<!-- Trailing Icon Actions -->
+<div class="flex items-center gap-1">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-full transition-colors relative" title="Notifications">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-full transition-colors" title="Live Satellite Feed">
+<span class="material-symbols-outlined text-[20px]">satellite_alt</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-full transition-colors" title="Tune Parameters">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+<!-- Trailing CTA Buttons -->
+<div class="hidden sm:flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-full border border-error text-error text-label-md font-label-md hover:bg-error-container transition-colors active:scale-[0.99]">
+            Emergency Escalate
+          </button>
+<button class="px-4 py-1.5 rounded-full bg-[#E99A54] hover:bg-[#d68640] text-white text-label-md font-label-md transition-colors active:scale-[0.99] shadow-sm">
+            Finalize Batch
+          </button>
+</div>
+<!-- Officer Profile Emblem -->
+<div class="flex items-center gap-2 pl-space-xs border-l border-outline-variant" title="Officer K. Ramanathan, Lead Geospatial Inspector avatar emblem">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-label-md border border-primary-fixed">
+            KR
+          </div>
+</div>
+</div>
+</div>
+</header>
+<!-- ========================================================================= -->
+<!-- MAIN WORKSPACE CONTAINER (Sidebar Dock + Split Screen Workstation)        -->
+<!-- ========================================================================= -->
+<div class="pt-16 pb-24 flex min-h-screen bg-background">
+<!-- ======================================================================= -->
+<!-- SHARED COMPONENT 2: SideNavBar (desktop_workstation_dock)               -->
+<!-- ======================================================================= -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-72 flex flex-col justify-between border-r border-outline-variant dark:border-outline bg-surface-container-lowest dark:bg-surface-container-low shadow-sm z-40 hidden md:flex">
+<!-- Upper Section -->
+<div class="p-space-md flex flex-col gap-space-md">
+<!-- Sub-header & Sector identity -->
+<div class="pb-space-sm border-b border-outline-variant">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-[20px]">pin_drop</span>
+<div class="text-label-md font-label-md font-bold text-primary dark:text-primary-fixed uppercase tracking-wider">
+              Zone 4 - Idukki &amp; Wayanad
+            </div>
+</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant flex items-center justify-between">
+<span>Queue: 18 Pending Verifications</span>
+<span class="w-2 h-2 rounded-full bg-[#E99A54] animate-ping"></span>
+</div>
+</div>
+<!-- Main Navigation Tabs (5 tabs) -->
+<nav aria-label="Dock Navigation" class="flex flex-col gap-1.5">
+<!-- Active Tab: Buffer Audits -->
+<a class="bg-surface-container dark:bg-surface-container-high text-primary dark:text-primary-fixed font-title-md text-title-md rounded-lg border-l-4 border-primary dark:border-primary-fixed px-space-md py-space-sm flex items-center gap-space-md" href="#">
+<span class="material-symbols-outlined text-[20px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">radar</span>
+<span>Buffer Audits</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-title-md text-title-md hover:bg-surface-container-low dark:hover:bg-surface-container rounded-lg px-space-md py-space-sm flex items-center gap-space-md transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">image_search</span>
+<span>EXIF Telemetry</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-title-md text-title-md hover:bg-surface-container-low dark:hover:bg-surface-container rounded-lg px-space-md py-space-sm flex items-center gap-space-md transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">hub</span>
+<span>Proximity Radar</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-title-md text-title-md hover:bg-surface-container-low dark:hover:bg-surface-container rounded-lg px-space-md py-space-sm flex items-center gap-space-md transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">forest</span>
+<span>Zone Registry</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-title-md text-title-md hover:bg-surface-container-low dark:hover:bg-surface-container rounded-lg px-space-md py-space-sm flex items-center gap-space-md transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+<span>Inspector Analytics</span>
+</a>
+</nav>
+<!-- CTA Action in Dock -->
+<div class="pt-2">
+<button class="w-full py-2.5 px-3 rounded-lg bg-primary text-white text-label-md font-label-md font-semibold hover:bg-primary-container transition-all flex items-center justify-center gap-2 shadow-sm active:scale-[0.98]">
+<span class="material-symbols-outlined text-[18px]">play_circle</span>
+<span>Batch Run Geocheck</span>
+</button>
+</div>
+</div>
+<!-- Lower Dock Section / Footer Tabs -->
+<div class="p-space-md border-t border-outline-variant flex flex-col gap-1">
+<a class="text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface p-2 rounded-lg flex items-center gap-space-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px] text-secondary">format_image_left</span>
+<span>System Health: 99.8% Online</span>
+</a>
+<a class="text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface p-2 rounded-lg flex items-center gap-space-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+<span>Compliance Settings</span>
+</a>
+</div>
+</aside>
+<!-- ======================================================================= -->
+<!-- MAIN WORKSTATION CONTENT AREA (Offset by md:pl-72)                      -->
+<!-- ======================================================================= -->
+<main class="flex-1 md:pl-72 w-full">
+<div class="max-w-[1360px] mx-auto px-4 md:px-gutter py-4">
+<!-- Top Status Ticker & Summary Strip -->
+<div class="mb-4 bg-surface-container-low rounded-xl border border-outline-variant p-3.5 flex flex-wrap items-center justify-between gap-3 shadow-sm">
+<div class="flex items-center gap-3">
+<span class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container text-label-sm font-label-sm uppercase tracking-wider flex items-center gap-1.5 font-bold">
+<span class="w-2 h-2 rounded-full bg-[#145C43]"></span>
+              Live Geofence Mode
+            </span>
+<div class="h-4 w-px bg-outline-variant hidden sm:block"></div>
+<p class="text-body-sm font-body-sm text-on-surface">
+<span class="font-bold text-primary">Officer K. Ramanathan</span> • Lead Geospatial Inspector (Idukki &amp; Wayanad Sector)
+            </p>
+</div>
+<!-- Quick Stats Pill Stack -->
+<div class="flex items-center gap-2">
+<div class="px-3 py-1 bg-surface-container-lowest rounded-lg border border-outline-variant text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1.5">
+<span>Queue:</span> <strong class="text-primary font-bold">18 Pending</strong>
+</div>
+<div class="px-3 py-1 bg-surface-container-lowest rounded-lg border border-outline-variant text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1.5">
+<span>Verified Today:</span> <strong class="text-secondary font-bold">42</strong>
+</div>
+<div class="px-3 py-1 bg-surface-container-lowest rounded-lg border border-error-container text-label-sm font-label-sm text-error flex items-center gap-1.5">
+<span>Buffer Flags:</span> <strong class="font-bold">3</strong>
+</div>
+</div>
+</div>
+<!-- TWO COLUMN WORKSTATION GRID (50 / 50 Desktop Grid) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- ================================================================= -->
+<!-- LEFT COLUMN: Crowdsourced Spot Submission & Telemetry Dossier    -->
+<!-- ================================================================= -->
+<section class="lg:col-span-6 flex flex-col gap-space-md">
+<!-- Spot Master Dossier Header Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-space-md shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 w-28 h-28 bg-surface-container-low rounded-full -mr-8 -mt-8 pointer-events-none opacity-60"></div>
+<div class="flex items-start justify-between gap-3 mb-2">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded text-label-sm font-mono bg-surface-container-high text-primary font-bold">
+                      #KL-IDK-8842
+                    </span>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-[#78A878]/20 text-[#145C43] font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Level 3 Verification
+                    </span>
+</div>
+<h1 class="text-headline-sm font-headline-sm text-primary tracking-tight font-semibold">
+                    Meenmutty Secret Canyon Falls &amp; Mist Ridge
+                  </h1>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-[#E99A54]">location_on</span>
+                    Vagamon-Idukki Border Highland Range, Kerala
+                  </p>
+</div>
+<div class="text-right">
+<span class="inline-block px-3 py-1 rounded-full text-label-sm font-label-sm font-bold bg-[#bcf0ba] text-[#235029]">
+                    Eco-Tourism Grade A
+                  </span>
+</div>
+</div>
+<!-- Submitter Identity Meta Box -->
+<div class="mt-3 pt-3 border-t border-outline-variant/60 flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-label-sm font-bold">
+                    MV
+                  </div>
+<div>
+<span class="text-on-surface font-semibold">Manu K. Varghese</span>
+<span class="text-on-surface-variant text-label-sm block">Certified Eco-Trek Guide (Badge #KL-G-4091)</span>
+</div>
+</div>
+<div class="text-right text-label-sm text-on-surface-variant">
+<span>Submitted: 14 Oct 2025</span>
+<span class="block text-secondary font-mono font-medium">GPS Auto-Logged</span>
+</div>
+</div>
+</div>
+<!-- Photo Inspection Carousel & Perceptual Hash Verification -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm">
+<div class="p-3 bg-surface-container-low border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">photo_camera</span>
+<span class="text-label-md font-label-md uppercase tracking-wider text-primary font-bold">
+                    Primary Photographic Evidence (High-Res 61MP RAW)
+                  </span>
+</div>
+<!-- Perceptual Hash Badge -->
+<span class="px-2 py-0.5 rounded text-label-sm font-mono bg-secondary-container text-on-secondary-container font-semibold">
+                  pHash: 99.2% Unique • 0 Stock Matches
+                </span>
+</div>
+<!-- Main Inspection Photo -->
+<div class="relative w-full h-72 bg-neutral-900 group">
+<img class="w-full h-full object-cover" data-alt="A lush tropical rainforest canyon in the Western Ghats of Kerala, featuring a cascading waterfall flowing over dark wet granite boulders into a clear river stream. Bamboo groves and ferns frame the hiking trail bathed in atmospheric morning mist and soft ambient sunlight. High dynamic range nature photography with vivid rainforest greens, deep shadows, and serene wilderness tone." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaifNmv2tgaRlRSC80oYjeS-xlhBkKLJYaL8wQ76ws0KZIe-loNNjzjAXNwRi9KlwAea_I89PS_bu7gIjJuOKlWCQ-CGJifC_7RM_J2eUW8b2P7V2diXP-0ld7ytLAhOHpOTyfVmdRSUO5Z4X2blNkLncL1If-EAz-iqO9xKChPIyvaPn6OaGTpGCuAeQjq07s4Uui6dSfnwje4uDjEm5VZq76gjdPcTvdCDGmE-ymJkwuMpW19E16zJsZ-cvlBcblpOHlpvxnPdw"/>
+<!-- Floating Forensic Pill Overlays -->
+<div class="absolute bottom-3 left-3 flex flex-wrap gap-2">
+<span class="px-2.5 py-1 rounded-full text-label-sm font-mono bg-surface-container-lowest/90 backdrop-blur-md text-primary border border-outline-variant shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">hdr_on</span>
+                    61.0 MP • 9504 × 6336
+                  </span>
+<span class="px-2.5 py-1 rounded-full text-label-sm font-mono bg-surface-container-lowest/90 backdrop-blur-md text-primary border border-outline-variant shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-[#E99A54]">wb_sunny</span>
+                    Histogram RGB Balanced
+                  </span>
+<span class="px-2.5 py-1 rounded-full text-label-sm font-mono bg-[#145C43] text-white backdrop-blur-md border border-white/20 shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                    C2PA Cryptographic Attestation
+                  </span>
+</div>
+<div class="absolute top-3 right-3 flex gap-1">
+<button class="p-1.5 rounded-lg bg-black/60 hover:bg-black/80 text-white backdrop-blur-sm transition-colors" title="Examine RAW Channel">
+<span class="material-symbols-outlined text-[18px]">contrast</span>
+</button>
+<button class="p-1.5 rounded-lg bg-black/60 hover:bg-black/80 text-white backdrop-blur-sm transition-colors" title="Magnify Reticle">
+<span class="material-symbols-outlined text-[18px]">zoom_in</span>
+</button>
+</div>
+</div>
+<!-- Thumbnail Evidence Strip -->
+<div class="p-3 bg-surface-container-lowest flex items-center gap-3 overflow-x-auto custom-scrollbar">
+<!-- Thumbnail 1 (Active) -->
+<div class="relative w-24 h-16 rounded-lg overflow-hidden border-2 border-primary shrink-0 cursor-pointer shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Close up of a misty waterfall cascading through wild ferns and bamboo stalks in a tranquil Kerala jungle corridor, captured with cinematic green tones and soft water spray." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9JYKqDRnS4c12fwu3gnIqEtRCVzFEsNeffLLmRpDVBcJIdHqdA6zwH5o50LesxD9huOis0Nh2MaHvKv9H-GtkGCwv33pZxfxIp5lJQ7RkUzGke0wZ_AjE9AdDZZq2M3PgvbojdJDc46UvgDxDIQ2rsTXoNRnOUAaQbhz8PvJxkXM9EfSbFnSryd3Y7VYdUNHVAjPD3z-hGsqFQ4__99hKnJQhDgkJvcTwikimwMfhXSKRuXkSDMrnvczlHLvF818JytgArHO8w3E"/>
+<span class="absolute bottom-0 inset-x-0 bg-primary/80 text-white text-[9px] text-center font-mono py-0.5">Falls View</span>
+</div>
+<!-- Thumbnail 2 -->
+<div class="relative w-24 h-16 rounded-lg overflow-hidden border border-outline-variant shrink-0 cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="Sunburst rising over expansive rolling green tea gardens and terraced mist-covered hills in Munnar Kerala, with dramatic morning sun rays filtering through valley clouds." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9HUCp7dUr8SVGPhxB1M4W5GpFkGq6_RyJUq0lUBVppilnkQNSWy9QBB0vm-Hq2QsbshU8LI6AFID6oEKYqti_qK7r30lWOceBQz9kWe_b4b8L8v7zFzU7k_SGyxXJAid45aIL-UHlo5y_0-V0C1Muvs0-VfxPzB0jZJXb3jlS4W3iDGEKCFSa6X9aiFN5HsII0NebMiULSiT-2lb2EKQ3wD6bGBdSBk5dv2J43ojbCxHMsLrRl2QfSdCrqcRYYxE8Q5uA_7TqT3g"/>
+<span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center font-mono py-0.5">Ridge Pan</span>
+</div>
+<!-- Thumbnail 3 -->
+<div class="relative w-24 h-16 rounded-lg overflow-hidden border border-outline-variant shrink-0 cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="High angle cliff-edge perspective overlooking pristine coastal cliffs and tropical ocean surf at sunset in Varkala Kerala, with red laterite rocks and lush coconut groves." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfwiWsIkqFAdV7LfPaRA5FMPxNZE61zErI0NCxkr1NPa6zEmbRHnYxghkluoB2HaSexbNp-PoeczOUvSEOkP9EUgIfpKTfyiAuBYRtxjEkUFWdt1o0NpVmXIHuPsCmcNq6hYT82aG6BWU13Z97c9NAqJO8f2Xz_8R1RpEujx_qi4Ij9K6NYv6W7TdOU5x2grYM_usDfaS9ffbtoxxybu0swVKJr0rt90RPdssY2Ci89AZvjHJSDlUjknfMER3-pq47JAW9lFGqWSQ"/>
+<span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center font-mono py-0.5">Trail Access</span>
+</div>
+<!-- Add Extra Evidence placeholder tile -->
+<div class="w-24 h-16 rounded-lg border border-dashed border-outline-variant flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low shrink-0 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[20px]">add_a_photo</span>
+<span class="text-[10px] font-semibold mt-0.5">Attach Drone</span>
+</div>
+</div>
+</div>
+<!-- Hardware & EXIF Telemetry Box (Monospace Grid) -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-2 mb-3 border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">developer_board</span>
+<h2 class="text-title-md font-title-md text-primary font-bold">Camera Hardware &amp; EXIF Telemetry</h2>
+</div>
+<span class="text-label-sm font-mono text-secondary font-semibold bg-secondary-container/40 px-2 py-0.5 rounded">
+                  SHA-256 Verified: c94b8e...71fa
+                </span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-label-sm font-mono">
+<div class="p-2 rounded bg-surface-container-low border border-outline-variant/60">
+<span class="text-on-surface-variant block text-[10px] uppercase font-sans">Camera Body</span>
+<strong class="text-on-surface block text-[12px] truncate">Sony ILCE-7RM4</strong>
+</div>
+<div class="p-2 rounded bg-surface-container-low border border-outline-variant/60">
+<span class="text-on-surface-variant block text-[10px] uppercase font-sans">Optics</span>
+<strong class="text-on-surface block text-[12px] truncate">FE 24-70mm F2.8 GM</strong>
+</div>
+<div class="p-2 rounded bg-surface-container-low border border-outline-variant/60">
+<span class="text-on-surface-variant block text-[10px] uppercase font-sans">Exposure Settings</span>
+<strong class="text-on-surface block text-[12px]">1/320s • f/8 • ISO 100</strong>
+</div>
+<div class="p-2 rounded bg-surface-container-low border border-outline-variant/60">
+<span class="text-on-surface-variant block text-[10px] uppercase font-sans">Focal Length</span>
+<strong class="text-on-surface block text-[12px]">35mm Prime Equivalent</strong>
+</div>
+<div class="p-2 rounded bg-surface-container-low border border-outline-variant/60">
+<span class="text-on-surface-variant block text-[10px] uppercase font-sans">Captured Time</span>
+<strong class="text-on-surface block text-[12px]">14 Oct 2025, 06:42 IST</strong>
+</div>
+<div class="p-2 rounded bg-surface-container-low border border-outline-variant/60">
+<span class="text-on-surface-variant block text-[10px] uppercase font-sans">Internal Sensor GPS</span>
+<strong class="text-primary block text-[12px]">9°41'18.4"N 76°54'02.1"E</strong>
+</div>
+<div class="p-2 rounded bg-surface-container-low border border-outline-variant/60">
+<span class="text-on-surface-variant block text-[10px] uppercase font-sans">Barometric Altitude</span>
+<strong class="text-on-surface block text-[12px]">1,142m MSL</strong>
+</div>
+<div class="p-2 rounded bg-surface-container-low border border-outline-variant/60">
+<span class="text-on-surface-variant block text-[10px] uppercase font-sans">Compass Azimuth</span>
+<strong class="text-on-surface block text-[12px]">048° NE (Magnetic)</strong>
+</div>
+</div>
+</div>
+<!-- Guide Field Notes & Access Assessment -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-space-md shadow-sm">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-[#E99A54] text-[20px]">assignment</span>
+<h2 class="text-title-md font-title-md text-primary font-bold">Field Assessment &amp; Panchayat Regulations</h2>
+</div>
+<blockquote class="bg-surface-container-low p-3 rounded-lg border-l-4 border-secondary text-body-sm font-body-sm text-on-surface mb-3 italic">
+                “Trek duration: 45 mins from Pine Forest checkpoint. Slippery during monsoon season. Local tribal guide mandatory as per Grama Panchayat resolution #44. Water potable at perennial spring source.”
+              </blockquote>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-body-sm">
+<div class="p-2.5 rounded-lg border border-outline-variant bg-surface">
+<span class="text-label-sm font-label-sm text-on-surface-variant block">Difficulty Rating</span>
+<span class="font-bold text-primary flex items-center gap-1 mt-0.5">
+                    Moderate (3 / 5)
+                  </span>
+<span class="text-[11px] text-on-surface-variant">Laterite soil + wet granite</span>
+</div>
+<div class="p-2.5 rounded-lg border border-outline-variant bg-surface">
+<span class="text-label-sm font-label-sm text-on-surface-variant block">Cellular Coverage</span>
+<span class="font-bold text-[#E99A54] flex items-center gap-1 mt-0.5">
+                    BSNL 2G (Weak)
+                  </span>
+<span class="text-[11px] text-on-surface-variant">Jio / Airtel No Service</span>
+</div>
+<div class="p-2.5 rounded-lg border border-outline-variant bg-surface">
+<span class="text-label-sm font-label-sm text-on-surface-variant block">Eco Compliance</span>
+<span class="font-bold text-secondary flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check_circle</span> Plastic Free Zone
+                  </span>
+<span class="text-[11px] text-on-surface-variant">Deposit kiosk active</span>
+</div>
+</div>
+</div>
+</section>
+<!-- ================================================================= -->
+<!-- RIGHT COLUMN: Interactive Geospatial Inspection & Radar Terminal -->
+<!-- ================================================================= -->
+<section class="lg:col-span-6 flex flex-col gap-space-md">
+<!-- Satellite Geofence Viewport & HUD Canvas -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm flex flex-col">
+<!-- Viewport Toolbar -->
+<div class="p-3 bg-surface-container-low border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">layers</span>
+<span class="text-label-md font-label-md uppercase tracking-wider text-primary font-bold">
+                    GIS Sentinel-2 Satellite Orthomosaic (10m Multi-spectral)
+                  </span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="text-label-sm font-mono px-2 py-0.5 rounded bg-surface-container-high text-on-surface">
+                    EPSG: 4326 (WGS 84)
+                  </span>
+<button class="p-1 rounded hover:bg-surface-container text-on-surface-variant" title="Recenter Viewport">
+<span class="material-symbols-outlined text-[18px]">my_location</span>
+</button>
+</div>
+</div>
+<!-- Interactive Simulated Satellite Map Canvas -->
+<div class="relative w-full h-[360px] bg-[#0c1813] overflow-hidden radar-grid select-none flex items-center justify-center" data-location="Kerala" style="">
+<!-- Satellite Imagery Base Layer -->
+<div class="absolute inset-0 opacity-40 mix-blend-luminosity">
+<img class="w-full h-full object-cover" data-alt="Satellite top-down view of dense tropical rainforest canopy, mountain contours, and winding highland rivers in the Idukki district of Kerala, with digital elevation contours and green foliage textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjpcHltAqokxR_jSNQ5S_55HcuSHM5CPph42s33H7ZTnzgBfzFR3RbMEPEM5nbjGq-9fHL3u_lnSXxodw2-g_Sw8qQ0LOVeB-5wNYK86KhKDX15TQK--V27QA7TwjsgDhmPD552KeYRTzyU-tvj9G8-LaFkjmrTPAQAV10EoqCUvUa1AnUS13E_TictOrpQbYe8vTkXuO9X8eQDCnUoVNI11tJtW0SkWYIjiVi1Bule4HqoXT3FFtAwZ5GOg3IgpI-XTrDN740bvE"/>
+</div>
+<!-- Animated Radar Sweep Overlay -->
+<div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+<div class="w-80 h-80 rounded-full border border-secondary/20 relative">
+<div class="absolute inset-0 rounded-full border border-dashed border-secondary/30"></div>
+<div class="absolute top-1/2 left-1/2 w-40 h-40 -translate-x-full -translate-y-full origin-bottom-right radar-sweep bg-gradient-to-tr from-secondary/20 to-transparent"></div>
+</div>
+</div>
+<!-- Forest Boundary GIS Polygons (SVG Layer) -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" viewbox="0 0 600 360">
+<!-- Sanctuary Core Zone Polygon (Red boundary) -->
+<polygon fill="rgba(186, 26, 26, 0.15)" points="20,10 180,40 160,190 30,160" stroke="#ba1a1a" stroke-dasharray="4 2" stroke-width="1.5"></polygon>
+<text fill="#ffdad6" font-family="Inter" font-size="10" font-weight="600" x="35" y="60">Periyar Sanctuary Core Zone</text>
+<!-- 1km Eco Buffer Corridor (Amber boundary) -->
+<polygon fill="rgba(233, 154, 84, 0.12)" points="5,5 240,45 210,240 10,210" stroke="#E99A54" stroke-width="1.5"></polygon>
+<text fill="#ffdcc2" font-family="Inter" font-size="9" x="25" y="225">1.0 km Buffer Threshold</text>
+<!-- Shola Grassland Catchment (Green boundary) -->
+<polygon fill="rgba(120, 168, 120, 0.2)" points="340,180 570,160 590,340 380,330" stroke="#3b683e" stroke-width="1.5"></polygon>
+<text fill="#acf1d0" font-family="Inter" font-size="10" font-weight="600" x="400" y="270">Shola Protected Basin</text>
+<!-- Trail Vector Line -->
+<path d="M 230 350 Q 280 250 320 170 T 365 145" fill="none" stroke="#acf1d0" stroke-dasharray="3 3" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+<!-- Candidate Reticle Pin (Center Target) -->
+<div class="relative z-10 flex flex-col items-center">
+<!-- Outer Pulse -->
+<div class="w-12 h-12 rounded-full border-2 border-primary-fixed bg-primary-fixed/20 pulse-radar absolute -top-3 -left-3 pointer-events-none"></div>
+<!-- Center Target Glyph -->
+<div class="w-6 h-6 rounded-full bg-[#145C43] border-2 border-white shadow-lg flex items-center justify-center text-white">
+<span class="w-2 h-2 rounded-full bg-[#E99A54]"></span>
+</div>
+<!-- Target Floating Tag -->
+<div class="mt-2 px-2.5 py-1 rounded bg-black/85 backdrop-blur-md border border-white/20 text-white text-[11px] font-mono whitespace-nowrap shadow-xl">
+<span class="text-[#acf1d0] font-bold">KL-IDK-8842</span> • 9°41'18.4"N
+                  </div>
+</div>
+<!-- Existing Known Spot Pin (Duplicate Check Reference) -->
+<div class="absolute right-20 top-16 z-10 flex items-center gap-1.5">
+<div class="w-4 h-4 rounded-full bg-[#3b683e] border border-white flex items-center justify-center">
+<span class="w-1 h-1 rounded-full bg-white"></span>
+</div>
+<span class="text-[10px] font-mono text-white/90 bg-black/70 px-1.5 py-0.5 rounded backdrop-blur-sm">
+                    Vagamon Pine Valley (3.2km SW)
+                  </span>
+</div>
+<!-- HUD Coordinate Corner Indicators -->
+<div class="absolute bottom-2 left-3 text-[10px] font-mono text-[#acf1d0] bg-black/60 px-2 py-0.5 rounded">
+                  LAT: 09.68844° N | LON: 76.90058° E | ELEV: 1,142m
+                </div>
+<div class="absolute top-2 left-3 flex gap-1">
+<span class="px-2 py-0.5 rounded text-[10px] font-mono bg-secondary/80 text-white font-semibold">
+                    STATUS: SANCTUARY CLEAR (2.4km)
+                  </span>
+</div>
+</div>
+<!-- Geofence Buffer Analytics Grid -->
+<div class="p-3 bg-surface-container-low border-t border-outline-variant grid grid-cols-3 gap-2 text-center text-body-sm">
+<div class="p-2 rounded bg-surface-container-lowest border border-outline-variant">
+<span class="text-[11px] text-on-surface-variant block font-medium">Periyar Core Distance</span>
+<span class="font-bold text-secondary text-[14px] font-mono">2.4 km OUTSIDE</span>
+<span class="text-[10px] text-secondary font-semibold block">Clearance Passed</span>
+</div>
+<div class="p-2 rounded bg-surface-container-lowest border border-outline-variant">
+<span class="text-[11px] text-on-surface-variant block font-medium">Shola Basin Buffer</span>
+<span class="font-bold text-secondary text-[14px] font-mono">650 m Margin</span>
+<span class="text-[10px] text-secondary font-semibold block">Above 500m Limit</span>
+</div>
+<div class="p-2 rounded bg-surface-container-lowest border border-outline-variant">
+<span class="text-[11px] text-on-surface-variant block font-medium">Eco Sensitivity Class</span>
+<span class="font-bold text-[#E99A54] text-[14px] font-mono">ESI Class 2</span>
+<span class="text-[10px] text-on-surface-variant block">Supervised Access</span>
+</div>
+</div>
+</div>
+<!-- Proximity Radar & Conflict Verification Panel -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-2 mb-3 border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">radar</span>
+<h2 class="text-title-md font-title-md text-primary font-bold">Duplicate Proximity Detector</h2>
+</div>
+<span class="px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-secondary-container text-on-secondary-container font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check</span> 0 Duplicate Conflicts
+                </span>
+</div>
+<!-- Duplicate Evaluation Metrics -->
+<div class="space-y-2.5">
+<div class="flex items-center justify-between text-body-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">verified_user</span>
+<span class="font-medium text-on-surface">Spatial Separation Threshold (1.5km rule)</span>
+</div>
+<span class="font-mono font-bold text-primary">1.8 km clearance verified</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-[#145C43] h-full rounded-full" style="width: 82%"></div>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low text-body-sm text-on-surface-variant flex items-start gap-2">
+<span class="material-symbols-outlined text-[#145C43] text-[18px] shrink-0 mt-0.5">info</span>
+<p class="text-[12px] leading-relaxed">
+                    Nearest registered ecotourism point is <strong>'Vagamon Pine Valley'</strong> (3.2km SW). No name collisions found in official Kerala Tourism master gazetteer.
+                  </p>
+</div>
+</div>
+</div>
+<!-- Crowd Safety & Risk Telemetry Grid -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-space-md shadow-sm">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-[#ba1a1a] text-[20px]">warning</span>
+<h2 class="text-title-md font-title-md text-primary font-bold">Seasonal Risk &amp; Disaster Management Metrics</h2>
+</div>
+<div class="grid grid-cols-2 gap-3 text-body-sm">
+<!-- Landslide Hazard -->
+<div class="p-3 rounded-lg border border-outline-variant bg-surface flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-on-surface-variant">Landslide Hazard Index</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">terrain</span>
+</div>
+<div class="mt-2">
+<span class="font-bold text-primary text-[18px]">Low (0.14)</span>
+<p class="text-[11px] text-on-surface-variant mt-0.5">Solid granite substrata confirmed</p>
+</div>
+</div>
+<!-- Flash Flood Hazard -->
+<div class="p-3 rounded-lg border border-outline-variant bg-surface flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-on-surface-variant">Monsoon Flash Flood Risk</span>
+<span class="material-symbols-outlined text-[#E99A54] text-[18px]">flood</span>
+</div>
+<div class="mt-2">
+<span class="font-bold text-[#E99A54] text-[18px]">Moderate</span>
+<p class="text-[11px] text-on-surface-variant mt-0.5">Requires warning signs near water gate</p>
+</div>
+</div>
+</div>
+<!-- DTO Inspection Note -->
+<div class="mt-3 pt-2.5 border-t border-outline-variant flex items-center justify-between text-label-sm font-label-sm text-on-surface-variant">
+<span>Last Physical Range Audit: <strong>12 Aug 2024 by DTO Peermade</strong></span>
+<span class="text-primary font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">history</span> History Log (4)
+                </span>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+<!-- ========================================================================= -->
+<!-- STICKY BOTTOM ACTION CONSOLE (Admin Decision Console)                     -->
+<!-- ========================================================================= -->
+<footer class="fixed bottom-0 left-0 right-0 z-50 bg-surface-container-lowest/95 backdrop-blur-md border-t border-outline-variant shadow-lg h-20">
+<div class="w-full px-4 md:px-gutter max-w-[1360px] mx-auto h-full flex flex-col md:flex-row items-center justify-between gap-3">
+<!-- Left: Queue Progression Controls -->
+<div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
+<div class="flex items-center gap-2">
+<span class="text-label-md font-label-md font-bold text-primary font-mono bg-surface-container-high px-2.5 py-1 rounded">
+            Item 7 of 18
+          </span>
+<span class="text-label-sm font-label-sm text-on-surface-variant hidden sm:inline">
+            Batch #2025-Q4-KL
+          </span>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-low text-on-surface-variant transition-colors" title="Previous Spot in Queue">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="px-2.5 py-1.5 rounded-lg border border-outline-variant hover:bg-surface-container-low text-label-sm font-label-sm text-on-surface font-medium transition-colors" title="Skip Spot (Re-queue)">
+            Skip
+          </button>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-low text-on-surface-variant transition-colors" title="Next Spot in Queue">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Center: Tactical Conditional Toggles -->
+<div class="hidden xl:flex items-center gap-2">
+<label class="px-3 py-1.5 rounded-full border border-outline-variant bg-surface-container-low hover:bg-surface-container cursor-pointer flex items-center gap-2 text-label-sm font-label-sm text-on-surface transition-colors select-none">
+<input checked="" class="rounded text-[#145C43] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
+<span>Mark Seasonal Access Only</span>
+</label>
+<label class="px-3 py-1.5 rounded-full border border-outline-variant bg-surface-container-low hover:bg-surface-container cursor-pointer flex items-center gap-2 text-label-sm font-label-sm text-on-surface transition-colors select-none">
+<input checked="" class="rounded text-[#145C43] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
+<span>Require Certified Guide</span>
+</label>
+<label class="px-3 py-1.5 rounded-full border border-outline-variant bg-surface-container-low hover:bg-surface-container cursor-pointer flex items-center gap-2 text-label-sm font-label-sm text-on-surface transition-colors select-none">
+<input class="rounded text-[#145C43] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
+<span>Add Monsoon Hazard Warning</span>
+</label>
+</div>
+<!-- Right: Primary Final Decisions CTA Cluster -->
+<div class="flex items-center gap-2.5 w-full md:w-auto justify-end">
+<!-- Reject Button -->
+<button class="px-4 py-2 rounded-full border border-error text-error hover:bg-error-container text-label-md font-label-md font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">close</span>
+<span>Reject &amp; Notify Submitter</span>
+</button>
+<!-- Dispatch Field DTO Button -->
+<button class="px-4 py-2 rounded-full border border-[#145C43] text-[#145C43] hover:bg-[#78A878]/10 text-label-md font-label-md font-semibold transition-all active:scale-[0.98] hidden sm:flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">person_pin_circle</span>
+<span>Dispatch Field DTO (Audit)</span>
+</button>
+<!-- Primary Approve CTA Button -->
+<button class="px-5 py-2.5 rounded-full bg-[#145C43] hover:bg-primary text-white text-label-md font-label-md font-bold shadow-md hover:shadow-lg transition-all active:scale-[0.98] flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-[#acf1d0]">verified</span>
+<span>Approve &amp; Publish to Mobile App</span>
+</button>
+</div>
+</div>
+</footer>
+<!-- Micro-Interactions Script for HUD Toggles -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Toggle button micro-animations
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          this.classList.add('scale-[0.97]');
+          setTimeout(() => {
+            this.classList.remove('scale-[0.97]');
+          }, 100);
+        });
+      });
+    });
+  </script>
+</body></html>

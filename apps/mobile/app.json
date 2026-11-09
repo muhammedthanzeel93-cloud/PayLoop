@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "Kerala Tourism",
+    "slug": "kerala-tourism",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#145C43"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "gov.kerala.tourism"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#145C43"
+      },
+      "package": "gov.kerala.tourism"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}

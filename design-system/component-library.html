@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kerala Tourism — Master Design System & Component Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              forest: '#145C43',
+              nature: '#78A878',
+              cream: '#F8F7F1',
+              sunset: '#E99A54',
+              charcoal: '#202A25',
+              muted: '#EFECE4',
+              border: '#E3DFD5',
+              borderStrong: '#D1CBBF',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #F8F7F1; color: #202A25; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .skeleton-shimmer {
+      background: linear-gradient(90deg, #EFECE4 25%, #FFFFFF 50%, #EFECE4 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- TOP APP BAR / BRAND HEADER -->
+  <header class="sticky top-0 z-50 bg-[#F8F7F1]/90 backdrop-blur-md border-b border-brand-border px-8 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <div class="w-10 h-10 rounded-full bg-brand-forest flex items-center justify-center text-white font-bold text-lg shadow-sm">
+        🌴
+      </div>
+      <div>
+        <h1 class="text-lg font-bold text-brand-forest tracking-tight">Kerala Tourism Design System</h1>
+        <p class="text-xs text-brand-charcoal/70">Theme: Kerala Nature + Premium Travel | Inter Typography</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="px-3 py-1 bg-brand-nature/20 text-brand-forest rounded-full text-xs font-semibold uppercase tracking-wider">
+        WCAG 2.2 AA Verified
+      </span>
+      <a href="#foundations" class="px-3 py-1.5 text-xs font-medium hover:text-brand-forest transition">Foundations</a>
+      <a href="#buttons" class="px-3 py-1.5 text-xs font-medium hover:text-brand-forest transition">Buttons & Inputs</a>
+      <a href="#cards" class="px-3 py-1.5 text-xs font-medium hover:text-brand-forest transition">Domain Cards</a>
+      <a href="#calendar" class="px-3 py-1.5 text-xs font-medium hover:text-brand-forest transition">Hourly Calendar</a>
+      <a href="#states" class="px-3 py-1.5 text-xs font-medium hover:text-brand-forest transition">States & Skeletons</a>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-10 space-y-16">
+
+    <!-- 1. COLOR & TYPOGRAPHY FOUNDATIONS -->
+    <section id="foundations" class="space-y-6">
+      <div class="border-b border-brand-border pb-3">
+        <span class="text-xs font-semibold text-brand-forest uppercase tracking-widest">Section 01</span>
+        <h2 class="text-2xl font-bold text-brand-charcoal">Design Tokens & Chromatic Foundation</h2>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <!-- Forest Green -->
+        <div class="bg-white p-4 rounded-xl border border-brand-border shadow-sm flex flex-col justify-between h-36">
+          <div class="h-16 w-full rounded-lg bg-[#145C43] flex items-end p-2 text-white font-mono text-xs justify-between">
+            <span>#145C43</span>
+            <span class="bg-black/20 px-1 rounded text-[10px]">AAA</span>
+          </div>
+          <div>
+            <div class="font-semibold text-sm">Forest Green</div>
+            <div class="text-xs text-brand-charcoal/70">Primary Brand Anchor</div>
+          </div>
+        </div>
+
+        <!-- Nature Green -->
+        <div class="bg-white p-4 rounded-xl border border-brand-border shadow-sm flex flex-col justify-between h-36">
+          <div class="h-16 w-full rounded-lg bg-[#78A878] flex items-end p-2 text-brand-charcoal font-mono text-xs justify-between">
+            <span>#78A878</span>
+            <span class="bg-white/40 px-1 rounded text-[10px]">AA</span>
+          </div>
+          <div>
+            <div class="font-semibold text-sm">Nature Green</div>
+            <div class="text-xs text-brand-charcoal/70">Eco Tags & Active Indicators</div>
+          </div>
+        </div>
+
+        <!-- Warm Cream -->
+        <div class="bg-white p-4 rounded-xl border border-brand-border shadow-sm flex flex-col justify-between h-36">
+          <div class="h-16 w-full rounded-lg bg-[#F8F7F1] border border-brand-border flex items-end p-2 text-brand-charcoal font-mono text-xs justify-between">
+            <span>#F8F7F1</span>
+            <span class="bg-black/10 px-1 rounded text-[10px]">Canvas</span>
+          </div>
+          <div>
+            <div class="font-semibold text-sm">Warm Cream</div>
+            <div class="text-xs text-brand-charcoal/70">Anti-Glare Natural Base</div>
+          </div>
+        </div>
+
+        <!-- Sunset Orange -->
+        <div class="bg-white p-4 rounded-xl border border-brand-border shadow-sm flex flex-col justify-between h-36">
+          <div class="h-16 w-full rounded-lg bg-[#E99A54] flex items-end p-2 text-brand-charcoal font-mono text-xs justify-between">
+            <span>#E99A54</span>
+            <span class="bg-black/10 px-1 rounded text-[10px]">CTA</span>
+          </div>
+          <div>
+            <div class="font-semibold text-sm">Sunset Orange</div>
+            <div class="text-xs text-brand-charcoal/70">High-Conversion Buttons</div>
+          </div>
+        </div>
+
+        <!-- Charcoal -->
+        <div class="bg-white p-4 rounded-xl border border-brand-border shadow-sm flex flex-col justify-between h-36">
+          <div class="h-16 w-full rounded-lg bg-[#202A25] flex items-end p-2 text-white font-mono text-xs justify-between">
+            <span>#202A25</span>
+            <span class="bg-white/20 px-1 rounded text-[10px]">AAA</span>
+          </div>
+          <div>
+            <div class="font-semibold text-sm">Charcoal</div>
+            <div class="text-xs text-brand-charcoal/70">Typography & Hairlines</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. NAVIGATION BAR (DESKTOP PREVIEW) -->
+    <section class="space-y-4">
+      <div class="border-b border-brand-border pb-3">
+        <span class="text-xs font-semibold text-brand-forest uppercase tracking-widest">Section 02</span>
+        <h2 class="text-2xl font-bold text-brand-charcoal">Master Navigation Components</h2>
+      </div>
+
+      <!-- Desktop Navbar Specimen -->
+      <div class="bg-white p-4 rounded-2xl border border-brand-border shadow-sm">
+        <div class="text-xs font-semibold text-brand-charcoal/60 mb-2">Desktop Header Navigation (1440px)</div>
+        <nav class="h-16 w-full bg-[#F8F7F1] border border-brand-border rounded-xl px-6 flex items-center justify-between">
+          <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">🌴</span>
+              <span class="font-bold text-brand-forest tracking-tight text-base">KERALA TOURISM</span>
+            </div>
+            <div class="hidden lg:flex items-center gap-6 text-sm font-medium">
+              <a href="#" class="text-brand-forest font-semibold border-b-2 border-brand-forest pb-1">Explore</a>
+              <a href="#" class="text-brand-charcoal/70 hover:text-brand-forest transition">Nearby Map</a>
+              <a href="#" class="text-brand-charcoal/70 hover:text-brand-forest transition">Hourly Stays</a>
+              <a href="#" class="text-brand-charcoal/70 hover:text-brand-forest transition">Tour Packages</a>
+              <a href="#" class="text-brand-charcoal/70 hover:text-brand-forest transition">Community Feed</a>
+            </div>
+          </div>
+
+          <!-- Quick Search Pill -->
+          <div class="hidden md:flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-brand-borderStrong text-xs text-brand-charcoal/70 w-72">
+            <span class="material-symbols-outlined text-[16px] text-brand-forest">search</span>
+            <span>Search Munnar, Alleppey, Varkala...</span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button class="px-4 py-2 bg-brand-sunset text-brand-charcoal font-semibold text-xs rounded-full shadow-sm hover:bg-[#DE8C44] transition flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[16px]">add_location_alt</span>
+              <span>Submit Spot</span>
+            </button>
+            <div class="w-9 h-9 rounded-full bg-brand-forest text-white flex items-center justify-center font-semibold text-xs">
+              AK
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <!-- Mobile Bottom Navigation Specimen -->
+      <div class="bg-white p-4 rounded-2xl border border-brand-border shadow-sm max-w-sm mx-auto">
+        <div class="text-xs font-semibold text-brand-charcoal/60 mb-2 text-center">Mobile Bottom Dock (390px Native App)</div>
+        <div class="h-16 w-full bg-white border border-brand-border rounded-2xl px-4 flex items-center justify-around shadow-md relative">
+          <button class="flex flex-col items-center text-brand-forest">
+            <span class="material-symbols-outlined text-[20px]">explore</span>
+            <span class="text-[10px] font-semibold mt-0.5">Explore</span>
+            <span class="w-1 h-1 bg-brand-forest rounded-full mt-0.5"></span>
+          </button>
+          <button class="flex flex-col items-center text-brand-charcoal/60 hover:text-brand-forest">
+            <span class="material-symbols-outlined text-[20px]">map</span>
+            <span class="text-[10px] mt-0.5">Nearby</span>
+          </button>
+          <!-- Center Action Button -->
+          <button class="w-11 h-11 bg-brand-sunset text-brand-charcoal rounded-full flex items-center justify-center shadow-md -translate-y-3 border-2 border-white">
+            <span class="material-symbols-outlined text-[22px] font-bold">add</span>
+          </button>
+          <button class="flex flex-col items-center text-brand-charcoal/60 hover:text-brand-forest">
+            <span class="material-symbols-outlined text-[20px]">photo_library</span>
+            <span class="text-[10px] mt-0.5">Feed</span>
+          </button>
+          <button class="flex flex-col items-center text-brand-charcoal/60 hover:text-brand-forest">
+            <span class="material-symbols-outlined text-[20px]">person</span>
+            <span class="text-[10px] mt-0.5">Profile</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. BUTTONS, INPUTS & CONTROLS -->
+    <section id="buttons" class="space-y-6">
+      <div class="border-b border-brand-border pb-3">
+        <span class="text-xs font-semibold text-brand-forest uppercase tracking-widest">Section 03</span>
+        <h2 class="text-2xl font-bold text-brand-charcoal">Buttons, Form Inputs & Search Controls</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Button Variants -->
+        <div class="bg-white p-6 rounded-2xl border border-brand-border space-y-4">
+          <h3 class="text-sm font-bold uppercase tracking-wider text-brand-forest">Button Variant Matrix</h3>
+          
+          <div class="flex flex-wrap items-center gap-3">
+            <!-- Primary -->
+            <button class="px-5 py-2.5 bg-brand-sunset text-brand-charcoal font-semibold text-sm rounded-full shadow-sm hover:bg-[#DE8C44] active:scale-95 transition">
+              Primary (Book Now)
+            </button>
+            <!-- Secondary -->
+            <button class="px-5 py-2.5 border-2 border-brand-forest text-brand-forest font-semibold text-sm rounded-full hover:bg-brand-forest/5 active:scale-95 transition">
+              Secondary (Outline)
+            </button>
+            <!-- Tertiary Ghost -->
+            <button class="px-4 py-2 text-brand-forest font-semibold text-sm hover:underline">
+              Ghost Link →
+            </button>
+            <!-- Destructive -->
+            <button class="px-4 py-2 bg-red-600 text-white font-semibold text-xs rounded-lg hover:bg-red-700 transition">
+              Cancel Booking
+            </button>
+            <!-- Disabled -->
+            <button disabled class="px-5 py-2.5 bg-gray-200 text-gray-400 font-semibold text-sm rounded-full cursor-not-allowed">
+              Slot Unavailable
+            </button>
+          </div>
+
+          <!-- Hourly Duration Pills -->
+          <div class="pt-4 border-t border-brand-border">
+            <div class="text-xs font-semibold text-brand-charcoal/70 mb-2">Hourly Slot Selection Chips</div>
+            <div class="flex items-center gap-2">
+              <button class="px-3 py-1.5 rounded-full bg-brand-forest text-white text-xs font-semibold">3 Hours (Transit)</button>
+              <button class="px-3 py-1.5 rounded-full bg-brand-cream border border-brand-borderStrong text-brand-charcoal text-xs hover:border-brand-forest transition">6 Hours (Half Day)</button>
+              <button class="px-3 py-1.5 rounded-full bg-brand-cream border border-brand-borderStrong text-brand-charcoal text-xs hover:border-brand-forest transition">12 Hours (Day Use)</button>
+              <button class="px-3 py-1.5 rounded-full bg-brand-cream border border-brand-borderStrong text-brand-charcoal text-xs hover:border-brand-forest transition">24h Overnight</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Input Fields & Form Controls -->
+        <div class="bg-white p-6 rounded-2xl border border-brand-border space-y-4">
+          <h3 class="text-sm font-bold uppercase tracking-wider text-brand-forest">Form Inputs & Validation States</h3>
+          
+          <div class="space-y-3">
+            <!-- Standard Input -->
+            <div>
+              <label class="block text-xs font-semibold text-brand-charcoal mb-1">Destination Name or District</label>
+              <input type="text" value="Alleppey Backwaters" class="w-full h-11 px-3.5 rounded-lg border border-brand-borderStrong focus:outline-none focus:ring-2 focus:ring-brand-forest text-sm bg-brand-cream/30">
+            </div>
+
+            <!-- Error State Input -->
+            <div>
+              <label class="block text-xs font-semibold text-red-600 mb-1">Mobile Number (OTP Verification)</label>
+              <div class="relative">
+                <input type="text" value="+91 984" class="w-full h-11 px-3.5 rounded-lg border-2 border-red-500 focus:outline-none text-sm bg-red-50 text-red-900 pr-10">
+                <span class="material-symbols-outlined text-red-500 absolute right-3 top-2.5 text-[20px]">error</span>
+              </div>
+              <p class="text-[11px] text-red-600 mt-1">Please enter a valid 10-digit Indian phone number.</p>
+            </div>
+
+            <!-- Select Dropdown -->
+            <div>
+              <label class="block text-xs font-semibold text-brand-charcoal mb-1">Accommodation Type</label>
+              <select class="w-full h-11 px-3.5 rounded-lg border border-brand-borderStrong focus:outline-none focus:ring-2 focus:ring-brand-forest text-sm bg-white">
+                <option>Houseboat (Kettuvallam)</option>
+                <option>Heritage Backwater Homestay</option>
+                <option>Tea Plantation Eco-Resort</option>
+                <option>Hourly Transit Room</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. DOMAIN CARDS & MARKETPLACE MODULES -->
+    <section id="cards" class="space-y-6">
+      <div class="border-b border-brand-border pb-3">
+        <span class="text-xs font-semibold text-brand-forest uppercase tracking-widest">Section 04</span>
+        <h2 class="text-2xl font-bold text-brand-charcoal">Travel Marketplace & Social Cards</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- 1. Destination Discovery Card -->
+        <div class="bg-white rounded-2xl border border-brand-border overflow-hidden shadow-sm hover:shadow-md transition group">
+          <div class="h-48 bg-gradient-to-t from-black/60 to-transparent relative overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80" alt="Alleppey Houseboat" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <span class="absolute top-3 left-3 px-2.5 py-1 bg-white/90 backdrop-blur-sm rounded-full text-[11px] font-semibold text-brand-forest">
+              Alappuzha
+            </span>
+            <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-brand-charcoal hover:text-red-500 transition">
+              <span class="material-symbols-outlined text-[18px]">favorite</span>
+            </button>
+            <div class="absolute bottom-3 left-3 text-white">
+              <span class="text-xs bg-brand-nature text-white px-2 py-0.5 rounded font-medium">Eco-Certified</span>
+            </div>
+          </div>
+          <div class="p-4 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-base text-brand-charcoal">Vembanad Houseboat Trail</h4>
+              <div class="flex items-center gap-1 text-xs font-semibold text-amber-600">
+                <span>★</span><span>4.9</span><span class="text-gray-400 font-normal">(842)</span>
+              </div>
+            </div>
+            <p class="text-xs text-brand-charcoal/70 line-clamp-2">
+              Cruise through serene backwater canals fringed by palm trees, visiting traditional coir-weaving villages.
+            </p>
+            <div class="pt-3 border-t border-brand-border flex items-center justify-between text-xs">
+              <div>
+                <span class="text-gray-500">From</span>
+                <span class="font-bold text-sm text-brand-forest ml-1">₹4,500</span><span class="text-gray-500"> / day</span>
+              </div>
+              <button class="px-3 py-1.5 bg-brand-forest text-white rounded-full font-semibold hover:bg-brand-forest/90 transition">
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Dual-Mode Property Card (Hourly & Daily) -->
+        <div class="bg-white rounded-2xl border border-brand-border overflow-hidden shadow-sm hover:shadow-md transition">
+          <div class="h-48 bg-gray-200 relative">
+            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" alt="Resort" class="w-full h-full object-cover">
+            <div class="absolute top-3 left-3 px-2 py-0.5 bg-brand-sunset text-brand-charcoal text-[11px] font-bold rounded">
+              Hourly Booking Available
+            </div>
+          </div>
+          <div class="p-4 space-y-3">
+            <div>
+              <div class="text-[11px] uppercase tracking-wider font-semibold text-brand-nature">Kumarakom • Waterfront</div>
+              <h4 class="font-bold text-base text-brand-charcoal">Ayur Heritage Lake Resort</h4>
+            </div>
+
+            <!-- Dual Pricing Box -->
+            <div class="grid grid-cols-2 gap-2 bg-brand-cream p-2.5 rounded-xl border border-brand-border">
+              <div class="border-r border-brand-border pr-2">
+                <div class="text-[10px] text-brand-charcoal/60 uppercase font-semibold">Hourly Transit</div>
+                <div class="text-sm font-bold text-brand-forest">₹850 <span class="text-[10px] font-normal text-gray-500">/ 3 hrs</span></div>
+                <div class="text-[10px] text-green-700">✓ AC + Shower Access</div>
+              </div>
+              <div class="pl-2">
+                <div class="text-[10px] text-brand-charcoal/60 uppercase font-semibold">Overnight Stay</div>
+                <div class="text-sm font-bold text-brand-forest">₹3,800 <span class="text-[10px] font-normal text-gray-500">/ night</span></div>
+                <div class="text-[10px] text-gray-600">✓ Breakfast included</div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-1">
+              <span class="text-xs text-brand-charcoal/70 flex items-center gap-1">
+                <span class="material-symbols-outlined text-[16px] text-brand-forest">verified</span>
+                Verified Host
+              </span>
+              <button class="px-4 py-2 bg-brand-sunset text-brand-charcoal font-semibold text-xs rounded-full hover:bg-[#DE8C44] transition shadow-sm">
+                Reserve Slot
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Social Post Card -->
+        <div class="bg-white rounded-2xl border border-brand-border overflow-hidden shadow-sm p-4 space-y-3">
+          <!-- User Header -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-10 h-10 rounded-full bg-brand-forest text-white font-bold flex items-center justify-center text-xs">
+                MR
+              </div>
+              <div>
+                <div class="text-xs font-bold text-brand-charcoal flex items-center gap-1">
+                  Maya Ramanan
+                  <span class="material-symbols-outlined text-brand-forest text-[14px]">verified</span>
+                </div>
+                <div class="text-[11px] text-brand-charcoal/60">Varkala Black Sand Beach • 2h ago</div>
+              </div>
+            </div>
+            <button class="text-brand-charcoal/60 hover:text-brand-charcoal">
+              <span class="material-symbols-outlined text-[18px]">more_horiz</span>
+            </button>
+          </div>
+
+          <!-- Photo Attachment -->
+          <div class="h-44 rounded-xl overflow-hidden bg-gray-100">
+            <img src="https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?auto=format&fit=crop&w=600&q=80" alt="Varkala Cliff" class="w-full h-full object-cover">
+          </div>
+
+          <!-- Caption -->
+          <p class="text-xs text-brand-charcoal leading-relaxed">
+            The golden hour sunset over Varkala Cliff is pure poetry. Discovered a secluded cove just 1km south of the main helipad! 🌊✨
+            <span class="text-brand-forest font-medium">#GodsOwnCountry #Varkala #KeralaTrails</span>
+          </p>
+
+          <!-- Engagement Bar -->
+          <div class="flex items-center justify-between pt-2 border-t border-brand-border text-xs text-brand-charcoal/70">
+            <button class="flex items-center gap-1 text-red-500 font-semibold">
+              <span class="material-symbols-outlined text-[18px]">favorite</span>
+              <span>184</span>
+            </button>
+            <button class="flex items-center gap-1 hover:text-brand-forest">
+              <span class="material-symbols-outlined text-[18px]">chat_bubble</span>
+              <span>24</span>
+            </button>
+            <button class="flex items-center gap-1 hover:text-brand-forest">
+              <span class="material-symbols-outlined text-[18px]">repeat</span>
+              <span>12</span>
+            </button>
+            <button class="flex items-center gap-1 hover:text-brand-forest">
+              <span class="material-symbols-outlined text-[18px]">bookmark</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. HOURLY & DAILY AVAILABILITY CALENDAR -->
+    <section id="calendar" class="space-y-6">
+      <div class="border-b border-brand-border pb-3">
+        <span class="text-xs font-semibold text-brand-forest uppercase tracking-widest">Section 05</span>
+        <h2 class="text-2xl font-bold text-brand-charcoal">Hourly & Daily Room Availability Matrix</h2>
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl border border-brand-border shadow-sm space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div>
+            <h3 class="text-base font-bold text-brand-charcoal">Property Inventory: Deluxe Teak Cottage</h3>
+            <p class="text-xs text-brand-charcoal/70">Manage hourly transit slots and overnight availability</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button class="px-3 py-1.5 bg-brand-forest text-white rounded-lg text-xs font-semibold">Hourly Grid View</button>
+            <button class="px-3 py-1.5 bg-brand-cream border border-brand-borderStrong text-brand-charcoal rounded-lg text-xs font-semibold">Monthly Calendar</button>
+          </div>
+        </div>
+
+        <!-- 24-Hour Time Slot Schedule Grid -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left border-collapse">
+            <thead>
+              <tr class="bg-brand-cream border-y border-brand-borderStrong text-brand-charcoal font-semibold">
+                <th class="p-3 w-40">Time Slot</th>
+                <th class="p-3">Type</th>
+                <th class="p-3">Base Price</th>
+                <th class="p-3">Status</th>
+                <th class="p-3 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-brand-border">
+              <!-- Slot 1 -->
+              <tr class="hover:bg-brand-cream/30">
+                <td class="p-3 font-semibold text-brand-forest">06:00 AM – 09:00 AM</td>
+                <td class="p-3">3-Hr Early Transit</td>
+                <td class="p-3 font-mono font-semibold">₹700</td>
+                <td class="p-3"><span class="px-2 py-0.5 bg-green-100 text-green-800 rounded-full font-medium">Available</span></td>
+                <td class="p-3 text-right"><button class="px-2.5 py-1 bg-brand-sunset text-brand-charcoal font-semibold rounded text-[11px]">Instant Book</button></td>
+              </tr>
+
+              <!-- Slot 2 -->
+              <tr class="hover:bg-brand-cream/30">
+                <td class="p-3 font-semibold text-brand-forest">09:00 AM – 12:00 PM</td>
+                <td class="p-3">3-Hr Morning Rest</td>
+                <td class="p-3 font-mono font-semibold">₹850</td>
+                <td class="p-3"><span class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded-full font-medium">1 Request Pending</span></td>
+                <td class="p-3 text-right"><button class="px-2.5 py-1 bg-amber-600 text-white font-semibold rounded text-[11px]">Review Request</button></td>
+              </tr>
+
+              <!-- Slot 3 -->
+              <tr class="bg-gray-50 opacity-60">
+                <td class="p-3 font-semibold text-gray-500">12:00 PM – 03:00 PM</td>
+                <td class="p-3">3-Hr Afternoon Stay</td>
+                <td class="p-3 font-mono font-semibold">₹900</td>
+                <td class="p-3"><span class="px-2 py-0.5 bg-red-100 text-red-800 rounded-full font-medium">Booked (Guest Checked-In)</span></td>
+                <td class="p-3 text-right"><span class="text-gray-400 font-mono text-[11px]">#BK-9281</span></td>
+              </tr>
+
+              <!-- Slot 4 -->
+              <tr class="hover:bg-brand-cream/30">
+                <td class="p-3 font-semibold text-brand-forest">03:00 PM – 09:00 PM</td>
+                <td class="p-3">6-Hr Sunset Transit</td>
+                <td class="p-3 font-mono font-semibold">₹1,500</td>
+                <td class="p-3"><span class="px-2 py-0.5 bg-green-100 text-green-800 rounded-full font-medium">Available</span></td>
+                <td class="p-3 text-right"><button class="px-2.5 py-1 bg-brand-sunset text-brand-charcoal font-semibold rounded text-[11px]">Instant Book</button></td>
+              </tr>
+
+              <!-- Slot 5 -->
+              <tr class="hover:bg-brand-cream/30">
+                <td class="p-3 font-semibold text-brand-forest">09:00 PM – 09:00 AM</td>
+                <td class="p-3">Overnight Standard</td>
+                <td class="p-3 font-mono font-semibold">₹3,400</td>
+                <td class="p-3"><span class="px-2 py-0.5 bg-green-100 text-green-800 rounded-full font-medium">Available</span></td>
+                <td class="p-3 text-right"><button class="px-2.5 py-1 bg-brand-sunset text-brand-charcoal font-semibold rounded text-[11px]">Instant Book</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. DATA TABLES (ADMIN & BUSINESS) -->
+    <section class="space-y-6">
+      <div class="border-b border-brand-border pb-3">
+        <span class="text-xs font-semibold text-brand-forest uppercase tracking-widest">Section 06</span>
+        <h2 class="text-2xl font-bold text-brand-charcoal">Admin Destination Verification Queue</h2>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-brand-border overflow-hidden shadow-sm">
+        <div class="p-4 bg-brand-cream border-b border-brand-border flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="font-bold text-sm text-brand-forest">Community Submissions (8 Pending Review)</span>
+            <span class="text-xs text-brand-charcoal/60">GPS validation & media toxicity checks</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button class="px-3 py-1 bg-white border border-brand-borderStrong text-brand-charcoal rounded text-xs font-medium">Filter by District ▾</button>
+            <button class="px-3 py-1 bg-brand-forest text-white rounded text-xs font-medium">Batch Export</button>
+          </div>
+        </div>
+
+        <table class="w-full text-xs text-left">
+          <thead class="bg-gray-50 border-b border-brand-border text-brand-charcoal uppercase text-[10px] tracking-wider font-semibold">
+            <tr>
+              <th class="p-3">Destination Name</th>
+              <th class="p-3">District</th>
+              <th class="p-3">GPS Coordinates</th>
+              <th class="p-3">Submitted By</th>
+              <th class="p-3">Status</th>
+              <th class="p-3 text-right">Verification Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-brand-border">
+            <tr class="hover:bg-brand-cream/20">
+              <td class="p-3 font-semibold text-brand-charcoal">Cheeyappara Waterfalls Trail</td>
+              <td class="p-3">Idukki</td>
+              <td class="p-3 font-mono text-[11px] text-brand-charcoal/70">10.0124° N, 76.8921° E</td>
+              <td class="p-3">@arjun_wildlife (Local Guide)</td>
+              <td class="p-3"><span class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded font-medium">Pending Inspection</span></td>
+              <td class="p-3 text-right space-x-1.5">
+                <button class="px-2.5 py-1 bg-green-600 text-white rounded font-medium hover:bg-green-700">Approve</button>
+                <button class="px-2.5 py-1 bg-red-100 text-red-700 rounded font-medium hover:bg-red-200">Reject</button>
+                <button class="px-2 py-1 bg-gray-100 text-gray-700 rounded">Inspect</button>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-brand-cream/20">
+              <td class="p-3 font-semibold text-brand-charcoal">Marari Fishermen Heritage Beach</td>
+              <td class="p-3">Alappuzha</td>
+              <td class="p-3 font-mono text-[11px] text-brand-charcoal/70">9.6012° N, 76.2990° E</td>
+              <td class="p-3">@kerala_explorer (User)</td>
+              <td class="p-3"><span class="px-2 py-0.5 bg-green-100 text-green-800 rounded font-medium">Auto-Verified (GPS)</span></td>
+              <td class="p-3 text-right space-x-1.5">
+                <button class="px-2.5 py-1 bg-green-600 text-white rounded font-medium hover:bg-green-700">Publish</button>
+                <button class="px-2.5 py-1 bg-gray-100 text-gray-700 rounded">Inspect</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 7. STATE VARIANTS: SKELETONS, EMPTY & ERROR STATES -->
+    <section id="states" class="space-y-6">
+      <div class="border-b border-brand-border pb-3">
+        <span class="text-xs font-semibold text-brand-forest uppercase tracking-widest">Section 07</span>
+        <h2 class="text-2xl font-bold text-brand-charcoal">Loading Skeletons, Empty States & Error Feedback</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- 1. Shimmer Loading Skeleton -->
+        <div class="bg-white p-4 rounded-2xl border border-brand-border space-y-3">
+          <div class="text-xs font-semibold text-brand-forest flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-brand-forest animate-pulse"></span>
+            Loading Shimmer Skeleton
+          </div>
+          <div class="h-40 rounded-xl skeleton-shimmer"></div>
+          <div class="space-y-2">
+            <div class="h-4 w-3/4 rounded skeleton-shimmer"></div>
+            <div class="h-3 w-1/2 rounded skeleton-shimmer"></div>
+          </div>
+          <div class="pt-3 border-t border-brand-border flex items-center justify-between">
+            <div class="h-4 w-20 rounded skeleton-shimmer"></div>
+            <div class="h-7 w-24 rounded-full skeleton-shimmer"></div>
+          </div>
+        </div>
+
+        <!-- 2. Empty State -->
+        <div class="bg-white p-6 rounded-2xl border border-brand-border flex flex-col items-center text-center justify-center space-y-3">
+          <div class="w-14 h-14 rounded-full bg-brand-cream border border-brand-borderStrong flex items-center justify-center text-2xl">
+            🛶
+          </div>
+          <h4 class="font-bold text-sm text-brand-charcoal">No Upcoming Bookings Found</h4>
+          <p class="text-xs text-brand-charcoal/70 max-w-xs">
+            You haven't booked any backwater houseboats or hourly transit stays yet.
+          </p>
+          <button class="px-4 py-2 bg-brand-sunset text-brand-charcoal font-semibold text-xs rounded-full hover:bg-[#DE8C44] transition shadow-sm">
+            Explore Destinations
+          </button>
+        </div>
+
+        <!-- 3. Form Validation & Error State -->
+        <div class="bg-white p-6 rounded-2xl border border-brand-border flex flex-col justify-between space-y-3">
+          <div class="flex items-center gap-2 text-red-600 font-bold text-xs uppercase tracking-wider">
+            <span class="material-symbols-outlined text-[18px]">error</span>
+            System Error Notice
+          </div>
+          <div class="p-3 bg-red-50 border border-red-200 rounded-xl space-y-1">
+            <div class="text-xs font-bold text-red-800">Booking Reservation Clash</div>
+            <p class="text-[11px] text-red-700 leading-relaxed">
+              The 3-hour transit slot (12:00 PM – 03:00 PM) was just reserved by another explorer. Please pick an alternative time window.
+            </p>
+          </div>
+          <button class="w-full py-2 border border-brand-forest text-brand-forest rounded-lg font-semibold text-xs hover:bg-brand-forest/5">
+            Refresh Availability Matrix
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-brand-charcoal text-white py-12 px-8 border-t border-brand-charcoal">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-gray-400">
+      <div>
+        <div class="font-bold text-white text-sm">Kerala Tourism Ecosystem UI/UX Architecture</div>
+        <div>Standard: WCAG 2.2 AA | Typography: Inter | Approved Palette Specification</div>
+      </div>
+      <div>Designed for Web (1440px), Tablet (768px), and Native iOS/Android (390px)</div>
+    </div>
+  </footer>
+
+</body>
+</html>

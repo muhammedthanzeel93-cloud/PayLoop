@@ -1,0 +1,473 @@
+﻿<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Kerala Tourism â€” Explore &amp; Nearby</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-lowest": "#ffffff",
+            "outline": "#707973",
+            "secondary-fixed": "#bcf0ba",
+            "on-secondary-fixed-variant": "#235029",
+            "on-secondary": "#ffffff",
+            "on-primary-container": "#8ed2b2",
+            "tertiary": "#5b2f00",
+            "surface-container-high": "#e0ebe3",
+            "on-secondary-container": "#416e44",
+            "background": "#f1fcf4",
+            "on-tertiary-fixed": "#2e1500",
+            "inverse-on-surface": "#e8f4eb",
+            "primary-fixed": "#acf1d0",
+            "tertiary-container": "#7c4200",
+            "surface": "#f1fcf4",
+            "on-error": "#ffffff",
+            "on-tertiary-container": "#ffb474",
+            "on-secondary-fixed": "#002107",
+            "error-container": "#ffdad6",
+            "on-primary-fixed-variant": "#015139",
+            "on-background": "#141e19",
+            "surface-bright": "#f1fcf4",
+            "on-primary-fixed": "#002115",
+            "surface-variant": "#dae5dd",
+            "secondary": "#3b683e",
+            "primary-fixed-dim": "#91d5b5",
+            "surface-tint": "#266a50",
+            "surface-dim": "#d1ddd5",
+            "surface-container-highest": "#dae5dd",
+            "on-surface": "#141e19",
+            "tertiary-fixed-dim": "#ffb77b",
+            "secondary-container": "#bcf0ba",
+            "surface-container-low": "#ebf6ee",
+            "primary-container": "#145c43",
+            "inverse-surface": "#28332d",
+            "inverse-primary": "#91d5b5",
+            "tertiary-fixed": "#ffdcc2",
+            "outline-variant": "#bfc9c2",
+            "on-tertiary": "#ffffff",
+            "on-error-container": "#93000a",
+            "on-primary": "#ffffff",
+            "surface-container": "#e5f1e9",
+            "error": "#ba1a1a",
+            "primary": "#00432e",
+            "on-tertiary-fixed-variant": "#6d3a00",
+            "on-surface-variant": "#404943",
+            "secondary-fixed-dim": "#a1d3a0"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "2.5rem",
+            "space-lg": "1.5rem",
+            "margin": "3rem",
+            "margin-mobile": "1.25rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "space-2xl": "4rem",
+            "gutter-mobile": "1rem",
+            "gutter": "1.5rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Inter"],
+            "display-lg-mobile": ["Inter"],
+            "title-md": ["Inter"],
+            "headline-md": ["Inter"],
+            "display-lg": ["Inter"],
+            "headline-sm": ["Inter"],
+            "label-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "title-lg": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "body-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "headline-lg": ["Inter"]
+          },
+          "fontSize": {
+            "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400"}],
+            "display-lg-mobile": ["38px", {"lineHeight": "46px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "title-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600"}],
+            "headline-md": ["28px", {"lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "500"}],
+            "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "headline-sm": ["22px", {"lineHeight": "30px", "letterSpacing": "0em", "fontWeight": "500"}],
+            "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+            "body-sm": ["13px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+            "title-lg": ["18px", {"lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "600"}],
+            "body-md": ["15px", {"lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400"}],
+            "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "600"}],
+            "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    /* Hide scrollbars for iOS feel */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(2.2); opacity: 0; }
+      100% { transform: scale(0.95); opacity: 0; }
+    }
+    .pulse-ring-anim {
+      animation: pulse-ring 2.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased flex justify-center min-h-screen selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- iPhone Canvas Shell (390px native framing) -->
+<main class="w-full max-w-[430px] relative bg-background min-h-screen flex flex-col shadow-2xl overflow-hidden pb-24">
+<!-- Top Floating Header Anchor (JSON TopAppBar implementation) -->
+<header class="fixed top-0 left-0 right-0 z-40 flex justify-between items-center px-gutter-mobile py-space-sm w-full max-w-[430px] mx-auto bg-surface/80 backdrop-blur-md shadow-sm">
+<div class="flex items-center space-x-2">
+<button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
+</button>
+<div>
+<span class="block text-label-sm font-label-sm text-on-surface-variant">Current Location</span>
+<div class="flex items-center space-x-1">
+<h1 class="text-title-md font-title-md text-primary font-bold">Fort Kochi, KL</h1>
+<span class="material-symbols-outlined text-primary text-base" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<button class="relative w-9 h-9 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-xl" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-tertiary-container border border-surface-container-lowest"></span>
+</button>
+<div class="w-9 h-9 rounded-full overflow-hidden border-2 border-primary-container/20 shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Warm sunlight portrait of an adventurous eco-traveler wearing artisanal cotton exploring backwaters of tropical Kerala, captured with soft morning glow and high-end natural aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoLsFyqaKGyHT4Iie4EQlx4syMNBbWcbOxkV_jhl0HsjagLzhRp-cP3XQOXUH6nNu0HoKzQYuGIYrmZewnUZ53EjGy474jtK9C3RRFqHv1FaxRC32tZIc8w8fjm6LYlu5I3RiM0IDAMFB8-ntKomF5Sw46I8-2qxoxSKS7TixWUfPBeJzVqAKae9l1zTwoMN3T-Fbrz4fwpCobhItzU71NKLcYrlI-7DNdEOIBA-p72K5kYzUnRw6Fz_sSxcIznbEYakDjmyJwpfU"/>
+</div>
+</div>
+</header>
+<!-- Map & Search Content Canvas -->
+<div class="relative w-full h-[640px] pt-16">
+<!-- Interactive Stylized Kerala Topographical Map -->
+<div class="absolute inset-0 bg-[#d8eae1] overflow-hidden" data-location="Kerala" style="">
+<!-- SVG Canvas representing serene Vembanad waterways, coastlines & topography -->
+<svg class="w-full h-full object-cover opacity-90" fill="none" viewbox="0 0 430 750" xmlns="http://www.w3.org/2000/svg">
+<!-- Ocean Coastline Background -->
+<path d="M0,0 L110,0 C120,80 85,150 95,230 C105,320 140,390 120,490 C100,580 65,650 75,750 L0,750 Z" fill="#bfe1d9"></path>
+<!-- Backwater lagoons & Vembanad lake artery -->
+<path d="M110,120 Q160,190 145,260 T190,380 T170,510 T130,620 T115,750" fill="none" stroke="#92cdbe" stroke-linecap="round" stroke-width="24"></path>
+<path d="M145,260 Q210,290 260,250 T380,310" fill="none" stroke="#a7d9cd" stroke-linecap="round" stroke-width="12"></path>
+<path d="M170,510 Q240,540 330,490" fill="none" stroke="#a7d9cd" stroke-linecap="round" stroke-width="14"></path>
+<!-- Contours / High-altitude tea hills terrain -->
+<path d="M280,40 Q350,20 430,90 L430,220 Q330,170 290,110 Z" fill="#c3ded0" opacity="0.6"></path>
+<path d="M310,90 Q370,60 430,120 L430,290 Q340,240 280,180 Z" fill="#b1d3bf" opacity="0.5"></path>
+<!-- Roads / Heritage Pathways -->
+<path d="M118,170 C130,240 180,310 160,420 C145,510 125,590 110,690" fill="none" stroke="#ffffff" stroke-dasharray="4 4" stroke-width="3"></path>
+<path d="M135,230 L320,160" fill="none" stroke="#ffffff" stroke-dasharray="3 3" stroke-width="2.5"></path>
+<path d="M150,470 L340,490" fill="none" stroke="#ffffff" stroke-dasharray="3 3" stroke-width="2.5"></path>
+</svg>
+<!-- User Location: Fort Kochi Pier (Pulsing Radar Wave) -->
+<div class="absolute top-[230px] left-[130px] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center">
+<div class="relative flex items-center justify-center">
+<span class="absolute w-12 h-12 rounded-full bg-primary/20 pulse-ring-anim"></span>
+<span class="relative w-5 h-5 rounded-full bg-primary-container border-2 border-surface-container-lowest shadow-md flex items-center justify-center">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
+</span>
+</div>
+<div class="mt-1 px-2 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md shadow-sm border border-outline-variant/30 text-center">
+<span class="text-label-sm font-label-sm text-primary font-bold">You (Fort Kochi Pier)</span>
+</div>
+</div>
+<!-- Custom Destination Pin 1: Alleppey Backwater (Emerald badge) -->
+<div class="absolute top-[365px] left-[175px] -translate-x-1/2 -translate-y-1/2 z-20">
+<div class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-primary-container text-on-primary shadow-md border border-primary-fixed/30 active:scale-95 transition-transform cursor-pointer">
+<span class="material-symbols-outlined text-sm fill text-secondary-fixed" data-icon="sailing">sailing</span>
+<span class="text-label-sm font-label-sm font-semibold tracking-wide">Alleppey â€¢ 1.2 km</span>
+</div>
+<div class="w-1.5 h-2 bg-primary-container mx-auto clip-triangle"></div>
+</div>
+<!-- Custom Destination Pin 2: Munnar Hills (Pine Forest badge) -->
+<div class="absolute top-[140px] right-[24px] z-20">
+<div class="flex items-center space-x-1 px-2.5 py-1.5 rounded-full bg-secondary text-on-secondary shadow-md border border-secondary-fixed/40 active:scale-95 transition-transform cursor-pointer">
+<span class="material-symbols-outlined text-sm" data-icon="filter_vintage">filter_vintage</span>
+<span class="text-label-sm font-label-sm font-semibold">Munnar Tea â€¢ 118 km</span>
+</div>
+</div>
+<!-- Custom Destination Pin 3: Varkala Beach (Warm Sunset Ochre badge) -->
+<div class="absolute bottom-[230px] right-[55px] z-20">
+<div class="flex items-center space-x-1 px-2.5 py-1.5 rounded-full bg-tertiary-container text-on-tertiary-container shadow-md border border-on-tertiary-container/30 active:scale-95 transition-transform cursor-pointer">
+<span class="material-symbols-outlined text-sm" data-icon="wb_twilight">wb_twilight</span>
+<span class="text-label-sm font-label-sm font-semibold text-surface-container-lowest">Varkala Cliffs â€¢ 142 km</span>
+</div>
+</div>
+</div>
+<!-- Floating Search Bar & Controls directly below Top Header -->
+<div class="absolute top-20 left-0 right-0 px-gutter-mobile z-30 space-y-2.5">
+<!-- Floating Pill Search -->
+<div class="flex items-center bg-surface-container-lowest/90 backdrop-blur-md rounded-full shadow-md border border-outline-variant/40 px-3 py-2">
+<span class="material-symbols-outlined text-primary text-xl ml-1 mr-2" data-icon="search">search</span>
+<input class="w-full bg-transparent border-none p-0 text-body-sm font-body-sm text-on-surface placeholder:text-outline focus:ring-0 focus:outline-none" placeholder="Search heritage spots, canals, stays..." type="text"/>
+<div class="flex items-center space-x-1.5 border-l border-outline-variant/50 pl-2">
+<button class="p-1 rounded-full text-primary hover:bg-surface-container active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-lg" data-icon="my_location">my_location</span>
+</button>
+<button class="p-1 rounded-full text-on-surface-variant hover:bg-surface-container active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-lg" data-icon="mic">mic</span>
+</button>
+</div>
+</div>
+<!-- Horizontal Scrollable Category Filter Chips -->
+<div class="flex space-x-2 overflow-x-auto no-scrollbar pt-1 pb-1">
+<!-- Active Chip -->
+<button class="shrink-0 flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-primary-container text-on-primary shadow-sm text-label-sm font-label-sm font-semibold active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-sm fill" data-icon="check">check</span>
+<span>All Nearby</span>
+</button>
+<button class="shrink-0 flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-on-surface-variant border border-outline-variant/50 shadow-sm text-label-sm font-label-sm active:scale-95 transition-transform hover:bg-surface-container" type="button">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="water">water</span>
+<span>Backwaters</span>
+</button>
+<button class="shrink-0 flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-on-surface-variant border border-outline-variant/50 shadow-sm text-label-sm font-label-sm active:scale-95 transition-transform hover:bg-surface-container" type="button">
+<span class="material-symbols-outlined text-sm text-tertiary-container" data-icon="schedule">schedule</span>
+<span>Transit Stays</span>
+</button>
+<button class="shrink-0 flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-on-surface-variant border border-outline-variant/50 shadow-sm text-label-sm font-label-sm active:scale-95 transition-transform hover:bg-surface-container" type="button">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="temple_hindu">temple_hindu</span>
+<span>Heritage</span>
+</button>
+<button class="shrink-0 flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-on-surface-variant border border-outline-variant/50 shadow-sm text-label-sm font-label-sm active:scale-95 transition-transform hover:bg-surface-container" type="button">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="local_cafe">local_cafe</span>
+<span>Cafes &amp; Spice</span>
+</button>
+</div>
+</div>
+<!-- Map Floating Overlay Controls (Compass, Layer switch, GPS Recenter) -->
+<div class="absolute right-gutter-mobile bottom-[310px] z-30 flex flex-col space-y-2">
+<button class="w-10 h-10 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-on-surface-variant border border-outline-variant/40 shadow-md flex items-center justify-center active:scale-95 transition-transform" title="Layers" type="button">
+<span class="material-symbols-outlined text-xl" data-icon="layers">layers</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-primary border border-outline-variant/40 shadow-md flex items-center justify-center active:scale-95 transition-transform" title="Recenter GPS" type="button">
+<span class="material-symbols-outlined text-xl fill" data-icon="near_me">near_me</span>
+</button>
+</div>
+<!-- Seasonal Monsoon / Climate Indicator Tag -->
+<div class="absolute left-gutter-mobile bottom-[310px] z-30">
+<div class="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md border border-outline-variant/30 shadow-md">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed-dim"></span>
+<span class="text-label-sm font-label-sm text-primary font-semibold">Calm Waters â€¢ 28Â°C</span>
+</div>
+</div>
+</div>
+<!-- Draggable Bottom Sheet Resting over Map Area -->
+<section class="relative -mt-72 z-30 bg-surface-container-lowest rounded-t-3xl shadow-[0_-8px_32px_rgba(20,92,67,0.12)] border-t border-outline-variant/20 flex flex-col px-gutter-mobile pt-3 pb-8">
+<!-- Grab Bar Indicator -->
+<div class="w-10 h-1.5 bg-outline-variant/60 rounded-full mx-auto mb-3"></div>
+<!-- Sheet Header Row -->
+<div class="flex items-center justify-between mb-3">
+<div>
+<h2 class="text-title-lg font-title-lg text-primary font-bold">Nearby Experiences</h2>
+<p class="text-label-sm font-label-sm text-on-surface-variant">24 curated cultural spots found in your perimeter</p>
+</div>
+<button class="flex items-center space-x-1 px-3 py-1 rounded-full bg-surface-container text-primary text-label-sm font-label-sm font-semibold active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-sm" data-icon="tune">tune</span>
+<span>Filters</span>
+</button>
+</div>
+<!-- Highlight Seasonal Banner: Hourly Stays Nearby -->
+<div class="mb-4 p-3 rounded-2xl bg-surface-container-low border border-secondary-container flex items-center justify-between">
+<div class="flex items-center space-x-2.5">
+<div class="w-9 h-9 rounded-xl bg-tertiary-container/15 flex items-center justify-center text-tertiary-container">
+<span class="material-symbols-outlined text-xl" data-icon="bolt">bolt</span>
+</div>
+<div>
+<div class="flex items-center space-x-1.5">
+<span class="text-title-md font-title-md text-primary font-semibold text-sm">Hourly Stays Nearby</span>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-container text-on-tertiary text-[10px] font-bold">FAST PASS</span>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant">3h / 6h slots starting from â‚¹650</p>
+</div>
+</div>
+<!-- iOS Style Switch Active -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<!-- Experience Cards Stack -->
+<div class="space-y-3.5">
+<!-- Experience Card 1: Alleppey Backwater (Shared Image IMG_8) -->
+<article class="bg-surface-container-lowest rounded-2xl p-2.5 border border-outline-variant/30 shadow-sm flex space-x-3 transition-transform active:scale-[0.99]">
+<div class="w-28 h-28 rounded-xl overflow-hidden shrink-0 relative bg-surface-container">
+<img alt="Alleppey Backwater Houseboat Cruise in Kerala" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrBXp8KsFPHHejuEbaaDGNQ4s2zlClX9RgQQSb9wuJV9j-dDBBxq1pQIXPrJ6TuPpqEkMnuSBNq-HkBJS8o_tlr3kcLs3jySapNpPqHlczwjkA5TniJODDKwIpLlA8AjVw94p2i9Qm6ia48qE4_nufJHRyH79D7c6o5hUpqI6XTq8u0zBk4kbZOUvi_Mbi8rZOig4Z3skVhXmW114xxmE5DIpDS9QS-jnZl3m4HQMTlM"/>
+<span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-primary text-[10px] font-bold shadow-xs">
+              1.2 km
+            </span>
+</div>
+<div class="flex flex-col justify-between flex-1 py-0.5">
+<div>
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-secondary font-bold">Vembanad Waterway</span>
+<div class="flex items-center space-x-0.5 text-tertiary-container">
+<span class="material-symbols-outlined text-xs fill" data-icon="star">star</span>
+<span class="text-label-sm font-label-sm font-bold text-on-surface">4.9</span>
+<span class="text-[10px] text-outline">(342)</span>
+</div>
+</div>
+<h3 class="text-title-md font-title-md text-primary font-semibold line-clamp-1 mt-0.5">Alleppey Backwater Canoe Trail</h3>
+</div>
+<div class="flex flex-wrap gap-1 my-1">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-fixed-variant text-[10px] font-medium flex items-center space-x-0.5">
+<span class="material-symbols-outlined text-[11px]" data-icon="headphones">headphones</span>
+<span>Audio Guide</span>
+</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant text-[10px] font-medium">Licensed Shikara</span>
+</div>
+<div class="flex items-center justify-between pt-1 border-t border-surface-container">
+<div>
+<span class="text-body-sm font-body-sm font-bold text-primary">â‚¹450</span>
+<span class="text-[10px] text-outline">/ person</span>
+</div>
+<button class="px-3 py-1 rounded-full bg-tertiary-container text-on-tertiary text-label-sm font-label-sm font-semibold active:scale-95 transition-transform shadow-sm" type="button">
+                Book Slot
+              </button>
+</div>
+</div>
+</article>
+<!-- Experience Card 2: Marari Heritage Fishery Beach (Shared Image IMG_5) -->
+<article class="bg-surface-container-lowest rounded-2xl p-2.5 border border-outline-variant/30 shadow-sm flex space-x-3 transition-transform active:scale-[0.99]">
+<div class="w-28 h-28 rounded-xl overflow-hidden shrink-0 relative bg-surface-container">
+<img alt="Varkala &amp; Marari Sunset Beach Kerala Cliffs" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrDi48NnGK-jE3yOWNUlaWHrZIMOYZw4gon3_cQRvANI4JLDP6_doYOH3VMaiWgMy8ktW76C9XV84f7p5S2ok1Y_E0C74JYzSCFTcD0LyWpG6oSdIFrqYeHiBrLPvnvqmTANFdRijExmdpowJif4pgcBPZbH2BpHOX0NNHEETM1DINr9ltx0woTcfc9BhlDnjM2FGci_1u4kXqTX5YilrhKt6CMiRYV2vDMRBIeywnZBC5iefBX-PxViOA"/>
+<span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-primary text-[10px] font-bold shadow-xs">
+              3.8 km
+            </span>
+</div>
+<div class="flex flex-col justify-between flex-1 py-0.5">
+<div>
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-secondary font-bold">Arabian Sea Coast</span>
+<div class="flex items-center space-x-0.5 text-tertiary-container">
+<span class="material-symbols-outlined text-xs fill" data-icon="star">star</span>
+<span class="text-label-sm font-label-sm font-bold text-on-surface">4.7</span>
+<span class="text-[10px] text-outline">(189)</span>
+</div>
+</div>
+<h3 class="text-title-md font-title-md text-primary font-semibold line-clamp-1 mt-0.5">Marari Heritage Fishery Beach</h3>
+</div>
+<div class="flex flex-wrap gap-1 my-1">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant text-[10px] font-medium flex items-center space-x-0.5">
+<span class="material-symbols-outlined text-[11px] text-tertiary-container" data-icon="wb_sunny">wb_sunny</span>
+<span>Sunset Point</span>
+</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed/50 text-on-secondary-fixed-variant text-[10px] font-medium">Clean Eco Beach</span>
+</div>
+<div class="flex items-center justify-between pt-1 border-t border-surface-container">
+<div>
+<span class="text-body-sm font-body-sm font-bold text-secondary">Free Access</span>
+<span class="text-[10px] text-outline">Open entry</span>
+</div>
+<button class="px-3 py-1 rounded-full border border-primary-container text-primary-container hover:bg-surface-container text-label-sm font-label-sm font-semibold active:scale-95 transition-transform" type="button">
+                Directions
+              </button>
+</div>
+</div>
+</article>
+<!-- Experience Card 3: Munnar Tea Plantation (Shared Image IMG_9) -->
+<article class="bg-surface-container-lowest rounded-2xl p-2.5 border border-outline-variant/30 shadow-sm flex space-x-3 transition-transform active:scale-[0.99]">
+<div class="w-28 h-28 rounded-xl overflow-hidden shrink-0 relative bg-surface-container">
+<img alt="Munnar Tea Gardens Mist Hill Station Kerala" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrCa7wQvwrD26df9Dbvl-Gyud0p8e5YmWm1wCJVS-_M2T8efKuG49GKHtPgaHI3JAbW42203jxuJGZp7FsBgWw20yUh9QBReJ6ZvtQdgtif5LukNGQJaP81cZ-JM2MPzpU9y24Nwa_Df8mP9gR2lKcbVl7d8XKo3W5qu-4jp_9U68e_zJQg8xZ5gqI7S9q-iDrMVpcRXm09QZsbudDsqv1AhTBnK0wNetOlpDMejHuWv"/>
+<span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-primary text-[10px] font-bold shadow-xs">
+              Transit
+            </span>
+</div>
+<div class="flex flex-col justify-between flex-1 py-0.5">
+<div>
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-secondary font-bold">Western Ghats</span>
+<div class="flex items-center space-x-0.5 text-tertiary-container">
+<span class="material-symbols-outlined text-xs fill" data-icon="star">star</span>
+<span class="text-label-sm font-label-sm font-bold text-on-surface">4.9</span>
+<span class="text-[10px] text-outline">(810)</span>
+</div>
+</div>
+<h3 class="text-title-md font-title-md text-primary font-semibold line-clamp-1 mt-0.5">Munnar High-Altitude Tea Walk</h3>
+</div>
+<div class="flex flex-wrap gap-1 my-1">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-fixed-variant text-[10px] font-medium flex items-center space-x-0.5">
+<span class="material-symbols-outlined text-[11px]" data-icon="eco">eco</span>
+<span>Tea Plucking</span>
+</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant text-[10px] font-medium">Mist Sunrise</span>
+</div>
+<div class="flex items-center justify-between pt-1 border-t border-surface-container">
+<div>
+<span class="text-body-sm font-body-sm font-bold text-primary">â‚¹320</span>
+<span class="text-[10px] text-outline">/ person</span>
+</div>
+<button class="px-3 py-1 rounded-full bg-tertiary-container text-on-tertiary text-label-sm font-label-sm font-semibold active:scale-95 transition-transform shadow-sm" type="button">
+                Reserve
+              </button>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- Bottom Navigation Bar (Mandated by Shared Components JSON) -->
+<!-- Responsive logic: Visible in mobile layout, perfectly styled with active Nearby tab and center Add CTA -->
+<nav class="fixed bottom-0 left-0 w-full max-w-[430px] mx-auto z-50 flex justify-around items-center px-gutter-mobile py-space-xs bg-surface-container-lowest/80 backdrop-blur-md shadow-md">
+<!-- 1. Explore -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-1 active:scale-95 transition-transform duration-150 hover:text-primary" href="#explore">
+<span class="material-symbols-outlined text-2xl" data-icon="explore">explore</span>
+<span class="text-label-sm font-label-sm mt-0.5">Explore</span>
+</a>
+<!-- 2. Nearby (Active Destination per semantic hierarchy) -->
+<a class="flex flex-col items-center justify-center text-primary font-semibold p-1 active:scale-95 transition-transform duration-150" href="#nearby">
+<span class="material-symbols-outlined text-2xl fill" data-icon="map">map</span>
+<span class="text-label-sm font-label-sm mt-0.5 font-bold">Nearby</span>
+<!-- Subtle Active Indicator Dot -->
+<span class="w-1 h-1 rounded-full bg-primary mt-0.5"></span>
+</a>
+<!-- 3. Add (Center Action CTA) -->
+<a aria-label="Add spot" class="flex flex-col items-center justify-center -mt-5 active:scale-95 transition-transform duration-150" href="#add">
+<div class="w-12 h-12 rounded-full bg-tertiary-container text-on-tertiary shadow-lg flex items-center justify-center border-2 border-surface-container-lowest">
+<span class="material-symbols-outlined text-2xl" data-icon="add_circle">add_circle</span>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant mt-1">Add</span>
+</a>
+<!-- 4. Passes -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-1 active:scale-95 transition-transform duration-150 hover:text-primary" href="#passes">
+<span class="material-symbols-outlined text-2xl" data-icon="confirmation_number">confirmation_number</span>
+<span class="text-label-sm font-label-sm mt-0.5">Passes</span>
+</a>
+<!-- 5. Profile -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-1 active:scale-95 transition-transform duration-150 hover:text-primary" href="#profile">
+<span class="material-symbols-outlined text-2xl" data-icon="person">person</span>
+<span class="text-label-sm font-label-sm mt-0.5">Profile</span>
+</a>
+</nav>
+</main>
+</body></html>

@@ -1,0 +1,39 @@
+{
+  "name": "kerala-tourism-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production monorepo for the Kerala Tourism ecosystem",
+  "workspaces": [
+    "apps/*",
+    "server",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace=@kerala-tourism/web",
+    "dev:mobile": "npm run start --workspace=@kerala-tourism/mobile",
+    "dev:business": "npm run dev --workspace=@kerala-tourism/business",
+    "dev:admin": "npm run dev --workspace=@kerala-tourism/admin",
+    "dev:server": "npm run dev --workspace=@kerala-tourism/server",
+    "build": "npm run build --workspaces --if-present",
+    "build:server": "npm run build --workspace=@kerala-tourism/server",
+    "build:web": "npm run build --workspace=@kerala-tourism/web",
+    "build:business": "npm run build --workspace=@kerala-tourism/business",
+    "build:admin": "npm run build --workspace=@kerala-tourism/admin",
+    "test:health": "npm run test:health --workspace=@kerala-tourism/server",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md}\""
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}

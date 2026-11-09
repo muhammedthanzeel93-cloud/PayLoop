@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kerala Tourism — Mobile App Prototype (390px)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              forest: '#145C43',
+              nature: '#78A878',
+              cream: '#F8F7F1',
+              sunset: '#E99A54',
+              charcoal: '#202A25',
+              muted: '#EFECE4',
+              border: '#E3DFD5',
+              borderStrong: '#D1CBBF',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #202A25; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    /* Hide scrollbars for slick app feel */
+    ::-webkit-scrollbar { display: none; }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+  <!-- PHONE FRAME (390px x 844px) -->
+  <div class="relative w-[390px] h-[844px] bg-[#F8F7F1] rounded-[48px] shadow-2xl border-[8px] border-black overflow-hidden flex flex-col text-brand-charcoal">
+    
+    <!-- TOP STATUS BAR / DYNAMIC ISLAND -->
+    <div class="h-11 w-full bg-transparent flex items-center justify-between px-7 pt-2 select-none z-50">
+      <span class="text-xs font-semibold text-brand-charcoal">9:41</span>
+      <!-- Island pill -->
+      <div class="w-24 h-5 bg-black rounded-full"></div>
+      <div class="flex items-center gap-1.5 text-xs text-brand-charcoal">
+        <span class="material-symbols-outlined text-[16px]">signal_cellular_alt</span>
+        <span class="material-symbols-outlined text-[16px]">wifi</span>
+        <span class="material-symbols-outlined text-[18px]">battery_full</span>
+      </div>
+    </div>
+
+    <!-- MAIN SCROLLABLE APP VIEW -->
+    <div class="flex-1 overflow-y-auto pb-20">
+
+      <!-- SCREEN 1: MOBILE HOME -->
+      <div id="mob-screen-home" class="mob-view space-y-5 px-4 pt-2">
+        <!-- Top Location & Notification Header -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-brand-border shadow-sm">
+            <span class="material-symbols-outlined text-brand-forest text-[16px]">location_on</span>
+            <span class="text-xs font-bold text-brand-charcoal">Fort Kochi, KL</span>
+            <span class="text-[10px] text-gray-400">▾</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button class="w-9 h-9 rounded-full bg-white border border-brand-border flex items-center justify-center text-brand-charcoal shadow-sm relative">
+              <span class="material-symbols-outlined text-[20px]">notifications</span>
+              <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-brand-sunset"></span>
+            </button>
+            <div class="w-9 h-9 rounded-full bg-brand-forest text-white font-bold text-xs flex items-center justify-center shadow-sm">
+              AY
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Omnisearch Pill -->
+        <div onclick="showMobScreen('map')" class="h-12 w-full bg-white rounded-full border border-brand-borderStrong px-4 flex items-center justify-between shadow-sm cursor-pointer">
+          <div class="flex items-center gap-2.5 text-xs text-brand-charcoal/60">
+            <span class="material-symbols-outlined text-brand-forest text-[20px]">search</span>
+            <span>Search backwaters, hill treks, homestays...</span>
+          </div>
+          <span class="material-symbols-outlined text-brand-nature text-[18px]">mic</span>
+        </div>
+
+        <!-- Category Horizontal Carousel -->
+        <div class="flex items-center gap-3 overflow-x-auto pb-1 -mx-4 px-4">
+          <div class="flex flex-col items-center gap-1 shrink-0">
+            <div class="w-14 h-14 rounded-2xl bg-brand-forest text-white flex items-center justify-center text-xl shadow-sm">
+              🛶
+            </div>
+            <span class="text-[10px] font-semibold text-brand-forest">Backwaters</span>
+          </div>
+          <div class="flex flex-col items-center gap-1 shrink-0">
+            <div class="w-14 h-14 rounded-2xl bg-white border border-brand-border text-brand-charcoal flex items-center justify-center text-xl shadow-sm">
+              ⛰️
+            </div>
+            <span class="text-[10px] font-semibold text-brand-charcoal">Hill Treks</span>
+          </div>
+          <div class="flex flex-col items-center gap-1 shrink-0">
+            <div class="w-14 h-14 rounded-2xl bg-white border border-brand-border text-brand-charcoal flex items-center justify-center text-xl shadow-sm">
+              🏖️
+            </div>
+            <span class="text-[10px] font-semibold text-brand-charcoal">Beaches</span>
+          </div>
+          <div class="flex flex-col items-center gap-1 shrink-0">
+            <div class="w-14 h-14 rounded-2xl bg-white border border-brand-border text-brand-charcoal flex items-center justify-center text-xl shadow-sm">
+              🌿
+            </div>
+            <span class="text-[10px] font-semibold text-brand-charcoal">Ayurveda</span>
+          </div>
+          <div class="flex flex-col items-center gap-1 shrink-0">
+            <div class="w-14 h-14 rounded-2xl bg-white border border-brand-border text-brand-charcoal flex items-center justify-center text-xl shadow-sm">
+              🐘
+            </div>
+            <span class="text-[10px] font-semibold text-brand-charcoal">Wildlife</span>
+          </div>
+        </div>
+
+        <!-- Hourly Stay Mini-Banner -->
+        <div onclick="showMobScreen('stays')" class="bg-gradient-to-r from-brand-forest to-[#1E7456] text-white p-4 rounded-2xl shadow-md cursor-pointer flex items-center justify-between">
+          <div class="space-y-1">
+            <span class="px-2 py-0.5 bg-brand-nature/40 rounded text-[9px] font-bold uppercase tracking-wider">Hourly Stays</span>
+            <div class="text-sm font-bold">Transit & Day-Use Rooms</div>
+            <div class="text-[11px] text-white/80">3h, 6h & 12h slots starting from ₹650</div>
+          </div>
+          <button class="px-3 py-1.5 bg-brand-sunset text-brand-charcoal rounded-full text-xs font-bold">
+            Explore
+          </button>
+        </div>
+
+        <!-- Featured Spot Card (Vertical Mobile Card) -->
+        <div onclick="showMobScreen('details')" class="bg-white rounded-3xl border border-brand-border overflow-hidden shadow-sm cursor-pointer space-y-3 pb-3">
+          <div class="h-48 relative">
+            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+            <span class="absolute top-3 left-3 px-2 py-0.5 bg-white/90 rounded-full text-[10px] font-bold text-brand-forest">Alappuzha</span>
+            <span class="absolute bottom-3 left-3 px-2 py-0.5 bg-brand-nature text-white rounded text-[9px] font-semibold">Eco-Certified Trail</span>
+          </div>
+          <div class="px-4 space-y-1">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-base text-brand-charcoal">Vembanad Waterway Route</h3>
+              <span class="text-xs font-bold text-amber-600">★ 4.9</span>
+            </div>
+            <p class="text-xs text-brand-charcoal/70 line-clamp-2">
+              Glide through tranquil coconut lagoons and village canals in a traditional wooden houseboat.
+            </p>
+            <div class="flex items-center justify-between pt-2 border-t border-brand-border text-xs">
+              <div>
+                <span class="text-gray-400 text-[10px]">From</span>
+                <span class="font-bold text-brand-forest ml-1">₹3,400</span>
+              </div>
+              <button class="px-3 py-1 bg-brand-forest text-white rounded-full text-[11px] font-semibold">
+                View Guide
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 2: MOBILE NEARBY MAP WITH BOTTOM SHEET -->
+      <div id="mob-screen-map" class="mob-view hidden relative h-full">
+        <!-- Map Canvas Background -->
+        <div class="h-[460px] bg-emerald-100 relative overflow-hidden flex items-center justify-center">
+          <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover opacity-60">
+          <!-- Pulse Dot -->
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-brand-forest/30 flex items-center justify-center animate-ping"></div>
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-brand-forest border-2 border-white shadow-md"></div>
+
+          <!-- Top Floating Search -->
+          <div class="absolute top-4 left-4 right-4 bg-white/95 backdrop-blur-md p-3 rounded-full border border-brand-border shadow-md flex items-center gap-2 text-xs">
+            <span class="material-symbols-outlined text-brand-forest text-[18px]">search</span>
+            <input type="text" value="Spots within 10 km" class="w-full focus:outline-none bg-transparent font-medium">
+            <span class="material-symbols-outlined text-brand-nature text-[18px]">my_location</span>
+          </div>
+        </div>
+
+        <!-- Draggable Bottom Sheet Specimen -->
+        <div class="bg-white rounded-t-3xl border-t border-brand-border p-4 shadow-xl -mt-6 relative z-10 space-y-3">
+          <!-- Drag Handle -->
+          <div class="w-10 h-1 bg-gray-300 rounded-full mx-auto"></div>
+          
+          <div class="flex items-center justify-between">
+            <div class="text-xs font-bold text-brand-charcoal">Nearby Destinations (14 Found)</div>
+            <span class="text-[10px] font-semibold text-brand-forest">Radius: 10km</span>
+          </div>
+
+          <!-- Horizontal Card Row -->
+          <div class="flex items-center gap-3 overflow-x-auto pb-2 -mx-4 px-4">
+            <div onclick="showMobScreen('details')" class="w-64 bg-brand-cream rounded-2xl p-3 border border-brand-border shrink-0 cursor-pointer space-y-2">
+              <div class="h-28 rounded-xl overflow-hidden bg-gray-200">
+                <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover">
+              </div>
+              <div class="text-xs font-bold text-brand-charcoal">Alleppey Canoe Canal</div>
+              <div class="flex items-center justify-between text-[11px] text-gray-500">
+                <span>📍 1.2 km away</span>
+                <span class="text-brand-forest font-bold">★ 4.9</span>
+              </div>
+            </div>
+
+            <div onclick="showMobScreen('details')" class="w-64 bg-brand-cream rounded-2xl p-3 border border-brand-border shrink-0 cursor-pointer space-y-2">
+              <div class="h-28 rounded-xl overflow-hidden bg-gray-200">
+                <img src="https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover">
+              </div>
+              <div class="text-xs font-bold text-brand-charcoal">Marari Heritage Fishery</div>
+              <div class="flex items-center justify-between text-[11px] text-gray-500">
+                <span>📍 3.8 km away</span>
+                <span class="text-brand-forest font-bold">★ 4.7</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 3: MOBILE DESTINATION DETAILS -->
+      <div id="mob-screen-details" class="mob-view hidden space-y-4 pb-4">
+        <!-- Hero Photo with Back Arrow -->
+        <div class="h-64 relative">
+          <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+          <button onclick="showMobScreen('home')" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-black/40 text-white backdrop-blur-md flex items-center justify-center">
+            <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+          </button>
+          <button class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/40 text-white backdrop-blur-md flex items-center justify-center">
+            <span class="material-symbols-outlined text-[20px]">bookmark</span>
+          </button>
+        </div>
+
+        <div class="px-4 space-y-4">
+          <div>
+            <div class="text-[11px] font-bold text-brand-nature uppercase">Alappuzha • Backwaters</div>
+            <h1 class="text-2xl font-bold text-brand-charcoal">Alleppey Houseboat Canals</h1>
+            <div class="text-xs text-amber-600 font-semibold mt-0.5">★ 4.9 (842 reviews)</div>
+          </div>
+
+          <!-- Mini Audio Guide -->
+          <div class="p-3 bg-brand-cream border border-brand-border rounded-xl flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <span class="material-symbols-outlined text-brand-forest text-[22px]">headphones</span>
+              <div class="text-xs">
+                <div class="font-bold text-brand-charcoal">Audio Guide Available</div>
+                <div class="text-[10px] text-gray-500">2 mins • History of Spice Vessels</div>
+              </div>
+            </div>
+            <button class="px-2.5 py-1 bg-brand-forest text-white rounded-lg text-[10px] font-semibold">Play</button>
+          </div>
+
+          <p class="text-xs text-brand-charcoal/80 leading-relaxed">
+            Glide through serene canals under palm trees, stop by local Toddy shacks, and watch traditional coir makers along the banks.
+          </p>
+
+          <!-- Sticky Bottom CTA in Mobile View -->
+          <div class="pt-4 border-t border-brand-border flex items-center justify-between">
+            <div>
+              <div class="text-[10px] text-gray-500">Starting from</div>
+              <div class="text-base font-bold text-brand-forest">₹3,400 <span class="text-xs font-normal">/ stay</span></div>
+            </div>
+            <button onclick="showMobScreen('pass')" class="px-6 py-2.5 bg-brand-sunset text-brand-charcoal font-bold text-xs rounded-full shadow hover:bg-[#DE8C44]">
+              Reserve Stay Pass
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 4: DIGITAL PASS & QR CODE -->
+      <div id="mob-screen-pass" class="mob-view hidden p-4 space-y-4">
+        <div class="flex items-center justify-between border-b border-brand-border pb-3">
+          <button onclick="showMobScreen('home')" class="text-xs text-brand-forest font-semibold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+            Back
+          </button>
+          <span class="text-xs font-bold text-brand-charcoal">Digital Travel Pass</span>
+          <span class="w-6"></span>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl border border-brand-border shadow-md space-y-4 text-center">
+          <div class="inline-block px-3 py-1 bg-green-100 text-green-800 text-[10px] font-bold rounded-full uppercase">
+            ✓ Booking Confirmed & Verified
+          </div>
+          <div>
+            <h2 class="text-lg font-bold text-brand-charcoal">Coconut Lagoon Villa</h2>
+            <p class="text-xs text-gray-500">3-Hour Transit Slot • Today 2:00 PM – 5:00 PM</p>
+          </div>
+
+          <!-- QR Box -->
+          <div class="w-44 h-44 mx-auto bg-brand-cream border-2 border-brand-borderStrong rounded-2xl p-4 flex flex-col items-center justify-center space-y-2">
+            <div class="font-mono text-2xl font-bold tracking-widest text-brand-charcoal">█ ▄ █ ▄</div>
+            <div class="font-mono text-xs font-bold text-brand-forest">#KL-78291</div>
+            <div class="text-[9px] text-gray-400">Scan at hotel reception</div>
+          </div>
+
+          <div class="pt-2 flex flex-col gap-2">
+            <button class="w-full py-2.5 bg-brand-charcoal text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2">
+              <span>Add to Apple / Google Wallet</span>
+            </button>
+            <button class="w-full py-2.5 border border-brand-forest text-brand-forest rounded-xl text-xs font-semibold">
+              Get Driving Directions (GPS)
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- NATIVE BOTTOM NAVIGATION DOCK (5 TABS) -->
+    <div class="h-16 w-full bg-white/95 backdrop-blur-md border-t border-brand-border px-3 flex items-center justify-around absolute bottom-0 z-50">
+      <button onclick="showMobScreen('home')" class="mob-tab flex flex-col items-center text-brand-forest" id="mob-tab-home">
+        <span class="material-symbols-outlined text-[20px]">explore</span>
+        <span class="text-[9px] font-bold mt-0.5">Explore</span>
+      </button>
+
+      <button onclick="showMobScreen('map')" class="mob-tab flex flex-col items-center text-brand-charcoal/60" id="mob-tab-map">
+        <span class="material-symbols-outlined text-[20px]">map</span>
+        <span class="text-[9px] mt-0.5">Nearby</span>
+      </button>
+
+      <!-- Center Plus Action -->
+      <button onclick="alert('Open Camera / Post Creator')" class="w-11 h-11 bg-brand-sunset text-brand-charcoal rounded-full flex items-center justify-center shadow-lg -translate-y-3 border-2 border-white active:scale-95 transition">
+        <span class="material-symbols-outlined text-[22px] font-bold">add</span>
+      </button>
+
+      <button onclick="showMobScreen('pass')" class="mob-tab flex flex-col items-center text-brand-charcoal/60" id="mob-tab-pass">
+        <span class="material-symbols-outlined text-[20px]">confirmation_number</span>
+        <span class="text-[9px] mt-0.5">Passes</span>
+      </button>
+
+      <button onclick="alert('Settings & Profile View')" class="mob-tab flex flex-col items-center text-brand-charcoal/60">
+        <span class="material-symbols-outlined text-[20px]">person</span>
+        <span class="text-[9px] mt-0.5">Account</span>
+      </button>
+    </div>
+
+    <!-- NATIVE HOME INDICATOR BAR (iOS) -->
+    <div class="h-1.5 w-32 bg-black/40 rounded-full mx-auto mb-1.5 absolute bottom-1 left-1/2 -translate-x-1/2 z-50 pointer-events-none"></div>
+  </div>
+
+  <script>
+    function showMobScreen(screenId) {
+      document.querySelectorAll('.mob-view').forEach(el => el.classList.add('hidden'));
+      const active = document.getElementById('mob-screen-' + screenId);
+      if (active) active.classList.remove('hidden');
+
+      document.querySelectorAll('.mob-tab').forEach(tab => {
+        tab.classList.remove('text-brand-forest');
+        tab.classList.add('text-brand-charcoal/60');
+      });
+
+      const activeTab = document.getElementById('mob-tab-' + screenId);
+      if (activeTab) {
+        activeTab.classList.remove('text-brand-charcoal/60');
+        activeTab.classList.add('text-brand-forest');
+      }
+    }
+  </script>
+
+</body>
+</html>

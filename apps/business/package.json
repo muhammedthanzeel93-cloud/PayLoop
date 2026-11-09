@@ -1,0 +1,28 @@
+{
+  "name": "@kerala-tourism/business",
+  "version": "1.0.0",
+  "description": "Business & Merchant Dashboard for Kerala Tourism Ecosystem",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3002",
+    "build": "next build",
+    "start": "next start -p 3002",
+    "typecheck": "tsc --noEmit",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@kerala-tourism/api-client": "*",
+    "@kerala-tourism/constants": "*",
+    "@kerala-tourism/shared-types": "*",
+    "next": "^14.2.15",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "eslint-config-next": "^14.2.15",
+    "typescript": "^5.4.5"
+  }
+}
