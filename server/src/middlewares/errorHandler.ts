@@ -1,42 +1,45 @@
 import { Request, Response, NextFunction } from 'express';
-import { ApiErrorResponse } from '@kerala-tourism/shared-types';
+import { ApiErrorResponse } from '../shared/types';
 import { env } from '../config/env';
+import { AppError } from '../shared/errors/AppError';
+import { ZodError } from 'zod';
 
-export class AppError extends Error {
-  public readonly statusCode: number;
-  public readonly code: string;
-  public readonly isOperational: boolean;
-  public readonly details?: unknown;
-
-  constructor(
-    message: string,
-    statusCode = 500,
-    code = 'INTERNAL_ERROR',
-    details?: unknown,
-    isOperational = true,
-  ) {
-    super(message);
-    this.name = 'AppError';
-    this.statusCode = statusCode;
-    this.code = code;
-    this.isOperational = isOperational;
-    this.details = details;
-    Error.captureStackTrace(this, this.constructor);
-  }
-}
+export { AppError };
 
 export const errorHandler = (
-  err: Error | AppError,
+  err: Error | AppError | ZodError,
   _req: Request,
   res: Response<ApiErrorResponse>,
   _next: NextFunction,
 ): void => {
+  if (err instanceof ZodError) {
+    res.status(400).json({
+      success: false,
+      error: {
+        message: 'Validation failed',
+        code: 'VALIDATION_ERROR',
+        details: err.issues.map((i) => ({
+          field: i.path.join('.'),
+          message: i.message,
+        })),
+      },
+    });
+    return;
+  }
+
   const isAppError = err instanceof AppError;
   const statusCode = isAppError ? err.statusCode : 500;
   const code = isAppError ? err.code : 'INTERNAL_SERVER_ERROR';
-  const message = isAppError || env.NODE_ENV !== 'production' ? err.message : 'Internal Server Error';
 
-  if (!isAppError) {
+  // Production responses must NEVER expose internal stack traces or internal raw messages for non-operational errors
+  const message =
+    isAppError && err.isOperational
+      ? err.message
+      : env.NODE_ENV !== 'production'
+        ? err.message
+        : 'Internal Server Error';
+
+  if (!isAppError || !err.isOperational) {
     console.error('[Unhandled Server Error]:', err);
   }
 

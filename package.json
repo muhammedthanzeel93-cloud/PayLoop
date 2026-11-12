@@ -19,6 +19,7 @@
     "build:web": "npm run build --workspace=@kerala-tourism/web",
     "build:business": "npm run build --workspace=@kerala-tourism/business",
     "build:admin": "npm run build --workspace=@kerala-tourism/admin",
+    "test:server": "npm run test --workspace=@kerala-tourism/server",
     "test:health": "npm run test:health --workspace=@kerala-tourism/server",
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",

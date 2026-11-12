@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { ApiResponse, HealthResponse } from '@kerala-tourism/shared-types';
-import { healthService } from '../services/health.service';
+import { ApiResponse } from '../../shared/types';
+import { HealthResponse } from './health.types';
+import { healthService } from './health.service';
 
 export class HealthController {
   public getHealth = async (
