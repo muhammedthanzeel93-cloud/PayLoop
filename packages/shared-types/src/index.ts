@@ -21,6 +21,12 @@ import {
   POST_VISIBILITIES,
   POST_STATUSES,
   POST_COMMENT_STATUSES,
+  ADMIN_AUDIT_ACTIONS,
+  AUDIT_TARGET_ENTITY_TYPES,
+  MODERATION_CONTENT_TYPES,
+  REPORT_TARGET_TYPES,
+  REPORT_REASONS,
+  REPORT_STATUSES,
 } from '@kerala-tourism/constants';
 
 // Role Types
@@ -48,6 +54,12 @@ export type BusinessDocumentType = (typeof BUSINESS_DOCUMENT_TYPES)[keyof typeof
 export type PreferredLanguage = (typeof PREFERRED_LANGUAGES)[keyof typeof PREFERRED_LANGUAGES];
 export type AuthTokenType = (typeof AUTH_TOKEN_TYPES)[keyof typeof AUTH_TOKEN_TYPES];
 export type SessionRevocationReason = (typeof SESSION_REVOCATION_REASONS)[keyof typeof SESSION_REVOCATION_REASONS];
+export type AdminAuditAction = (typeof ADMIN_AUDIT_ACTIONS)[keyof typeof ADMIN_AUDIT_ACTIONS];
+export type AuditTargetEntityType = (typeof AUDIT_TARGET_ENTITY_TYPES)[keyof typeof AUDIT_TARGET_ENTITY_TYPES];
+export type ModerationContentType = (typeof MODERATION_CONTENT_TYPES)[keyof typeof MODERATION_CONTENT_TYPES];
+export type ReportTargetType = (typeof REPORT_TARGET_TYPES)[keyof typeof REPORT_TARGET_TYPES];
+export type ReportReason = (typeof REPORT_REASONS)[keyof typeof REPORT_REASONS];
+export type ReportStatus = (typeof REPORT_STATUSES)[keyof typeof REPORT_STATUSES];
 
 // Authenticated Principal & Token Types
 export interface IAccessTokenClaims {
@@ -504,4 +516,277 @@ export interface CursorPaginationMeta {
   limit: number;
   hasMore: boolean;
   nextCursor?: string;
+}
+
+// ==============================================================================
+// Admin Dashboard Overview & User Governance DTOs (Day 17)
+// ==============================================================================
+
+export interface AdminDashboardUsersStatsDto {
+  total: number;
+  tourists: number;
+  businesses: number;
+  admins: number;
+  active: number;
+  suspended: number;
+}
+
+export interface AdminDashboardDestinationsStatsDto {
+  total: number;
+  verified: number;
+  pending: number;
+  published: number;
+}
+
+export interface AdminDashboardSocialStatsDto {
+  totalPosts: number;
+  pendingPosts: number;
+  publishedPosts: number;
+}
+
+export interface AdminDashboardBusinessVerificationStatsDto {
+  pending: number;
+  verified: number;
+  rejected: number;
+}
+
+export interface AdminDashboardOverviewDto {
+  users: AdminDashboardUsersStatsDto;
+  destinations: AdminDashboardDestinationsStatsDto;
+  social: AdminDashboardSocialStatsDto;
+  businessVerification: AdminDashboardBusinessVerificationStatsDto;
+}
+
+export interface AdminTouristProfileSummaryDto {
+  id: string;
+  firstName: string;
+  lastName: string;
+  preferredLanguage: PreferredLanguage;
+  followersCount: number;
+  followingCount: number;
+}
+
+export interface AdminBusinessProfileSummaryDto {
+  id: string;
+  businessName: string;
+  businessType: BusinessType;
+  contactNumber: string;
+  verificationStatus: VerificationStatus;
+  documentsCount: number;
+}
+
+export interface AdminAdminProfileSummaryDto {
+  id: string;
+  displayName: string;
+  adminLevel: AdminLevel;
+  permissions: AdminPermission[];
+  mfaEnabled: boolean;
+}
+
+export type AdminUserProfileSummaryDto =
+  | AdminTouristProfileSummaryDto
+  | AdminBusinessProfileSummaryDto
+  | AdminAdminProfileSummaryDto;
+
+export interface AdminUserListItemDto {
+  id: string;
+  email: string;
+  accountType: AccountType;
+  status: AccountStatus;
+  emailVerifiedAt: string | null;
+  lastLoginAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+  profile: AdminUserProfileSummaryDto | null;
+}
+
+export type AdminUserDetailsDto = AdminUserListItemDto;
+
+export interface AdminUsersPaginationMeta {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
+export interface AdminUsersListResponseDto {
+  items: AdminUserListItemDto[];
+  pagination: AdminUsersPaginationMeta;
+}
+
+export interface AuditLogEntryDto {
+  id: string;
+  actorAccountId: string;
+  actorAccountType: AccountType;
+  actorAdminLevel: AdminLevel;
+  action: AdminAuditAction;
+  targetEntityId: string;
+  targetEntityType: AuditTargetEntityType;
+  reason: string;
+  beforeState: Record<string, unknown>;
+  afterState: Record<string, unknown>;
+  ipAddress: string | null;
+  userAgent: string | null;
+  timestamp: string;
+}
+
+export interface AdminUserStatusTransitionResponseDto {
+  user: AdminUserDetailsDto;
+  revokedSessionsCount?: number;
+  auditLog: AuditLogEntryDto;
+}
+
+// ==============================================================================
+// Content Moderation & User Reports DTOs (Day 18)
+// ==============================================================================
+
+export interface ModerationCreatorSummaryDto {
+  id: string;
+  accountType: AccountType;
+  status: AccountStatus;
+  displayName: string;
+}
+
+export interface ModerationQueueItemDto {
+  contentType: ModerationContentType;
+  contentId: string;
+  moderationStatus: string;
+  creatorAccountId: string;
+  creator: ModerationCreatorSummaryDto | null;
+  district: KeralaDistrict | null;
+  titleOrExcerpt: string;
+  activeReportsCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ModerationQueueResponseDto {
+  items: ModerationQueueItemDto[];
+  pagination: AdminUsersPaginationMeta;
+}
+
+export interface ModerationDestinationSubmissionDto {
+  id: string;
+  submittedBy: string;
+  creator: ModerationCreatorSummaryDto | null;
+  name: string;
+  description: string;
+  categoryIds: string[];
+  district: KeralaDistrict | null;
+  submittedLocation: GeoPoint;
+  submittedAddress: string;
+  imageMediaIds: string[];
+  submissionStatus: DestinationSubmissionStatus;
+  reviewedBy: string | null;
+  reviewedAt: string | null;
+  reviewNotes: string | null;
+  destinationId: string | null;
+  activeReportsCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ModerationDestinationsListResponseDto {
+  items: ModerationDestinationSubmissionDto[];
+  pagination: AdminUsersPaginationMeta;
+}
+
+export interface ModerationDestinationMutationResponseDto {
+  submission: ModerationDestinationSubmissionDto;
+  destination: {
+    id: string;
+    name: string;
+    slug: string;
+    district: KeralaDistrict;
+    location: GeoPoint;
+    address: string;
+    verificationStatus: DestinationVerificationStatus;
+    publicationStatus: DestinationPublicationStatus;
+    verifiedBy: string | null;
+  } | null;
+  auditLog: AuditLogEntryDto;
+}
+
+export interface ModerationPostDto {
+  id: string;
+  authorId: string;
+  creator: ModerationCreatorSummaryDto | null;
+  content: string;
+  mediaIds: string[];
+  destinationId: string | null;
+  visibility: PostVisibility;
+  status: PostStatus;
+  likesCount: number;
+  commentsCount: number;
+  repostsCount: number;
+  publishedAt: string | null;
+  deletedAt: string | null;
+  moderatedBy: string | null;
+  moderatedAt: string | null;
+  moderationReason: string | null;
+  activeReportsCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ModerationPostsListResponseDto {
+  items: ModerationPostDto[];
+  pagination: AdminUsersPaginationMeta;
+}
+
+export interface ModerationPostMutationResponseDto {
+  post: ModerationPostDto;
+  auditLog: AuditLogEntryDto;
+}
+
+export interface ModerationCommentDto {
+  id: string;
+  postId: string;
+  authorId: string;
+  creator: ModerationCreatorSummaryDto | null;
+  content: string;
+  status: PostCommentStatus;
+  deletedAt: string | null;
+  moderatedBy: string | null;
+  moderatedAt: string | null;
+  moderationReason: string | null;
+  activeReportsCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ModerationCommentsListResponseDto {
+  items: ModerationCommentDto[];
+  pagination: AdminUsersPaginationMeta;
+}
+
+export interface ModerationCommentMutationResponseDto {
+  comment: ModerationCommentDto;
+  postCommentsCount: number;
+  auditLog: AuditLogEntryDto;
+}
+
+export interface ContentReportDto {
+  id: string;
+  reporterId: string;
+  targetType: ReportTargetType;
+  targetId: string;
+  reason: ReportReason;
+  description: string | null;
+  status: ReportStatus;
+  reviewedBy?: string | null;
+  reviewedAt: string | null;
+  moderatorNotes?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ReportsListResponseDto {
+  items: ContentReportDto[];
+  pagination: AdminUsersPaginationMeta;
+}
+
+export interface ReportReviewResponseDto {
+  report: ContentReportDto;
+  auditLog: AuditLogEntryDto;
 }

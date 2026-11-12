@@ -23,11 +23,13 @@ Every index in MongoDB incurs a RAM overhead in WiredTiger cache and a write lat
 |---|---|---|---|---|
 | `accounts` | `{ email: 1 }` | Unique, Sparse | `{ email: { $exists: true } }` | User login lookup via email |
 | `accounts` | `{ phone: 1 }` | Unique, Sparse | `{ phone: { $exists: true } }` | Mobile OTP authentication & registration |
-| `accounts` | `{ role: 1, accountStatus: 1 }` | Compound | None | Admin user management directory filters |
+| `accounts` | `{ accountType: 1, status: 1, createdAt: -1, _id: -1 }` | Compound (ESR) | None | Admin user directory filtered by `accountType` + `status` sorted by `createdAt` |
+| `accounts` | `{ status: 1, createdAt: -1, _id: -1 }` | Compound (ESR) | None | Admin user directory filtered by `status` only, sorted by `createdAt` |
+| `accounts` | `{ createdAt: -1, _id: -1 }` | Compound | None | Unfiltered admin user directory chronological pagination (zero in-memory sort) |
 | `touristProfiles`| `{ accountId: 1 }` | Unique | None | 1:1 account profile retrieval |
 | `touristProfiles`| `{ displayName: 1 }` | Unique | None | Handle lookup and `@mention` resolution |
 | `businessProfiles`| `{ accountId: 1 }` | Unique | None | 1:1 merchant profile retrieval |
-| `businessProfiles`| `{ kycStatus: 1, accreditationTier: 1 }` | Compound | None | Admin merchant verification queue |
+| `businessProfiles`| `{ verificationStatus: 1 }` | Single Field | None | Admin dashboard KYC verification aggregation & queue lookup |
 | `businessProfiles`| `{ gstin: 1 }` | Unique, Sparse | None | Merchant tax registration validation |
 | `adminProfiles` | `{ accountId: 1 }` | Unique | None | 1:1 admin profile retrieval |
 | `adminProfiles` | `{ employeeId: 1 }` | Unique | None | Directorate officer identification |
@@ -157,14 +159,22 @@ Every index in MongoDB incurs a RAM overhead in WiredTiger cache and a write lat
 |---|---|---|---|---|
 | `reviews` | `{ targetId: 1, targetType: 1, rating: -1 }` | Compound | None | Star review breakdown for stay/spot |
 | `reviews` | `{ bookingId: 1 }` | Unique, Sparse | None | 1 review per booking enforcement |
-| `reports` | `{ status: 1, createdAt: 1 }` | Compound | None | Admin moderation queue triage |
+| `reports` | `{ reporterId: 1, targetType: 1, targetId: 1 }` | Unique Partial Compound | `partialFilterExpression: { status: { $in: ['PENDING', 'UNDER_REVIEW'] } }` | Prevents duplicate active reports while preserving resolved history |
+| `reports` | `{ status: 1, createdAt: 1, _id: 1 }` | Compound (ESR) | None | Admin report triage FIFO queue |
+| `reports` | `{ reporterId: 1, createdAt: -1, _id: -1 }` | Compound (ESR) | None | Tourist personal submitted reports listing |
+| `reports` | `{ targetType: 1, targetId: 1, status: 1 }` | Compound (ESR) | None | Active report count aggregation & queue triage |
+| `destinationSubmissions` | `{ district: 1, submissionStatus: 1, createdAt: -1 }` | Compound (ESR) | None | Moderation queue filtering submissions by district |
+| `posts` | `{ status: 1, deletedAt: 1, createdAt: -1, _id: -1 }` | Compound (ESR) | None | Admin post moderation listing & queue |
+| `posts` | `{ authorId: 1, createdAt: -1, _id: -1 }` | Compound (ESR) | None | Moderation filtering by creator account ID |
+| `postComments` | `{ status: 1, createdAt: -1, _id: -1 }` | Compound (ESR) | None | Admin comment moderation listing |
 | `blocks` | `{ blockerAccountId: 1, blockedAccountId: 1 }` | Unique Compound | None | User blocking check |
 | `notifications` | `{ recipientAccountId: 1, isRead: 1, createdAt: -1 }` | Compound | None | Unread notification tray |
 | `media` | `{ storageKey: 1 }` | Unique | None | Cloud object key deduplication |
 | `media` | `{ destinationId: 1, displayOrder: 1 }` | Compound | None | Destination media gallery sorting |
 | `media` | `{ uploaderAccountId: 1, createdAt: -1 }` | Compound | None | Account media upload history |
 | `auditLogs` | `{ timestamp: -1 }` | Single Field | None | Directorate immutable audit log viewer |
-| `auditLogs` | `{ targetEntityId: 1, targetEntityType: 1 }` | Compound | None | Entity change history inspection |
+| `auditLogs` | `{ targetEntityId: 1, targetEntityType: 1, timestamp: -1 }` | Compound (ESR) | None | Chronological entity change history inspection |
+| `auditLogs` | `{ actorAccountId: 1, timestamp: -1 }` | Compound (ESR) | None | Chronological actions timeline by acting administrator |
 | `supportTickets` | `{ ticketNumber: 1 }` | Unique | None | Tourist police ticket tracking |
 | `supportTickets` | `{ status: 1, priority: 1, createdAt: 1 }` | Compound | None | Tourist Police 1364 emergency queue |
 | `systemSettings` | `{ configKey: 1 }` | Unique | None | Fast configuration key retrieval |

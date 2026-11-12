@@ -11,6 +11,8 @@ interface RateLimiterOptions {
   windowMs?: number;
   max?: number;
   message?: string;
+  keyPrefix?: string;
+  keyGenerator?: (req: Request) => string;
 }
 
 const ipStore = new Map<string, RateLimitRecord>();
@@ -46,7 +48,10 @@ export const createRateLimiter = (options: RateLimiterOptions = {}) => {
       return next();
     }
 
-    const ip = req.ip || req.socket.remoteAddress || '127.0.0.1';
+    const rawKey = options.keyGenerator
+      ? options.keyGenerator(req)
+      : req.ip || req.socket.remoteAddress || '127.0.0.1';
+    const ip = options.keyPrefix ? `${options.keyPrefix}:${rawKey}` : rawKey;
     const now = Date.now();
 
     let record = ipStore.get(ip);
@@ -143,6 +148,42 @@ export const followRateLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
   max: 60,
   message: 'Too many follow requests from this IP, please try again later',
+});
+
+/**
+ * Dedicated admin user lifecycle mutation rate limiter:
+ * Throttles sensitive account suspension and reactivation bursts per acting admin/IP.
+ */
+export const adminMutationRateLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: env.NODE_ENV === 'test' ? 20 : 30,
+  keyPrefix: 'admin-mutation',
+  keyGenerator: (req) => req.user?.id || req.ip || req.socket.remoteAddress || '127.0.0.1',
+  message: 'Too many administrative account modification attempts, please try again later',
+});
+
+/**
+ * Dedicated admin moderation action rate limiter:
+ * Throttles rapid moderation queue actions per acting admin/IP.
+ */
+export const moderationRateLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: env.NODE_ENV === 'test' ? 20 : 60,
+  keyPrefix: 'admin-moderation',
+  keyGenerator: (req) => req.user?.id || req.ip || req.socket.remoteAddress || '127.0.0.1',
+  message: 'Too many moderation actions triggered, please try again later',
+});
+
+/**
+ * Dedicated tourist content report rate limiter:
+ * Prevents report flooding and abusive spam reporting.
+ */
+export const reportRateLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: env.NODE_ENV === 'test' ? 15 : 20,
+  keyPrefix: 'tourist-report',
+  keyGenerator: (req) => req.user?.id || req.ip || req.socket.remoteAddress || '127.0.0.1',
+  message: 'Too many content reports submitted, please try again later',
 });
 
 export const resetRateLimiter = (): void => {

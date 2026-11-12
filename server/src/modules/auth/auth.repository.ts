@@ -285,15 +285,17 @@ export class AuthRepository {
   }
 
   /**
-   * Revokes all active sessions for an authenticated account (e.g. logout from all devices).
+   * Revokes all active sessions for an authenticated account (e.g. logout from all devices or admin suspension).
    */
   public async revokeAllAccountSessions(
     accountId: Types.ObjectId | string,
     reason: SessionRevocationReason | string = 'LOGOUT_ALL',
+    session?: ClientSession,
   ): Promise<number> {
     const result = await SessionModel.updateMany(
       { accountId, revokedAt: null },
       { $set: { revokedAt: new Date(), revocationReason: reason } },
+      { session },
     );
     return result.modifiedCount;
   }

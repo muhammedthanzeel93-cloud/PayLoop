@@ -74,6 +74,7 @@ export interface SafeDestinationSubmissionDto {
   name: string;
   description: string;
   categoryIds: string[];
+  district?: KeralaDistrict;
   submittedLocation: GeoPoint;
   submittedAddress: string;
   imageMediaIds: string[];

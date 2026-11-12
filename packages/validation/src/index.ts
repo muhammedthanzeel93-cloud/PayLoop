@@ -5,9 +5,20 @@ import {
   GEOSPATIAL_RULES,
   USER_ROLES,
   BUSINESS_TYPES,
+  ACCOUNT_TYPES,
+  ACCOUNT_STATUSES,
+  ADMIN_USER_MANAGEMENT_RULES,
+  DESTINATION_SUBMISSION_STATUSES,
   KERALA_DISTRICTS,
   MEDIA_RULES,
   MAP_CONFIG,
+  MODERATION_CONTENT_TYPES,
+  MODERATION_RULES,
+  POST_COMMENT_STATUSES,
+  POST_STATUSES,
+  REPORT_REASONS,
+  REPORT_STATUSES,
+  REPORT_TARGET_TYPES,
 } from '@kerala-tourism/constants';
 
 // Environment Variables Schema
@@ -499,5 +510,457 @@ export const updateDestinationMediaSchema = z
   .strict({ message: 'Unrecognized fields in media update' });
 
 export type UpdateDestinationMediaInput = z.infer<typeof updateDestinationMediaSchema>;
+
+// ==============================================================================
+// Day 17 – Admin Dashboard Overview & User Management Schemas
+// ==============================================================================
+
+const adminObjectIdSchema = z
+  .string({ required_error: 'User ID is required' })
+  .trim()
+  .regex(/^[0-9a-fA-F]{24}$/, 'Invalid user ID format');
+
+export const adminUserIdParamSchema = z
+  .object({
+    userId: adminObjectIdSchema,
+  })
+  .strict({ message: 'Unrecognized route parameters' });
+
+export type AdminUserIdParamInput = z.infer<typeof adminUserIdParamSchema>;
+
+export const adminUsersQuerySchema = z
+  .object({
+    page: z.coerce
+      .number({ invalid_type_error: 'Page must be a positive integer' })
+      .int('Page must be an integer')
+      .min(1, 'Page must be at least 1')
+      .max(ADMIN_USER_MANAGEMENT_RULES.MAX_PAGE, `Page cannot exceed ${ADMIN_USER_MANAGEMENT_RULES.MAX_PAGE}`)
+      .default(ADMIN_USER_MANAGEMENT_RULES.DEFAULT_PAGE),
+    limit: z.coerce
+      .number({ invalid_type_error: 'Limit must be a positive integer' })
+      .int('Limit must be an integer')
+      .min(1, 'Limit must be at least 1')
+      .max(ADMIN_USER_MANAGEMENT_RULES.MAX_LIMIT, `Limit cannot exceed ${ADMIN_USER_MANAGEMENT_RULES.MAX_LIMIT}`)
+      .default(ADMIN_USER_MANAGEMENT_RULES.DEFAULT_LIMIT),
+    search: z
+      .string({ invalid_type_error: 'Search query must be a string' })
+      .trim()
+      .min(1, 'Search query cannot be empty')
+      .max(
+        ADMIN_USER_MANAGEMENT_RULES.MAX_SEARCH_LENGTH,
+        `Search query cannot exceed ${ADMIN_USER_MANAGEMENT_RULES.MAX_SEARCH_LENGTH} characters`,
+      )
+      .refine((val) => !val.includes('\0'), 'Search query contains invalid characters')
+      .optional(),
+    accountType: z
+      .nativeEnum(ACCOUNT_TYPES, {
+        errorMap: () => ({ message: 'Invalid accountType. Allowed values: TOURIST, BUSINESS, ADMIN' }),
+      })
+      .optional(),
+    status: z
+      .nativeEnum(ACCOUNT_STATUSES, {
+        errorMap: () => ({ message: 'Invalid status. Allowed values: ACTIVE, SUSPENDED, DEACTIVATED' }),
+      })
+      .optional(),
+    sortBy: z
+      .enum(['createdAt'], {
+        errorMap: () => ({ message: 'Invalid sortBy field. Allowed value: createdAt' }),
+      })
+      .default('createdAt'),
+    sortOrder: z
+      .enum(['asc', 'desc'], {
+        errorMap: () => ({ message: 'Invalid sortOrder. Allowed values: asc, desc' }),
+      })
+      .default('desc'),
+  })
+  .strict({ message: 'Unrecognized query parameters' });
+
+export type AdminUsersQueryInput = z.infer<typeof adminUsersQuerySchema>;
+
+export const suspendUserSchema = z
+  .object({
+    reason: z
+      .string({ required_error: 'Suspension reason is required' })
+      .trim()
+      .min(
+        ADMIN_USER_MANAGEMENT_RULES.MIN_REASON_LENGTH,
+        `Suspension reason must be at least ${ADMIN_USER_MANAGEMENT_RULES.MIN_REASON_LENGTH} characters`,
+      )
+      .max(
+        ADMIN_USER_MANAGEMENT_RULES.MAX_REASON_LENGTH,
+        `Suspension reason cannot exceed ${ADMIN_USER_MANAGEMENT_RULES.MAX_REASON_LENGTH} characters`,
+      ),
+  })
+  .strict({ message: 'Unrecognized or unauthorized fields in request body' });
+
+export type SuspendUserInput = z.infer<typeof suspendUserSchema>;
+
+export const reactivateUserSchema = z
+  .object({
+    reason: z
+      .string({ invalid_type_error: 'Reactivation reason must be a string' })
+      .trim()
+      .min(
+        ADMIN_USER_MANAGEMENT_RULES.MIN_REASON_LENGTH,
+        `Reactivation reason must be at least ${ADMIN_USER_MANAGEMENT_RULES.MIN_REASON_LENGTH} characters`,
+      )
+      .max(
+        ADMIN_USER_MANAGEMENT_RULES.MAX_REASON_LENGTH,
+        `Reactivation reason cannot exceed ${ADMIN_USER_MANAGEMENT_RULES.MAX_REASON_LENGTH} characters`,
+      )
+      .optional(),
+  })
+  .strict({ message: 'Unrecognized or unauthorized fields in request body' });
+
+export type ReactivateUserInput = z.infer<typeof reactivateUserSchema>;
+
+// ==============================================================================
+// Day 18 – Admin Content Moderation & User Reports Schemas
+// ==============================================================================
+
+const moderationObjectIdSchema = (label: string) =>
+  z
+    .string({ required_error: `${label} is required` })
+    .trim()
+    .regex(/^[0-9a-fA-F]{24}$/, `Invalid ${label.toLowerCase()} format`);
+
+const ALL_MODERATION_STATUSES = [
+  ...new Set([
+    ...Object.values(DESTINATION_SUBMISSION_STATUSES),
+    ...Object.values(POST_STATUSES),
+    ...Object.values(POST_COMMENT_STATUSES),
+  ]),
+] as [string, ...string[]];
+
+const moderationDateFilterSchema = z
+  .string()
+  .trim()
+  .refine((val) => !Number.isNaN(Date.parse(val)), 'Invalid ISO date filter')
+  .optional();
+
+export const submissionIdParamSchema = z
+  .object({
+    submissionId: moderationObjectIdSchema('Submission ID'),
+  })
+  .strict({ message: 'Unrecognized route parameters' });
+
+export type SubmissionIdParamInput = z.infer<typeof submissionIdParamSchema>;
+
+export const moderationPostIdParamSchema = z
+  .object({
+    postId: moderationObjectIdSchema('Post ID'),
+  })
+  .strict({ message: 'Unrecognized route parameters' });
+
+export type ModerationPostIdParamInput = z.infer<typeof moderationPostIdParamSchema>;
+
+export const moderationCommentIdParamSchema = z
+  .object({
+    commentId: moderationObjectIdSchema('Comment ID'),
+  })
+  .strict({ message: 'Unrecognized route parameters' });
+
+export type ModerationCommentIdParamInput = z.infer<typeof moderationCommentIdParamSchema>;
+
+export const reportIdParamSchema = z
+  .object({
+    reportId: moderationObjectIdSchema('Report ID'),
+  })
+  .strict({ message: 'Unrecognized route parameters' });
+
+export type ReportIdParamInput = z.infer<typeof reportIdParamSchema>;
+
+export const moderationQueueQuerySchema = z
+  .object({
+    contentType: z
+      .nativeEnum(MODERATION_CONTENT_TYPES, {
+        errorMap: () => ({ message: 'Invalid contentType. Allowed values: DESTINATION, POST, COMMENT' }),
+      })
+      .optional(),
+    moderationStatus: z
+      .enum(ALL_MODERATION_STATUSES, {
+        errorMap: () => ({ message: 'Invalid moderationStatus filter value' }),
+      })
+      .optional(),
+    submissionDate: moderationDateFilterSchema,
+    submittedFrom: moderationDateFilterSchema,
+    submittedTo: moderationDateFilterSchema,
+    creatorAccountId: moderationObjectIdSchema('Creator account ID').optional(),
+    district: keralaDistrictSchema.optional(),
+    page: z.coerce
+      .number({ invalid_type_error: 'Page must be a positive integer' })
+      .int('Page must be an integer')
+      .min(1, 'Page must be at least 1')
+      .max(MODERATION_RULES.MAX_PAGE, `Page cannot exceed ${MODERATION_RULES.MAX_PAGE}`)
+      .default(MODERATION_RULES.DEFAULT_PAGE),
+    limit: z.coerce
+      .number({ invalid_type_error: 'Limit must be a positive integer' })
+      .int('Limit must be an integer')
+      .min(1, 'Limit must be at least 1')
+      .max(MODERATION_RULES.MAX_LIMIT, `Limit cannot exceed ${MODERATION_RULES.MAX_LIMIT}`)
+      .default(MODERATION_RULES.DEFAULT_LIMIT),
+  })
+  .strict({ message: 'Unrecognized query parameters' })
+  .superRefine((data, ctx) => {
+    if (!data.contentType && !data.district && data.page * data.limit > MODERATION_RULES.MAX_UNIFIED_QUEUE_WINDOW) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['page'],
+        message: 'Unified cross-collection queue window cannot exceed 500 items; specify contentType for deep pagination',
+      });
+    }
+  });
+
+export type ModerationQueueQueryInput = z.infer<typeof moderationQueueQuerySchema>;
+
+export const moderationDestinationsQuerySchema = z
+  .object({
+    status: z
+      .nativeEnum(DESTINATION_SUBMISSION_STATUSES, {
+        errorMap: () => ({ message: 'Invalid status. Allowed values: PENDING, APPROVED, REJECTED' }),
+      })
+      .optional(),
+    district: keralaDistrictSchema.optional(),
+    creatorAccountId: moderationObjectIdSchema('Creator account ID').optional(),
+    submittedFrom: moderationDateFilterSchema,
+    submittedTo: moderationDateFilterSchema,
+    page: z.coerce.number().int().min(1).max(MODERATION_RULES.MAX_PAGE).default(MODERATION_RULES.DEFAULT_PAGE),
+    limit: z.coerce.number().int().min(1).max(MODERATION_RULES.MAX_LIMIT).default(MODERATION_RULES.DEFAULT_LIMIT),
+  })
+  .strict({ message: 'Unrecognized query parameters' });
+
+export type ModerationDestinationsQueryInput = z.infer<typeof moderationDestinationsQuerySchema>;
+
+export const approveDestinationModerationSchema = z
+  .object({
+    reviewNotes: z
+      .string({ invalid_type_error: 'Review notes must be a string' })
+      .trim()
+      .min(MODERATION_RULES.MIN_REASON_LENGTH, `Review notes must be at least ${MODERATION_RULES.MIN_REASON_LENGTH} characters`)
+      .max(MODERATION_RULES.MAX_NOTES_LENGTH, `Review notes cannot exceed ${MODERATION_RULES.MAX_NOTES_LENGTH} characters`)
+      .optional(),
+    district: keralaDistrictSchema.optional(),
+    location: geoJsonPointSchema.optional(),
+    address: z.string().trim().min(5).max(300).optional(),
+    destinationId: moderationObjectIdSchema('Destination ID').optional(),
+  })
+  .strict({ message: 'Unrecognized or unauthorized fields in request body' });
+
+export type ApproveDestinationModerationInput = z.infer<typeof approveDestinationModerationSchema>;
+
+export const rejectDestinationModerationSchema = z
+  .object({
+    reviewNotes: z
+      .string({ required_error: 'Review notes are required when rejecting a destination submission' })
+      .trim()
+      .min(
+        MODERATION_RULES.MIN_REASON_LENGTH,
+        `Review notes must be at least ${MODERATION_RULES.MIN_REASON_LENGTH} characters`,
+      )
+      .max(
+        MODERATION_RULES.MAX_NOTES_LENGTH,
+        `Review notes cannot exceed ${MODERATION_RULES.MAX_NOTES_LENGTH} characters`,
+      ),
+  })
+  .strict({ message: 'Unrecognized or unauthorized fields in request body' });
+
+export type RejectDestinationModerationInput = z.infer<typeof rejectDestinationModerationSchema>;
+
+export const moderationPostsQuerySchema = z
+  .object({
+    status: z
+      .nativeEnum(POST_STATUSES, {
+        errorMap: () => ({ message: 'Invalid status. Allowed values: PENDING, PUBLISHED, REJECTED, REMOVED' }),
+      })
+      .optional(),
+    creatorAccountId: moderationObjectIdSchema('Creator account ID').optional(),
+    submittedFrom: moderationDateFilterSchema,
+    submittedTo: moderationDateFilterSchema,
+    reportedOnly: z.enum(['true', 'false']).optional(),
+    page: z.coerce.number().int().min(1).max(MODERATION_RULES.MAX_PAGE).default(MODERATION_RULES.DEFAULT_PAGE),
+    limit: z.coerce.number().int().min(1).max(MODERATION_RULES.MAX_LIMIT).default(MODERATION_RULES.DEFAULT_LIMIT),
+  })
+  .strict({ message: 'Unrecognized query parameters' });
+
+export type ModerationPostsQueryInput = z.infer<typeof moderationPostsQuerySchema>;
+
+export const approvePostModerationSchema = z
+  .object({
+    reason: z
+      .string({ invalid_type_error: 'Moderation reason must be a string' })
+      .trim()
+      .min(MODERATION_RULES.MIN_REASON_LENGTH)
+      .max(MODERATION_RULES.MAX_REASON_LENGTH)
+      .optional(),
+  })
+  .strict({ message: 'Unrecognized or unauthorized fields in request body' });
+
+export type ApprovePostModerationInput = z.infer<typeof approvePostModerationSchema>;
+
+const requiredModerationReasonBodySchema = (label: string) =>
+  z
+    .object({
+      reason: z
+        .string({ required_error: `${label} reason is required` })
+        .trim()
+        .min(
+          MODERATION_RULES.MIN_REASON_LENGTH,
+          `${label} reason must be at least ${MODERATION_RULES.MIN_REASON_LENGTH} characters`,
+        )
+        .max(
+          MODERATION_RULES.MAX_REASON_LENGTH,
+          `${label} reason cannot exceed ${MODERATION_RULES.MAX_REASON_LENGTH} characters`,
+        ),
+    })
+    .strict({ message: 'Unrecognized or unauthorized fields in request body' });
+
+export const rejectPostModerationSchema = requiredModerationReasonBodySchema('Rejection');
+export type RejectPostModerationInput = z.infer<typeof rejectPostModerationSchema>;
+
+export const removePostModerationSchema = requiredModerationReasonBodySchema('Removal');
+export type RemovePostModerationInput = z.infer<typeof removePostModerationSchema>;
+
+export const moderationCommentsQuerySchema = z
+  .object({
+    status: z
+      .nativeEnum(POST_COMMENT_STATUSES, {
+        errorMap: () => ({ message: 'Invalid status. Allowed values: ACTIVE, REMOVED' }),
+      })
+      .optional(),
+    postId: moderationObjectIdSchema('Post ID').optional(),
+    creatorAccountId: moderationObjectIdSchema('Creator account ID').optional(),
+    reportedOnly: z.enum(['true', 'false']).optional(),
+    page: z.coerce.number().int().min(1).max(MODERATION_RULES.MAX_PAGE).default(MODERATION_RULES.DEFAULT_PAGE),
+    limit: z.coerce.number().int().min(1).max(MODERATION_RULES.MAX_LIMIT).default(MODERATION_RULES.DEFAULT_LIMIT),
+  })
+  .strict({ message: 'Unrecognized query parameters' });
+
+export type ModerationCommentsQueryInput = z.infer<typeof moderationCommentsQuerySchema>;
+
+export const removeCommentModerationSchema = requiredModerationReasonBodySchema('Removal');
+export type RemoveCommentModerationInput = z.infer<typeof removeCommentModerationSchema>;
+
+export const restoreCommentModerationSchema = z
+  .object({
+    reason: z
+      .string({ invalid_type_error: 'Restoration reason must be a string' })
+      .trim()
+      .min(MODERATION_RULES.MIN_REASON_LENGTH)
+      .max(MODERATION_RULES.MAX_REASON_LENGTH)
+      .optional(),
+  })
+  .strict({ message: 'Unrecognized or unauthorized fields in request body' });
+
+export type RestoreCommentModerationInput = z.infer<typeof restoreCommentModerationSchema>;
+
+export const createContentReportSchema = z
+  .object({
+    targetType: z.nativeEnum(REPORT_TARGET_TYPES, {
+      errorMap: () => ({ message: 'Invalid targetType. Allowed values: DESTINATION, POST, COMMENT, ACCOUNT' }),
+    }),
+    targetId: moderationObjectIdSchema('Target ID'),
+    reason: z.nativeEnum(REPORT_REASONS, {
+      errorMap: () => ({ message: 'Invalid report reason' }),
+    }),
+    description: z
+      .string({ invalid_type_error: 'Description must be a string' })
+      .trim()
+      .max(
+        MODERATION_RULES.MAX_DESCRIPTION_LENGTH,
+        `Description cannot exceed ${MODERATION_RULES.MAX_DESCRIPTION_LENGTH} characters`,
+      )
+      .optional(),
+  })
+  .strict({ message: 'Unrecognized or unauthorized fields in request body' })
+  .superRefine((data, ctx) => {
+    if (
+      data.reason === REPORT_REASONS.OTHER &&
+      (!data.description || data.description.trim().length < MODERATION_RULES.MIN_OTHER_DESCRIPTION_LENGTH)
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['description'],
+        message: `A description of at least ${MODERATION_RULES.MIN_OTHER_DESCRIPTION_LENGTH} characters is required when reason is OTHER`,
+      });
+    }
+  });
+
+export type CreateContentReportInput = z.infer<typeof createContentReportSchema>;
+
+export const touristReportsQuerySchema = z
+  .object({
+    status: z
+      .nativeEnum(REPORT_STATUSES, {
+        errorMap: () => ({ message: 'Invalid report status filter' }),
+      })
+      .optional(),
+    targetType: z
+      .nativeEnum(REPORT_TARGET_TYPES, {
+        errorMap: () => ({ message: 'Invalid targetType filter' }),
+      })
+      .optional(),
+    page: z.coerce.number().int().min(1).max(MODERATION_RULES.MAX_PAGE).default(MODERATION_RULES.DEFAULT_PAGE),
+    limit: z.coerce.number().int().min(1).max(MODERATION_RULES.MAX_LIMIT).default(MODERATION_RULES.DEFAULT_LIMIT),
+  })
+  .strict({ message: 'Unrecognized query parameters' });
+
+export type TouristReportsQueryInput = z.infer<typeof touristReportsQuerySchema>;
+
+export const adminReportsQuerySchema = z
+  .object({
+    status: z
+      .nativeEnum(REPORT_STATUSES, {
+        errorMap: () => ({ message: 'Invalid report status filter' }),
+      })
+      .optional(),
+    targetType: z
+      .nativeEnum(REPORT_TARGET_TYPES, {
+        errorMap: () => ({ message: 'Invalid targetType filter' }),
+      })
+      .optional(),
+    reason: z
+      .nativeEnum(REPORT_REASONS, {
+        errorMap: () => ({ message: 'Invalid reason filter' }),
+      })
+      .optional(),
+    page: z.coerce.number().int().min(1).max(MODERATION_RULES.MAX_PAGE).default(MODERATION_RULES.DEFAULT_PAGE),
+    limit: z.coerce.number().int().min(1).max(MODERATION_RULES.MAX_LIMIT).default(MODERATION_RULES.DEFAULT_LIMIT),
+  })
+  .strict({ message: 'Unrecognized query parameters' });
+
+export type AdminReportsQueryInput = z.infer<typeof adminReportsQuerySchema>;
+
+export const reviewReportSchema = z
+  .object({
+    status: z.enum(
+      [REPORT_STATUSES.UNDER_REVIEW, REPORT_STATUSES.RESOLVED, REPORT_STATUSES.DISMISSED],
+      {
+        errorMap: () => ({ message: 'Status must be UNDER_REVIEW, RESOLVED, or DISMISSED' }),
+      },
+    ),
+    moderatorNotes: z
+      .string({ invalid_type_error: 'Moderator notes must be a string' })
+      .trim()
+      .max(
+        MODERATION_RULES.MAX_NOTES_LENGTH,
+        `Moderator notes cannot exceed ${MODERATION_RULES.MAX_NOTES_LENGTH} characters`,
+      )
+      .optional(),
+  })
+  .strict({ message: 'Unrecognized or unauthorized fields in request body' })
+  .superRefine((data, ctx) => {
+    if (
+      (data.status === REPORT_STATUSES.RESOLVED || data.status === REPORT_STATUSES.DISMISSED) &&
+      (!data.moderatorNotes || data.moderatorNotes.trim().length < MODERATION_RULES.MIN_REASON_LENGTH)
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['moderatorNotes'],
+        message: `Moderator notes of at least ${MODERATION_RULES.MIN_REASON_LENGTH} characters are required when resolving or dismissing a report`,
+      });
+    }
+  });
+
+export type ReviewReportInput = z.infer<typeof reviewReportSchema>;
 
 

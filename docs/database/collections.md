@@ -315,6 +315,7 @@
   - `name`: `String` (Required, 2–120 chars)
   - `description`: `String` (Required, 20–2000 chars)
   - `categoryIds`: `Array<ObjectId>` (References `destinationCategories._id`)
+  - `district`: `String` (Optional, Enum: 14 approved Kerala districts; indexed for moderation queue filtering)
   - `submittedLocation`: `Object` (GeoJSON Point: `{ type: "Point", coordinates: [Number, Number] }`)
   - `submittedAddress`: `String` (Required, 5–300 chars)
   - `imageMediaIds`: `Array<String>` (1 to 10 media references)
@@ -1373,29 +1374,35 @@
 ---
 
 ### 45. `reports`
-- **Purpose**: Community flags for inappropriate posts, misleading spots, or private property violations.
+- **Purpose**: Community flags submitted by tourists for inappropriate destinations, posts, comments, or accounts, reviewed separately from content moderation lifecycle.
 - **Fields**:
   - `_id`: `ObjectId`
-  - `reportedByAccountId`: `ObjectId` (Required, Ref: `accounts`)
-  - `targetEntityId`: `ObjectId` (Required target ID)
-  - `targetEntityType`: `String` (Enum: `POST`, `COMMENT`, `DESTINATION_SUBMISSION`, `USER`)
-  - `reportReason`: `String` (Enum: `LITTERING_ECO_VIOLATION`, `PRIVATE_LAND`, `SPAM`, `HARASSMENT`)
-  - `reportDetails`: `String`
-  - `status`: `String` (Enum: `PENDING`, `INVESTIGATING`, `RESOLVED`, `DISMISSED`)
-  - `resolvedByAdminId`: `ObjectId` (Ref: `adminProfiles`)
-  - `createdAt`: `Date`
-- **References**: Ref: `accounts._id`, Ref: `adminProfiles._id`.
+  - `reporterId`: `ObjectId` (Required, Ref: `accounts`, immutable)
+  - `targetType`: `String` (Enum: `DESTINATION`, `POST`, `COMMENT`, `ACCOUNT`, immutable)
+  - `targetId`: `ObjectId` (Required target document ID, immutable)
+  - `reason`: `String` (Enum: `SPAM`, `HARASSMENT`, `MISLEADING_INFORMATION`, `INAPPROPRIATE_CONTENT`, `FAKE_DESTINATION`, `FRAUD`, `OTHER`)
+  - `description`: `String | null` (Optional details up to 1000 chars; required >= 5 chars when `reason === 'OTHER'`)
+  - `status`: `String` (Enum: `PENDING`, `UNDER_REVIEW`, `RESOLVED`, `DISMISSED`, default: `PENDING`)
+  - `reviewedBy`: `ObjectId | null` (Optional Ref: `accounts`)
+  - `reviewedAt`: `Date | null` (Timestamp when moderator reviewed)
+  - `moderatorNotes`: `String | null` (Optional up to 1000 chars; required >= 3 chars when `RESOLVED` or `DISMISSED`)
+  - `createdAt`: `Date`, `updatedAt`: `Date`
+- **References**: Ref: `accounts._id`.
 - **Example Document**:
 ```json
 {
   "_id": { "$oid": "66e04d3e89a4b2c1d8e1f045" },
-  "reportedByAccountId": { "$oid": "66e04d3e89a4b2c1d8e1f001" },
-  "targetEntityId": { "$oid": "66e04d3e89a4b2c1d8e1f011" },
-  "targetEntityType": "POST",
-  "reportReason": "LITTERING_ECO_VIOLATION",
-  "reportDetails": "Photo shows plastic dumping near fragile mangrove canal.",
+  "reporterId": { "$oid": "66e04d3e89a4b2c1d8e1f001" },
+  "targetType": "POST",
+  "targetId": { "$oid": "66e04d3e89a4b2c1d8e1f011" },
+  "reason": "MISLEADING_INFORMATION",
+  "description": "Post claims waterfall entry road is open despite monsoon closure.",
   "status": "PENDING",
-  "createdAt": { "$date": "2026-11-10T09:00:00Z" }
+  "reviewedBy": null,
+  "reviewedAt": null,
+  "moderatorNotes": null,
+  "createdAt": { "$date": "2026-11-12T09:00:00Z" },
+  "updatedAt": { "$date": "2026-11-12T09:00:00Z" }
 }
 ```
 
@@ -1493,17 +1500,19 @@
 ---
 
 ### 49. `auditLogs`
-- **Purpose**: Tamper-evident administrative action ledger recording every moderation and financial override.
+- **Purpose**: Append-only, immutable administrative governance and moderation ledger recording user status overrides and content moderation decisions.
 - **Fields**:
   - `_id`: `ObjectId`
   - `actorAccountId`: `ObjectId` (Required, Ref: `accounts`)
-  - `actorRole`: `String`
-  - `action`: `String` (e.g. `APPROVE_DESTINATION_SUBMISSION`, `MANUAL_ESCROW_RELEASE`)
+  - `actorAccountType`: `String` (`ADMIN`)
+  - `actorAdminLevel`: `String` (`SUPER_ADMIN`, `DISTRICT_OFFICER`, `MODERATOR`)
+  - `action`: `String` (`USER_SUSPENDED`, `USER_REACTIVATED`, `DESTINATION_SUBMISSION_APPROVED`, `DESTINATION_SUBMISSION_REJECTED`, `POST_APPROVED`, `POST_REJECTED`, `POST_REMOVED`, `COMMENT_REMOVED`, `COMMENT_RESTORED`, `REPORT_UNDER_REVIEW`, `REPORT_RESOLVED`, `REPORT_DISMISSED`)
   - `targetEntityId`: `ObjectId`
-  - `targetEntityType`: `String`
-  - `ipAddress`: `String`
-  - `beforeState`: `Object` (Snapshot prior to modification)
-  - `afterState`: `Object` (Snapshot post modification)
+  - `targetEntityType`: `String` (`ACCOUNT`, `DESTINATION`, `DESTINATION_SUBMISSION`, `POST`, `COMMENT`, `REPORT`)
+  - `reason`: `String` (Sanitized justification, max 500 chars)
+  - `beforeState`: `Object` (Redacted snapshot prior to modification)
+  - `afterState`: `Object` (Redacted snapshot post modification)
+  - `ipAddress`: `String | null`, `userAgent`: `String | null`
   - `timestamp`: `Date` (Required)
 - **References**: Ref: `accounts._id`.
 - **Example Document**:

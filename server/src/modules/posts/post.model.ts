@@ -19,6 +19,9 @@ export interface IPostDocument extends Document {
   repostsCount: number;
   publishedAt?: Date | null;
   deletedAt?: Date | null;
+  moderatedBy?: Types.ObjectId | null;
+  moderatedAt?: Date | null;
+  moderationReason?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -121,6 +124,21 @@ export const postSchema = new Schema<IPostDocument>(
       type: Date,
       default: null,
     },
+    moderatedBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'Account',
+      default: null,
+    },
+    moderatedAt: {
+      type: Date,
+      default: null,
+    },
+    moderationReason: {
+      type: String,
+      trim: true,
+      maxlength: 500,
+      default: null,
+    },
   },
   {
     collection: 'posts',
@@ -191,6 +209,16 @@ postSchema.index(
       status: POST_STATUSES.PUBLISHED,
     },
   },
+);
+
+// ESR indexes for admin post moderation queries across all statuses and creators
+postSchema.index(
+  { status: 1, deletedAt: 1, createdAt: -1, _id: -1 },
+  { name: 'idx_posts_moderation_list' },
+);
+postSchema.index(
+  { authorId: 1, createdAt: -1, _id: -1 },
+  { name: 'idx_posts_moderation_creator' },
 );
 
 export const PostModel: Model<IPostDocument> = model<IPostDocument>('Post', postSchema);

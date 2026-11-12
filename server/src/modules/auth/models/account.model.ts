@@ -98,6 +98,10 @@ accountSchema.pre('validate', function (next) {
 
 // Explicit unique index definition on normalized email
 accountSchema.index({ email: 1 }, { unique: true });
+// Admin directory & operational overview ESR indexes
+accountSchema.index({ accountType: 1, status: 1, createdAt: -1, _id: -1 });
+accountSchema.index({ status: 1, createdAt: -1, _id: -1 });
+accountSchema.index({ createdAt: -1, _id: -1 });
 
 export const AccountModel: Model<IAccountDocument> =
   model<IAccountDocument>('Account', accountSchema);

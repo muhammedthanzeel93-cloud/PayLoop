@@ -1,12 +1,20 @@
 import { Schema, model, Document, Model, Types } from 'mongoose';
-import { DESTINATION_SUBMISSION_STATUSES } from '@kerala-tourism/constants';
-import { DestinationSubmissionStatus, GeoPoint } from '@kerala-tourism/shared-types';
+import {
+  DESTINATION_SUBMISSION_STATUSES,
+  KERALA_DISTRICTS,
+} from '@kerala-tourism/constants';
+import {
+  DestinationSubmissionStatus,
+  GeoPoint,
+  KeralaDistrict,
+} from '@kerala-tourism/shared-types';
 
 export interface IDestinationSubmissionDocument extends Document {
   submittedBy: Types.ObjectId;
   name: string;
   description: string;
   categoryIds: Types.ObjectId[];
+  district?: KeralaDistrict;
   submittedLocation: GeoPoint;
   submittedAddress: string;
   imageMediaIds: string[];
@@ -47,6 +55,14 @@ const destinationSubmissionSchema = new Schema<IDestinationSubmissionDocument>(
         ref: 'DestinationCategory',
       },
     ],
+    district: {
+      type: String,
+      enum: {
+        values: KERALA_DISTRICTS as unknown as string[],
+        message: 'Invalid district: {VALUE}. Must be one of 14 Kerala districts.',
+      },
+      default: undefined,
+    },
     submittedLocation: {
       type: {
         type: String,
@@ -115,6 +131,7 @@ const destinationSubmissionSchema = new Schema<IDestinationSubmissionDocument>(
 
 destinationSubmissionSchema.index({ submittedBy: 1, createdAt: -1 });
 destinationSubmissionSchema.index({ submissionStatus: 1, createdAt: -1 });
+destinationSubmissionSchema.index({ district: 1, submissionStatus: 1, createdAt: -1 });
 destinationSubmissionSchema.index({ submittedLocation: '2dsphere' });
 
 export const DestinationSubmissionModel: Model<IDestinationSubmissionDocument> =

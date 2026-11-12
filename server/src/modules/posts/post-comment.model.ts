@@ -14,6 +14,9 @@ export interface IPostCommentDocument extends Document {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date | null;
+  moderatedBy?: Types.ObjectId | null;
+  moderatedAt?: Date | null;
+  moderationReason?: string | null;
 }
 
 export const postCommentSchema = new Schema<IPostCommentDocument>(
@@ -56,6 +59,21 @@ export const postCommentSchema = new Schema<IPostCommentDocument>(
       type: Date,
       default: null,
     },
+    moderatedBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'Account',
+      default: null,
+    },
+    moderatedAt: {
+      type: Date,
+      default: null,
+    },
+    moderationReason: {
+      type: String,
+      trim: true,
+      maxlength: 500,
+      default: null,
+    },
   },
   {
     collection: 'postComments',
@@ -90,6 +108,12 @@ postCommentSchema.index(
 postCommentSchema.index(
   { authorId: 1, status: 1, deletedAt: 1, createdAt: -1 },
   { name: 'idx_author_comments' },
+);
+
+// Index for admin comment moderation directory queries
+postCommentSchema.index(
+  { status: 1, createdAt: -1, _id: -1 },
+  { name: 'idx_comments_moderation_list' },
 );
 
 export const PostCommentModel: Model<IPostCommentDocument> = model<IPostCommentDocument>(

@@ -143,6 +143,8 @@ export const businessProfileSchema = new Schema<IBusinessProfileDocument>(
 
 // Enforce one business profile per account
 businessProfileSchema.index({ accountId: 1 }, { unique: true });
+// Cover admin dashboard verification status counts
+businessProfileSchema.index({ verificationStatus: 1 });
 
 export const BusinessProfileModel: Model<IBusinessProfileDocument> =
   model<IBusinessProfileDocument>('BusinessProfile', businessProfileSchema);

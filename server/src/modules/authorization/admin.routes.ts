@@ -2,32 +2,97 @@ import { Router } from 'express';
 import { authenticate } from '../../middlewares/auth.middleware';
 import {
   requireAccountType,
+  requireActiveAccount,
+  requireAnyPermission,
   requirePermission,
 } from '../../middlewares/authorization.middleware';
-import { validateBody } from '../../middlewares/validateRequest';
-import { verifyBusinessActionSchema } from '@kerala-tourism/validation';
+import { adminMutationRateLimiter } from '../../middlewares/rateLimiter';
+import {
+  validateBody,
+  validateParams,
+  validateQuery,
+} from '../../middlewares/validateRequest';
+import {
+  adminUserIdParamSchema,
+  adminUsersQuerySchema,
+  reactivateUserSchema,
+  suspendUserSchema,
+  verifyBusinessActionSchema,
+} from '@kerala-tourism/validation';
+import { adminController } from '../admin';
+import { adminModerationRoutes } from '../moderation';
 import { authorizationController } from './authorization.controller';
 import { destinationsController } from '../destinations/destinations.controller';
 import { ACCOUNT_TYPES, ADMIN_PERMISSIONS } from '@kerala-tourism/constants';
 
 const router = Router();
 
-// Admin Dashboard: Requires VIEW_ANALYTICS
+// Admin Dashboard (Day 10 compatibility): Requires VIEW_ANALYTICS
 router.get(
   '/dashboard',
   authenticate,
+  requireActiveAccount,
   requireAccountType(ACCOUNT_TYPES.ADMIN),
   requirePermission(ADMIN_PERMISSIONS.VIEW_ANALYTICS),
   authorizationController.getAdminDashboard,
 );
 
-// Admin User Management: Requires MANAGE_USERS
+// Admin Dashboard Overview (Day 17): Requires VIEW_DASHBOARD
+router.get(
+  '/dashboard/overview',
+  authenticate,
+  requireActiveAccount,
+  requireAccountType(ACCOUNT_TYPES.ADMIN),
+  requirePermission(ADMIN_PERMISSIONS.VIEW_DASHBOARD),
+  adminController.getDashboardOverview,
+);
+
+// Admin User Management Directory (Day 17): Requires VIEW_USERS or MANAGE_USERS
 router.get(
   '/users',
   authenticate,
+  requireActiveAccount,
+  requireAccountType(ACCOUNT_TYPES.ADMIN),
+  requireAnyPermission([ADMIN_PERMISSIONS.VIEW_USERS, ADMIN_PERMISSIONS.MANAGE_USERS]),
+  validateQuery(adminUsersQuerySchema),
+  adminController.listUsers,
+);
+
+// Admin User Details (Day 17): Requires VIEW_USERS or MANAGE_USERS
+router.get(
+  '/users/:userId',
+  authenticate,
+  requireActiveAccount,
+  requireAccountType(ACCOUNT_TYPES.ADMIN),
+  requireAnyPermission([ADMIN_PERMISSIONS.VIEW_USERS, ADMIN_PERMISSIONS.MANAGE_USERS]),
+  validateParams(adminUserIdParamSchema),
+  adminController.getUserDetails,
+);
+
+// Admin Suspend User (Day 17): Requires SUSPEND_USERS
+router.patch(
+  '/users/:userId/suspend',
+  authenticate,
+  requireActiveAccount,
+  requireAccountType(ACCOUNT_TYPES.ADMIN),
+  requirePermission(ADMIN_PERMISSIONS.SUSPEND_USERS),
+  adminMutationRateLimiter,
+  validateParams(adminUserIdParamSchema),
+  validateBody(suspendUserSchema),
+  adminController.suspendUser,
+);
+
+// Admin Reactivate User (Day 17): Requires MANAGE_USERS
+router.patch(
+  '/users/:userId/reactivate',
+  authenticate,
+  requireActiveAccount,
   requireAccountType(ACCOUNT_TYPES.ADMIN),
   requirePermission(ADMIN_PERMISSIONS.MANAGE_USERS),
-  authorizationController.getAdminUsers,
+  adminMutationRateLimiter,
+  validateParams(adminUserIdParamSchema),
+  validateBody(reactivateUserSchema),
+  adminController.reactivateUser,
 );
 
 // Admin Business Verification: Requires VERIFY_BUSINESSES
@@ -88,5 +153,8 @@ router.patch(
   requirePermission(ADMIN_PERMISSIONS.VERIFY_DESTINATIONS),
   destinationsController.adminReviewSubmission,
 );
+
+// Admin Content Moderation System (Day 18)
+router.use('/moderation', adminModerationRoutes);
 
 export default router;

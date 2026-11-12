@@ -49,4 +49,10 @@ export type { IDestinationSubmissionDocument } from '../../modules/destinations/
 export { MediaModel } from '../../modules/media/media.model';
 export type { IMediaDocument } from '../../modules/media/media.model';
 
+export { AuditLogModel } from '../../modules/admin/audit-log.model';
+export type { IAuditLogDocument } from '../../modules/admin/audit-log.model';
+
+export { ReportModel } from '../../modules/moderation/moderation.model';
+export type { IReportDocument } from '../../modules/moderation/moderation.model';
+
 

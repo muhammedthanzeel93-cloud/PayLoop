@@ -425,7 +425,7 @@ export class DestinationsService {
         categoryIds: submission.categoryIds || [],
         location: submission.submittedLocation,
         address: submission.submittedAddress,
-        district: 'Idukki', // Default fallback district if not specified
+        district: submission.district || 'Idukki', // Default fallback district if not specified
         images: submission.imageMediaIds || [],
         verificationStatus: DESTINATION_VERIFICATION_STATUSES.VERIFIED,
         publicationStatus: DESTINATION_PUBLICATION_STATUSES.DRAFT,
@@ -582,6 +582,7 @@ export class DestinationsService {
       name: doc.name,
       description: doc.description,
       categoryIds: (doc.categoryIds || []).map((id) => id.toString()),
+      ...(doc.district ? { district: doc.district } : {}),
       submittedLocation: doc.submittedLocation,
       submittedAddress: doc.submittedAddress,
       imageMediaIds: doc.imageMediaIds || [],
